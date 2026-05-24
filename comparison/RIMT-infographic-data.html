@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RIMT Infographic Data Package</title>
+
+  <!-- MathJax -- renders LaTeX math in the browser -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$']],
+        displayMath: [['$$', '$$']],
+        processEscapes: true
+      },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+
+  <style>
+    /* ---- Page layout ---- */
+    /* Page numbering uses CSS Paged Media @bottom-center.  In Chrome's
+       print dialog, enable "Headers and footers" so margin boxes render;
+       the empty top/bottom boxes below override Chrome's default URL/title
+       headers, leaving only the centered page counter. */
+    @page {
+      size: A4;
+      margin: 25mm 20mm 25mm 20mm;
+      @top-left     { content: ""; }
+      @top-center   { content: ""; }
+      @top-right    { content: ""; }
+      @bottom-left  { content: ""; }
+      @bottom-right { content: ""; }
+      @bottom-center {
+        content: "Page " counter(page) " of " counter(pages);
+        font-family: "Times New Roman", Times, serif;
+        font-size: 9pt;
+        color: #666;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 11pt;
+      line-height: 1.6;
+      color: #111;
+      max-width: 170mm;
+      margin: 0 auto;
+      padding: 10mm 0;
+    }
+
+    /* ---- Title block ---- */
+    h1 {
+      font-size: 16pt;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 4pt;
+    }
+    /* Metadata block directly under the H1 title (author/date/version/...).
+       Left-aligned, slightly smaller than body, line-height tight so that
+       the stacked <br>-separated lines read as a compact author block. */
+    h1 + p {
+      text-align: left;
+      font-size: 10pt;
+      color: #333;
+      line-height: 1.4;
+      margin-top: 8pt;
+      margin-bottom: 12pt;
+    }
+
+    /* ---- Section headings ---- */
+    h2 {
+      font-size: 13pt;
+      font-weight: bold;
+      border-bottom: 1px solid #aaa;
+      padding-bottom: 2pt;
+      margin-top: 18pt;
+      page-break-after: avoid;
+    }
+    h3 {
+      font-size: 11pt;
+      font-weight: bold;
+      margin-top: 12pt;
+      page-break-after: avoid;
+    }
+
+    /* ---- Abstract ---- */
+    h2#abstract + p,
+    h2:first-of-type + p {
+      margin: 8pt 12mm;
+      font-size: 10pt;
+    }
+
+    /* ---- Keywords ---- */
+    p strong:first-child {
+      font-weight: bold;
+    }
+
+    /* ---- Tables ---- */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9.5pt;
+      margin: 10pt 0;
+      page-break-inside: avoid;
+    }
+    th {
+      background: #e8e8e8;
+      border: 1px solid #999;
+      padding: 4pt 6pt;
+      text-align: left;
+      font-weight: bold;
+    }
+    td {
+      border: 1px solid #bbb;
+      padding: 3pt 6pt;
+      vertical-align: top;
+    }
+    tr:nth-child(even) td {
+      background: #f7f7f7;
+    }
+
+    /* ---- Code / equations ---- */
+    pre, code {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 9pt;
+      background: #f4f4f4;
+      padding: 2pt 4pt;
+      border-radius: 2px;
+    }
+    pre {
+      padding: 8pt;
+      overflow-x: auto;
+      page-break-inside: avoid;
+    }
+
+    /* ---- Horizontal rules ---- */
+    hr {
+      border: none;
+      border-top: 1px solid #ccc;
+      margin: 12pt 0;
+    }
+
+    /* ---- Blockquotes ---- */
+    blockquote {
+      border-left: 3px solid #aaa;
+      margin: 8pt 0 8pt 12pt;
+      padding: 4pt 8pt;
+      color: #444;
+      font-style: italic;
+    }
+
+    /* ---- Print overrides ---- */
+    @media print {
+      body { padding: 0; }
+      h2, h3 { page-break-after: avoid; }
+      p, li { orphans: 3; widows: 3; }
+      table { page-break-inside: avoid; }
+      a { color: #111; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+
+<h1>RIMT Infographic Data Package</h1>
+<p><strong>Purpose.</strong> This file is a structured data feed for visualisation tools (Napkin, Canva, Adobe Express, Visme, an LLM with image generation, etc.). It contains the headline pitch, hero numbers, before/after panels, application matrix, build path, and call-to-action that would form a single-page infographic aimed at <strong>decision makers, manufacturers, and potential R&amp;D sponsors</strong> — not a consumer-marketing piece.</p>
+<p><strong>Companion to:</strong>
+- Full whitepaper: <a href="../whitepaper/RIMT-whitepaper.md"><code>whitepaper/RIMT-whitepaper.md</code></a>
+- Detailed comparison: <a href="RIMT-vs-conventional-comparison.md"><code>comparison/RIMT-vs-conventional-comparison.md</code></a></p>
+<p><strong>Author / originator:</strong> Gábor Szabó<br>
+<strong>Licence:</strong> CC BY-SA 4.0 — use freely, share back any derivatives.</p>
+<hr />
+<h2>1. Headline pitch (one sentence)</h2>
+<blockquote>
+<p>A solid-state marine engine that turns the entire wetted hull into a silent, distributed propulsor — no spinning propeller, no combustion, no fuel onboard.</p>
+</blockquote>
+<p><strong>Sub-line (one line):</strong> First-order analytical concept, TRL 2; published as a defensive disclosure to keep the technology open for any builder to validate.</p>
+<h2>2. Hero numbers (five tiles)</h2>
+<p>Use as five large numerical tiles in a horizontal strip at the top of the infographic.</p>
+<table>
+<thead>
+<tr>
+<th>Number</th>
+<th>Label</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>83 %</strong></td>
+<td>First-order modelled wall-plug efficiency (electrical input to useful thrust)</td>
+<td>RIMT whitepaper §4.4 (Model 3, optimised)</td>
+</tr>
+<tr>
+<td><strong>0</strong></td>
+<td>Moving parts in the propulsion path</td>
+<td>RIMT design (whitepaper §3)</td>
+</tr>
+<tr>
+<td><strong>&#36;30 B / yr</strong></td>
+<td>Annual cost of propeller biofouling to global shipping today — would be largely eliminated if RIMT's antifouling co-benefit holds</td>
+<td>Comparison ref [10]</td>
+</tr>
+<tr>
+<td><strong>~ 3 %</strong></td>
+<td>Share of global CO₂ from international shipping today, with IMO target of net-zero by ≈ 2050</td>
+<td>Comparison refs [1, 3]</td>
+</tr>
+<tr>
+<td><strong>2026</strong></td>
+<td>Year MEPC 85 decides whether IMO underwater-noise rules become mandatory</td>
+<td>Comparison refs [5, 6]</td>
+</tr>
+</tbody>
+</table>
+<h2>3. Before / After (four-panel comparison)</h2>
+<p>Render as four side-by-side icon pairs (conventional ← → RIMT).</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Conventional today</th>
+<th>RIMT if validated</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Direct emissions</strong></td>
+<td>CO₂, NOₓ, SOₓ, PM, oil-spill risk</td>
+<td>Zero direct</td>
+</tr>
+<tr>
+<td><strong>Underwater noise</strong></td>
+<td>180+ dB monopole source, dominated by propeller cavitation</td>
+<td>Hull-flow noise of the displacement hull alone</td>
+</tr>
+<tr>
+<td><strong>Moving parts</strong></td>
+<td>Hundreds to thousands per drivetrain</td>
+<td>Zero in the propulsion path</td>
+</tr>
+<tr>
+<td><strong>Propeller strikes on marine life</strong></td>
+<td>Tens to hundreds of large cetaceans killed annually in shipping lanes; recreational injuries to swimmers and pinnipeds</td>
+<td>Eliminated — no external rotating element</td>
+</tr>
+</tbody>
+</table>
+<h2>4. Where it shines (five application tiles)</h2>
+<p>Five cards, each one hero application drawn from the broader Application Landscape in the comparison document.</p>
+<ol>
+<li><strong>Stealth UUVs (defence).</strong> Silent, low-signature, no cavitation. The likely first hardware validation venue — small craft, accepted risk envelope, customer willing to pay technology-development premiums.</li>
+<li><strong>Whale-watching and cetacean research.</strong> Removes the operator's own contribution to the disturbance regulations are tightening to limit.</li>
+<li><strong>Inland-waterway and canal boats.</strong> Zero emissions and low noise in urban-canal contexts where diesel is increasingly restricted.</li>
+<li><strong>Harbour tugs and pilot boats.</strong> High duty cycle amortises CAPEX premium fastest; ports already mandating shore-power and zero local emissions.</li>
+<li><strong>RC boats and educational kits.</strong> Lowest-stakes first consumer demonstration of the principle; visible electrokinetic effect makes a strong STEM teaching tool.</li>
+</ol>
+<p><em>(Full application landscape with six sectors and ~30 entries lives in the comparison document.)</em></p>
+<h2>5. Build path (call-to-action panel)</h2>
+<p>A small staircase chart of milestones, illustrating that early validation is <strong>cheap on the scale of marine R&amp;D</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Milestone</th>
+<th>Indicative scale</th>
+<th>Indicative cumulative spend</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bench-top ionic plate (10 × 10 cm tile)</td>
+<td>University / hobbyist lab</td>
+<td>&#36;50 k</td>
+</tr>
+<tr>
+<td>Torsion-balance thrust measurement; first η, drag, fouling data</td>
+<td>1-person team × 6 months</td>
+<td>&#36;0.2 M</td>
+</tr>
+<tr>
+<td>1 m² tile in a saltwater tank</td>
+<td>Small applied-research project</td>
+<td>&#36;1 M</td>
+</tr>
+<tr>
+<td>3 m sub-scale vessel demonstrator</td>
+<td>Research consortium</td>
+<td>&#36;5 M</td>
+</tr>
+<tr>
+<td>10 m in-water vessel demonstrator</td>
+<td>Industry / national programme</td>
+<td>&#36;20 M</td>
+</tr>
+</tbody>
+</table>
+<p>All figures are order-of-magnitude planning estimates, not committed costs. Detail in the comparison document's Figure 5 specification.</p>
+<h2>6. The honest caveat (one paragraph, bottom)</h2>
+<blockquote>
+<p>RIMT is a <strong>first-order analytical concept at TRL 2</strong>. No laboratory prototype has been built. The figures shown are <em>modelled upper bounds under stated idealisations</em> — not measurements. Realistic performance must be set by experiment. The work is published under <strong>CC BY-SA 4.0</strong> as a defensive disclosure: any individual, university, company, or research consortium is free to build, modify, and benefit from the technology, with the only obligation being attribution and same-licence sharing of derivative work.</p>
+</blockquote>
+<h2>7. Where to find more</h2>
+<ul>
+<li><strong>DOI:</strong> [to be assigned upon Zenodo upload — placeholder <code>10.5281/zenodo.XXXXXXX</code>]</li>
+<li><strong>GitHub repository:</strong> Project Leviathan — RIMT</li>
+<li><strong>Whitepaper:</strong> <a href="../whitepaper/RIMT-whitepaper.md"><code>whitepaper/RIMT-whitepaper.md</code></a></li>
+<li><strong>Detailed comparison:</strong> <a href="RIMT-vs-conventional-comparison.md"><code>comparison/RIMT-vs-conventional-comparison.md</code></a></li>
+<li><strong>Open-source simulation (42 unit tests passing):</strong> <a href="../simulations/rimt_simulation.py"><code>simulations/rimt_simulation.py</code></a></li>
+</ul>
+<hr />
+<h2>8. Suggested layout for the rendering tool</h2>
+<p>A single A3 (or 2× US-letter) portrait page. Top to bottom:</p>
+<table>
+<thead>
+<tr>
+<th>Band</th>
+<th style="text-align: center;">Height</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Header</td>
+<td style="text-align: center;">10 %</td>
+<td>Title: "RIMT — A Silent Solid-State Marine Engine." Sub-title: the one-sentence headline pitch (Section 1).</td>
+</tr>
+<tr>
+<td>Hero numbers</td>
+<td style="text-align: center;">15 %</td>
+<td>Five large numerical tiles from Section 2 in a horizontal strip.</td>
+</tr>
+<tr>
+<td>Before / After</td>
+<td style="text-align: center;">20 %</td>
+<td>Four pairs of side-by-side icons + short labels from Section 3.</td>
+</tr>
+<tr>
+<td>Where it shines</td>
+<td style="text-align: center;">25 %</td>
+<td>Five vertical cards from Section 4, each with a small representative icon.</td>
+</tr>
+<tr>
+<td>Build path</td>
+<td style="text-align: center;">15 %</td>
+<td>Horizontal staircase / timeline of the milestones in Section 5.</td>
+</tr>
+<tr>
+<td>Caveat band</td>
+<td style="text-align: center;">5 %</td>
+<td>The paragraph from Section 6 in muted but clearly legible type.</td>
+</tr>
+<tr>
+<td>Footer</td>
+<td style="text-align: center;">10 %</td>
+<td>DOI badge, GitHub link, CC BY-SA 4.0 badge, attribution to Gábor Szabó.</td>
+</tr>
+</tbody>
+</table>
+<h3>Visual style direction</h3>
+<ul>
+<li><strong>Palette.</strong> Deep navy backgrounds; lighter teal for RIMT "modelled" data; light grey for conventional "today" data; a single warm accent (amber) for hero numbers and the call-to-action panel. The point is decision-maker clarity, not boat-show flash.</li>
+<li><strong>Typography.</strong> Sans-serif (Inter, IBM Plex Sans, or similar) for numerical tiles; serif optional for the headline pitch and caveat paragraph for readability.</li>
+<li><strong>Iconography.</strong> Geometric, flat, monochrome within each panel; avoid skeuomorphic boat/propeller clip-art.</li>
+<li><strong>Tone.</strong> Factual throughout. The cumulative effect should be: <em>"this would be worth a bench-test grant,"</em> not <em>"buy this now."</em> Resist marketing-language temptation; the numbers do the work.</li>
+</ul>
+<hr />
+<h2>9. Optional supporting visuals (if a multi-page deck rather than a single sheet)</h2>
+<p>If the audience wants a 3–4 page slide deck instead of a one-sheet, include also:</p>
+<ol>
+<li><strong>Side-by-side energy-conversion chain</strong> (Figure 1 from the comparison document's Appendix B).</li>
+<li><strong>20-axis radar chart of the scorecard</strong> (Figure 2 from the comparison document's Appendix B).</li>
+<li><strong>CO₂ reduction sensitivity chart</strong> (Figure 4 from the comparison document's Appendix B).</li>
+<li><strong>Underwater acoustic-signature comparison curve</strong> (Figure 6 from the comparison document's Appendix B).</li>
+</ol>
+<p>These are the highest-value supporting graphics if more than one page is on the table.</p>
+<hr />
+<h2>10. Canonical machine-readable data (for <code>build_infographic.py</code>)</h2>
+<p>The fenced <code>json</code> block below is the <strong>single source of truth</strong> consumed by <code>build_infographic.py</code> to render the interactive HTML at <code>RIMT-infographic.html</code>. Prose sections 1–9 above are for human readers; the JSON block is for the renderer.</p>
+<p>Every numerical claim carries a <code>source</code> field pointing at its canonical location (whitepaper section, comparison-document section, or external reference number). If a source value in the WP or the comparison document changes, the corresponding field here must be updated in lockstep — see the <code>project-rimt-data-sync-registry</code> memory for the full cross-document data invariant list.</p>
+<pre><code class="language-json">{
+  &quot;schema_version&quot;: &quot;1.0&quot;,
+  &quot;doc_meta&quot;: {
+    &quot;title&quot;: &quot;RIMT — A Silent Solid-State Marine Engine&quot;,
+    &quot;headline&quot;: &quot;A solid-state marine engine that turns the entire wetted hull into a silent, distributed propulsor — no spinning propeller, no combustion, no fuel onboard.&quot;,
+    &quot;subtitle&quot;: &quot;First-order analytical concept, TRL 2. Published as a defensive disclosure under CC BY-SA 4.0 so any builder can validate it.&quot;,
+    &quot;author&quot;: &quot;Gábor Szabó&quot;,
+    &quot;license&quot;: &quot;CC BY-SA 4.0 International&quot;,
+    &quot;doi_placeholder&quot;: &quot;10.5281/zenodo.XXXXXXX&quot;,
+    &quot;source&quot;: &quot;WP §1, Comparison Executive Summary&quot;
+  },
+  &quot;hero_numbers&quot;: [
+    {
+      &quot;value&quot;: 83,
+      &quot;counter_from&quot;: 0,
+      &quot;unit_suffix&quot;: &quot; %&quot;,
+      &quot;label&quot;: &quot;First-order modelled wall-plug efficiency (electrical input to useful thrust)&quot;,
+      &quot;source&quot;: &quot;WP §4.4 (Model 3, optimised)&quot;
+    },
+    {
+      &quot;value&quot;: 0,
+      &quot;counter_from&quot;: 0,
+      &quot;unit_suffix&quot;: &quot;&quot;,
+      &quot;label&quot;: &quot;Moving parts in the propulsion path&quot;,
+      &quot;source&quot;: &quot;WP §3&quot;
+    },
+    {
+      &quot;value&quot;: 30,
+      &quot;counter_from&quot;: 0,
+      &quot;unit_prefix&quot;: &quot;$&quot;,
+      &quot;unit_suffix&quot;: &quot;B / yr&quot;,
+      &quot;label&quot;: &quot;Annual biofouling cost to global shipping today — eliminated if RIMT's antifouling co-benefit holds&quot;,
+      &quot;source&quot;: &quot;Comparison ref [10]&quot;
+    },
+    {
+      &quot;value&quot;: 3,
+      &quot;display_override&quot;: &quot;~3&quot;,
+      &quot;unit_suffix&quot;: &quot; %&quot;,
+      &quot;label&quot;: &quot;Share of global CO₂ from international shipping today (IMO target: net-zero by ≈ 2050)&quot;,
+      &quot;source&quot;: &quot;Comparison refs [1, 3]&quot;
+    },
+    {
+      &quot;value&quot;: 2026,
+      &quot;counter_from&quot;: 2020,
+      &quot;unit_suffix&quot;: &quot;&quot;,
+      &quot;label&quot;: &quot;Year MEPC 85 decides whether IMO underwater-noise rules become mandatory&quot;,
+      &quot;source&quot;: &quot;Comparison refs [5, 6]&quot;
+    }
+  ],
+  &quot;before_after&quot;: [
+    {
+      &quot;aspect&quot;: &quot;Direct emissions&quot;,
+      &quot;conventional&quot;: &quot;CO₂, NOₓ, SOₓ, PM, oil-spill risk&quot;,
+      &quot;rimt&quot;: &quot;Zero direct&quot;,
+      &quot;source&quot;: &quot;Comparison §6&quot;
+    },
+    {
+      &quot;aspect&quot;: &quot;Underwater noise&quot;,
+      &quot;conventional&quot;: &quot;180+ dB monopole source, dominated by propeller cavitation&quot;,
+      &quot;rimt&quot;: &quot;Hull-flow noise of the displacement hull alone&quot;,
+      &quot;source&quot;: &quot;Comparison §6 + refs [7, 8]&quot;
+    },
+    {
+      &quot;aspect&quot;: &quot;Moving parts&quot;,
+      &quot;conventional&quot;: &quot;Hundreds to thousands per drivetrain&quot;,
+      &quot;rimt&quot;: &quot;Zero in the propulsion path&quot;,
+      &quot;source&quot;: &quot;Comparison §5&quot;
+    },
+    {
+      &quot;aspect&quot;: &quot;Strikes on marine life&quot;,
+      &quot;conventional&quot;: &quot;Tens to hundreds of large cetaceans killed annually in shipping lanes; recreational injuries to swimmers and pinnipeds&quot;,
+      &quot;rimt&quot;: &quot;Eliminated — no external rotating element&quot;,
+      &quot;source&quot;: &quot;Comparison §6&quot;
+    }
+  ],
+  &quot;where_it_shines&quot;: [
+    {
+      &quot;title&quot;: &quot;Stealth UUVs (defence)&quot;,
+      &quot;summary&quot;: &quot;Silent, low-signature, no cavitation.&quot;,
+      &quot;detail&quot;: &quot;Small craft, accepted risk envelope, customer willing to pay technology-development premiums. The likely first hardware validation venue — closest prior art (Hansen et al. 2020) already demonstrated electro-osmotic vehicle propulsion at UUV scale.&quot;,
+      &quot;source&quot;: &quot;Comparison §13 + Application Landscape §Defence&quot;
+    },
+    {
+      &quot;title&quot;: &quot;Whale-watching and cetacean research&quot;,
+      &quot;summary&quot;: &quot;Removes the operator's contribution to disturbance.&quot;,
+      &quot;detail&quot;: &quot;Acoustic stealth removes the operator's own contribution to the disturbance regulations are tightening to limit. For research vessels, also removes the dominant source of self-induced acoustic interference in passive-sonar studies.&quot;,
+      &quot;source&quot;: &quot;Application Landscape §Marine science&quot;
+    },
+    {
+      &quot;title&quot;: &quot;Inland-waterway and canal boats&quot;,
+      &quot;summary&quot;: &quot;Zero emissions and low noise in urban canals.&quot;,
+      &quot;detail&quot;: &quot;Diesel is increasingly restricted in urban-canal contexts where the boat moves slowly through residential areas. Shallow draft is a structural advantage on inland waterways. Small fleets, regional regulation — a plausible near-term entry market.&quot;,
+      &quot;source&quot;: &quot;Application Landscape §Commercial&quot;
+    },
+    {
+      &quot;title&quot;: &quot;Harbour tugs and pilot boats&quot;,
+      &quot;summary&quot;: &quot;High duty cycle amortises CAPEX premium fastest.&quot;,
+      &quot;detail&quot;: &quot;Ports already mandating shore-power and zero local emissions; high utilisation (4 000 + hours/year) means the OPEX advantage compounds quickly. The structural advantage of the no-moving-parts maintenance profile is felt most strongly here.&quot;,
+      &quot;source&quot;: &quot;Application Landscape §Commercial + Where RIMT could win&quot;
+    },
+    {
+      &quot;title&quot;: &quot;RC boats and educational kits&quot;,
+      &quot;summary&quot;: &quot;Lowest-stakes consumer demonstration.&quot;,
+      &quot;detail&quot;: &quot;No propeller-blade injury risk to children, no fuel, silent operation. The educational appeal of a visible electrokinetic effect is intrinsic — currently a microfluidics-lab exercise, a tabletop ionic boat makes it tangible.&quot;,
+      &quot;source&quot;: &quot;Application Landscape §Hobby&quot;
+    }
+  ],
+  &quot;build_path&quot;: [
+    {&quot;year&quot;: 0, &quot;milestone&quot;: &quot;Bench-top ionic plate (10 × 10 cm tile)&quot;, &quot;scale&quot;: &quot;University / hobbyist lab&quot;, &quot;spend_usd_m&quot;: 0.05},
+    {&quot;year&quot;: 1, &quot;milestone&quot;: &quot;Torsion-balance thrust measurement; first η, drag, fouling data&quot;, &quot;scale&quot;: &quot;1-person team × 6 months&quot;, &quot;spend_usd_m&quot;: 0.2},
+    {&quot;year&quot;: 2, &quot;milestone&quot;: &quot;1 m² tile in a saltwater tank&quot;, &quot;scale&quot;: &quot;Small applied-research project&quot;, &quot;spend_usd_m&quot;: 1},
+    {&quot;year&quot;: 3, &quot;milestone&quot;: &quot;Sub-scale vessel demonstrator (~ 3 m)&quot;, &quot;scale&quot;: &quot;Research consortium&quot;, &quot;spend_usd_m&quot;: 5},
+    {&quot;year&quot;: 5, &quot;milestone&quot;: &quot;In-water vessel demonstrator (~ 10 m)&quot;, &quot;scale&quot;: &quot;Industry / national programme&quot;, &quot;spend_usd_m&quot;: 20},
+    {&quot;year&quot;: 8, &quot;milestone&quot;: &quot;Class-society pilot (small commercial craft)&quot;, &quot;scale&quot;: &quot;National programme / consortium&quot;, &quot;spend_usd_m&quot;: 80}
+  ],
+  &quot;caveat&quot;: &quot;RIMT is a first-order analytical concept at TRL 2. No laboratory prototype has been built. The figures shown are modelled upper bounds under stated idealisations — not measurements. Realistic performance must be set by experiment. Published under CC BY-SA 4.0 as a defensive disclosure: any individual, university, company, or research consortium is free to build, modify, and benefit from the technology, with the only obligation being attribution and same-licence sharing of derivative work.&quot;,
+  &quot;figures&quot;: {
+    &quot;energy_chain&quot;: {
+      &quot;title&quot;: &quot;Energy conversion chain: conventional vs. RIMT&quot;,
+      &quot;caption&quot;: &quot;Same input (1 unit of primary energy) tracked through each stack. Each stage shows the percentage retained after losses; the final value is useful thrust delivered.&quot;,
+      &quot;conventional&quot;: {
+        &quot;stages&quot;: [
+          {&quot;label&quot;: &quot;Fuel chemical energy&quot;, &quot;retained&quot;: 100},
+          {&quot;label&quot;: &quot;Combustion (~50 % heat loss)&quot;, &quot;retained&quot;: 50},
+          {&quot;label&quot;: &quot;Transmission + shaft (~95 %)&quot;, &quot;retained&quot;: 47.5},
+          {&quot;label&quot;: &quot;Propeller open-water (~70 %)&quot;, &quot;retained&quot;: 33}
+        ]
+      },
+      &quot;rimt&quot;: {
+        &quot;stages&quot;: [
+          {&quot;label&quot;: &quot;Battery electric energy&quot;, &quot;retained&quot;: 100},
+          {&quot;label&quot;: &quot;DC bus (~99 %)&quot;, &quot;retained&quot;: 99},
+          {&quot;label&quot;: &quot;GaN PEM AC synthesis (~97 %)&quot;, &quot;retained&quot;: 96},
+          {&quot;label&quot;: &quot;EDL coupling + ohmic + viscous&quot;, &quot;retained&quot;: 83}
+        ]
+      },
+      &quot;source&quot;: &quot;WP §4.4, Comparison §1 + §2, Comparison Appendix B Figure 1&quot;
+    },
+    &quot;scorecard_radar&quot;: {
+      &quot;title&quot;: &quot;Quantitative scorecard — RIMT (modelled) vs. conventional&quot;,
+      &quot;caption&quot;: &quot;20 axes scored on the qualitative −−/−/0/+/++ rubric (1–5). RIMT scores reflect modelled design targets, not measurements.&quot;,
+      &quot;axes&quot;: [
+        {&quot;name&quot;: &quot;Physics novelty&quot;, &quot;conventional&quot;: 3, &quot;rimt&quot;: 5},
+        {&quot;name&quot;: &quot;Efficiency&quot;, &quot;conventional&quot;: 4, &quot;rimt&quot;: 5},
+        {&quot;name&quot;: &quot;OPEX&quot;, &quot;conventional&quot;: 2, &quot;rimt&quot;: 4},
+        {&quot;name&quot;: &quot;CAPEX&quot;, &quot;conventional&quot;: 4, &quot;rimt&quot;: 2},
+        {&quot;name&quot;: &quot;Mfg maturity&quot;, &quot;conventional&quot;: 5, &quot;rimt&quot;: 2},
+        {&quot;name&quot;: &quot;Mech. complexity&quot;, &quot;conventional&quot;: 2, &quot;rimt&quot;: 5},
+        {&quot;name&quot;: &quot;SW complexity&quot;, &quot;conventional&quot;: 3, &quot;rimt&quot;: 2},
+        {&quot;name&quot;: &quot;Emissions&quot;, &quot;conventional&quot;: 1, &quot;rimt&quot;: 5},
+        {&quot;name&quot;: &quot;Logistics: fuel&quot;, &quot;conventional&quot;: 2, &quot;rimt&quot;: 4},
+        {&quot;name&quot;: &quot;Logistics: range&quot;, &quot;conventional&quot;: 5, &quot;rimt&quot;: 2},
+        {&quot;name&quot;: &quot;Usability&quot;, &quot;conventional&quot;: 3, &quot;rimt&quot;: 4},
+        {&quot;name&quot;: &quot;Safety: fire/strike&quot;, &quot;conventional&quot;: 2, &quot;rimt&quot;: 5},
+        {&quot;name&quot;: &quot;Safety: electrical&quot;, &quot;conventional&quot;: 4, &quot;rimt&quot;: 3},
+        {&quot;name&quot;: &quot;Maintenance&quot;, &quot;conventional&quot;: 2, &quot;rimt&quot;: 4},
+        {&quot;name&quot;: &quot;Regulatory&quot;, &quot;conventional&quot;: 2, &quot;rimt&quot;: 4},
+        {&quot;name&quot;: &quot;Shallow water&quot;, &quot;conventional&quot;: 3, &quot;rimt&quot;: 5},
+        {&quot;name&quot;: &quot;Freshwater&quot;, &quot;conventional&quot;: 4, &quot;rimt&quot;: 2},
+        {&quot;name&quot;: &quot;Scalability&quot;, &quot;conventional&quot;: 4, &quot;rimt&quot;: 4},
+        {&quot;name&quot;: &quot;Market position&quot;, &quot;conventional&quot;: 5, &quot;rimt&quot;: 2},
+        {&quot;name&quot;: &quot;TRL&quot;, &quot;conventional&quot;: 5, &quot;rimt&quot;: 1}
+      ],
+      &quot;source&quot;: &quot;Comparison Quantitative Scorecard&quot;
+    },
+    &quot;application_quadrant&quot;: {
+      &quot;title&quot;: &quot;Application landscape — natural early adopters&quot;,
+      &quot;caption&quot;: &quot;Upper-right cluster = high RIMT value × high customer risk tolerance. Lower-left = harder near-term targets.&quot;,
+      &quot;axis_x_label&quot;: &quot;Value of RIMT's unique properties (acoustic stealth + zero-draft + zero-emission)&quot;,
+      &quot;axis_y_label&quot;: &quot;Risk tolerance of typical early customer&quot;,
+      &quot;points&quot;: [
+        {&quot;name&quot;: &quot;RC boat&quot;, &quot;x&quot;: 4, &quot;y&quot;: 10, &quot;category&quot;: &quot;hobby&quot;},
+        {&quot;name&quot;: &quot;Pool cleaner&quot;, &quot;x&quot;: 5, &quot;y&quot;: 9, &quot;category&quot;: &quot;hobby&quot;},
+        {&quot;name&quot;: &quot;Aquarium pump&quot;, &quot;x&quot;: 4, &quot;y&quot;: 9, &quot;category&quot;: &quot;hobby&quot;},
+        {&quot;name&quot;: &quot;STEM education kit&quot;, &quot;x&quot;: 3, &quot;y&quot;: 9, &quot;category&quot;: &quot;hobby&quot;},
+        {&quot;name&quot;: &quot;Sailing-yacht auxiliary&quot;, &quot;x&quot;: 6, &quot;y&quot;: 8, &quot;category&quot;: &quot;recreational&quot;},
+        {&quot;name&quot;: &quot;Marine-reserve ranger boat&quot;, &quot;x&quot;: 8, &quot;y&quot;: 7, &quot;category&quot;: &quot;conservation&quot;},
+        {&quot;name&quot;: &quot;Whale-watching tour boat&quot;, &quot;x&quot;: 9, &quot;y&quot;: 6, &quot;category&quot;: &quot;conservation&quot;},
+        {&quot;name&quot;: &quot;Inland canal boat&quot;, &quot;x&quot;: 7, &quot;y&quot;: 6, &quot;category&quot;: &quot;commercial&quot;},
+        {&quot;name&quot;: &quot;Small naval UUV&quot;, &quot;x&quot;: 10, &quot;y&quot;: 5, &quot;category&quot;: &quot;defence&quot;},
+        {&quot;name&quot;: &quot;Cetacean research vessel&quot;, &quot;x&quot;: 9, &quot;y&quot;: 4, &quot;category&quot;: &quot;conservation&quot;},
+        {&quot;name&quot;: &quot;Harbour tug&quot;, &quot;x&quot;: 7, &quot;y&quot;: 3, &quot;category&quot;: &quot;commercial&quot;},
+        {&quot;name&quot;: &quot;Urban passenger ferry&quot;, &quot;x&quot;: 8, &quot;y&quot;: 3, &quot;category&quot;: &quot;commercial&quot;},
+        {&quot;name&quot;: &quot;Container ship&quot;, &quot;x&quot;: 4, &quot;y&quot;: 1, &quot;category&quot;: &quot;commercial&quot;},
+        {&quot;name&quot;: &quot;Attack submarine&quot;, &quot;x&quot;: 10, &quot;y&quot;: 1, &quot;category&quot;: &quot;defence&quot;}
+      ],
+      &quot;source&quot;: &quot;Comparison Appendix B Figure 3&quot;
+    },
+    &quot;co2_sensitivity&quot;: {
+      &quot;title&quot;: &quot;Shipping CO₂ — adoption sensitivity (illustrative)&quot;,
+      &quot;caption&quot;: &quot;Hypothetical RIMT-fleet adoption against the IMO net-zero trajectory. Adoption percentages are sensitivity-analysis stand-ins, not forecasts. RIMT share assumes pairing with renewable grid electricity.&quot;,
+      &quot;years&quot;: [2025, 2030, 2035, 2040, 2045, 2050],
+      &quot;baseline_gt_co2&quot;: [1.05, 1.05, 1.05, 1.05, 1.05, 1.05],
+      &quot;imo_target_gt_co2&quot;: [1.05, 0.84, 0.55, 0.25, 0.10, 0],
+      &quot;rimt_share_pct&quot;: [0, 0, 5, 20, 35, 50],
+      &quot;source&quot;: &quot;Comparison refs [1, 3] + Comparison Appendix B Figure 4&quot;
+    },
+    &quot;trl_pathway&quot;: {
+      &quot;title&quot;: &quot;TRL pathway — cost to validate&quot;,
+      &quot;caption&quot;: &quot;Order-of-magnitude planning estimates. Each milestone embeds an experimental work package listed in WP §6.&quot;,
+      &quot;milestones&quot;: [
+        {&quot;year&quot;: 0, &quot;milestone&quot;: &quot;Bench-top ionic plate&quot;, &quot;spend_usd_m&quot;: 0.05},
+        {&quot;year&quot;: 1, &quot;milestone&quot;: &quot;Torsion-balance thrust&quot;, &quot;spend_usd_m&quot;: 0.2},
+        {&quot;year&quot;: 2, &quot;milestone&quot;: &quot;1 m² tile, tank&quot;, &quot;spend_usd_m&quot;: 1},
+        {&quot;year&quot;: 3, &quot;milestone&quot;: &quot;3 m demonstrator&quot;, &quot;spend_usd_m&quot;: 5},
+        {&quot;year&quot;: 5, &quot;milestone&quot;: &quot;10 m demonstrator&quot;, &quot;spend_usd_m&quot;: 20},
+        {&quot;year&quot;: 8, &quot;milestone&quot;: &quot;Class-society pilot&quot;, &quot;spend_usd_m&quot;: 80}
+      ],
+      &quot;source&quot;: &quot;Comparison Appendix B Figure 5&quot;
+    },
+    &quot;acoustic_spectrum&quot;: {
+      &quot;title&quot;: &quot;Underwater acoustic signature comparison&quot;,
+      &quot;caption&quot;: &quot;Projected RIMT spectrum is derived from the source-elimination argument, not measurement. Container-ship curve is after [7, 8]. Whale-vocalisation bands shown for context.&quot;,
+      &quot;freq_hz&quot;: [10, 31, 100, 316, 1000, 3162, 10000, 31623, 100000],
+      &quot;container_ship_db&quot;: [180, 178, 170, 155, 140, 135, 132, 130, 130],
+      &quot;electric_small_vessel_db&quot;: [130, 128, 125, 120, 115, 112, 110, 108, 108],
+      &quot;rimt_projected_db&quot;: [110, 108, 105, 100, 95, 92, 90, 88, 88],
+      &quot;whale_bands&quot;: [
+        {&quot;name&quot;: &quot;Blue whale&quot;, &quot;min_hz&quot;: 10, &quot;max_hz&quot;: 40},
+        {&quot;name&quot;: &quot;Humpback&quot;, &quot;min_hz&quot;: 30, &quot;max_hz&quot;: 8000},
+        {&quot;name&quot;: &quot;Killer whale&quot;, &quot;min_hz&quot;: 500, &quot;max_hz&quot;: 40000},
+        {&quot;name&quot;: &quot;Sperm whale clicks&quot;, &quot;min_hz&quot;: 5000, &quot;max_hz&quot;: 25000}
+      ],
+      &quot;source&quot;: &quot;Comparison refs [7, 8] + Comparison Appendix B Figure 6&quot;
+    }
+  },
+  &quot;links&quot;: {
+    &quot;whitepaper&quot;: &quot;../whitepaper/RIMT-whitepaper.html&quot;,
+    &quot;comparison&quot;: &quot;RIMT-vs-conventional-comparison.html&quot;,
+    &quot;simulation&quot;: &quot;../simulations/rimt_simulation.py&quot;,
+    &quot;github&quot;: &quot;https://github.com/uchimata2/Project-Leviathan-RIMT&quot;,
+    &quot;doi&quot;: &quot;https://doi.org/10.5281/zenodo.XXXXXXX&quot;
+  }
+}
+</code></pre>
+<hr />
+<p><em>Generated as supporting material for the RIMT Technical Disclosure, CC BY-SA 4.0 · Project Leviathan · DOI: [to be assigned upon Zenodo upload]</em></p>
+
+</body>
+</html>

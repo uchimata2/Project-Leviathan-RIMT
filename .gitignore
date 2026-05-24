@@ -1,0 +1,8 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Export artefacts (HTML is intermediate; PDF is uploaded to Zenodo)
+whitepaper/RIMT-whitepaper.html
