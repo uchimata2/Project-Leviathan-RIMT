@@ -1,1 +1,9 @@
+# Runtime dependency for rimt_simulation.py
 numpy>=1.21
+
+# Test dependency for test_rimt_simulation.py (pytest is required by the
+# README "Running the Simulations" block and by source/validate_all.py).
+pytest>=7
+
+# Tested on: Python 3.12, numpy 2.x, pytest 9.x, Windows 11.
+# Headline numerical results are deterministic — no random seeds.

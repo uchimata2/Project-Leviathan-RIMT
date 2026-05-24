@@ -167,8 +167,8 @@
 <h2>A Side-by-Side Comparative Analysis</h2>
 <p><strong>Companion document to:</strong> <em>Solid-State Marine Propulsion via Resonant Ionic Momentum Transfer (RIMT) — Technical Disclosure &amp; Whitepaper</em><br>
 <strong>Author:</strong> Gábor Szabó<br>
-<strong>Date:</strong> 2026-05-23<br>
-<strong>Version:</strong> 1.0<br>
+<strong>Date:</strong> 2026-05-24<br>
+<strong>Version:</strong> 1.0.2<br>
 <strong>License:</strong> CC BY-SA 4.0 International</p>
 <hr />
 <h2>Reader's note</h2>
@@ -200,7 +200,7 @@
 <tr>
 <td>Thrust generation mechanism</td>
 <td>Point-source: a rotating screw accelerates a column of water aft, generating Newtonian reaction force. Local cavitation and tip vortices set the practical ceiling.</td>
-<td>Distributed: every cm² of hull surface acts as a momentum source. No vortex shedding, no cavitation, no minimum local flow velocity required (WP §1.3, §7).</td>
+<td>Distributed: every cm² of hull surface acts as a momentum source. No vortex shedding, no cavitation, no minimum local flow velocity required (WP §1.3, §7). Cooling design must accommodate stationary-vessel operation, since the only thermal sink for the GaN PEMs at zero vessel speed is conductive heat flow to still water through the hull.</td>
 </tr>
 <tr>
 <td>Working-fluid interaction</td>
@@ -252,7 +252,7 @@
 <tr>
 <td>Top speed</td>
 <td>Routine 12–25 knots commercial; planing recreational craft 30–60 knots; high-performance jets &gt;60 knots.</td>
-<td>Not bounded by the actuator (wave propagation v_w ≈ 60 m/s ≈ 117 knots, WP §3.3); top speed is set by hull form drag and onboard electrical power, not the RIMT mechanism.</td>
+<td>The wave-pattern propagation speed v_w = 60 m/s ≈ 117 knots (WP §3.3) substantially exceeds any conceivable vessel speed, so the actuator is not the speed-limiting element. Vessel top speed is set by hull-form drag and onboard electrical power, not the RIMT mechanism. (v_w is a wave kinematic, not a vessel-speed claim.)</td>
 </tr>
 <tr>
 <td>Low-speed maneuverability</td>
@@ -298,7 +298,7 @@
 </tr>
 <tr>
 <td>OPEX (annual energy)</td>
-<td>Marine diesel fuel cost dominates; biofouling adds up to 40 % overhead. Mid-range 20 m yacht with 200 hrs/yr usage: typical &#36;7k–&#36;15k fuel + &#36;5k–&#36;15k servicing (order of magnitude; varies widely with cruise speed and bunker price).</td>
+<td>Marine diesel fuel cost dominates; biofouling adds up to 40 % overhead. Mid-range 20 m yacht at a representative 200 hrs/yr usage (typical for owner-operated mid-latitude recreational yachts; ranges from ~100 hrs/yr in cold-climate seasonal use to ~300 hrs/yr in chartered or year-round operation): typical &#36;7k–&#36;15k fuel + &#36;5k–&#36;15k servicing (rough order of magnitude; varies widely with cruise speed and bunker price).</td>
 <td>Electrical energy at modelled 83 % wall-plug efficiency; battery-electric or hybrid energy source. Annual energy cost depends on local electricity tariff and usage profile; at &#36;0.20/kWh and the same 200 hrs/yr usage, on the order of &#36;1k–&#36;4k for the same hull. The OPEX gap widens with carbon pricing and bunker-fuel surcharges.</td>
 </tr>
 <tr>
@@ -378,7 +378,7 @@
 <tr>
 <td>Number of moving parts</td>
 <td>Hundreds to thousands per drivetrain (pistons, valves, rings, bearings, gears, shafts, cooling pumps, fuel pumps, injectors, governor, prop blades, shaft seals).</td>
-<td>Zero in the propulsion path. Cooling fans on GaN PEMs are the only rotating elements, and they can be solid-state too (Peltier) if needed.</td>
+<td>Zero in the propulsion path (the vessel as a whole still has the usual non-propulsion mechanical systems — bilge pumps, steering linkages, hatches, HVAC fans). Cooling fans on GaN PEMs are the only rotating elements within the propulsion chain, and they can be replaced by solid-state Peltier cooling if needed.</td>
 </tr>
 <tr>
 <td>Distinct subsystems</td>
@@ -439,12 +439,12 @@
 </tr>
 <tr>
 <td>Underwater noise</td>
-<td>Container ship monopole source level ~183–188 dB re 1 µPa @ 1 m, predominantly below 40 Hz from prop cavitation + machinery vibration [7, 8]. IMO Experience Building Phase ends MEPC 85 in 2026; mandatory measures on the table after that [5, 6].</td>
+<td>Container ship monopole source level ~180 dB re 1 µPa @ 1 m (with peak measurements in the 180–188 dB range across the cited studies), predominantly below 40 Hz from prop cavitation + machinery vibration [7, 8]. IMO Experience Building Phase ends MEPC 85 in 2026; mandatory measures on the table after that [5, 6].</td>
 <td>The two dominant acoustic sources of a conventional vessel — propeller cavitation and rotating-machinery vibration — are absent by construction. The 2 MHz drive carrier is electrical, not acoustic; in seawater (σ ≈ 5 S/m) the EM skin depth at 2 MHz is ~16 cm, so the field does not propagate beyond the immediate hull boundary. The dominant emitted signature reduces to residual hull-flow noise of the displacement hull itself.</td>
 </tr>
 <tr>
 <td>Cetacean and fish strike</td>
-<td>Direct propeller strike kills tens to hundreds of large cetaceans annually in shipping lanes; small recreational propeller strikes injure swimmers and pinnipeds.</td>
+<td>Direct propeller and hull strike contribute tens to hundreds of documented large-cetacean mortalities annually in shipping lanes globally (IWC ship-strike database; regional NOAA right-whale records). Small recreational propeller strikes injure swimmers and pinnipeds.</td>
 <td>No external rotating element; no propeller-strike mechanism. Strike risk reduces to the hull's own impact profile.</td>
 </tr>
 <tr>
@@ -748,7 +748,7 @@
 </tr>
 <tr>
 <td>Mid-range (10–20 m yacht, small ferry)</td>
-<td>The reference design point in the whitepaper.</td>
+<td>Conventional 10–20 m yachts use 50–200 hp diesel inboards or 60–300 hp outboards; small ferries use 200–800 kW diesel-electric drives. Well-served by existing OEMs across all sub-segments.</td>
 <td>The whitepaper's reference design point (30 m² hull, 1 500 N at 10 m/s; WP §4.4).</td>
 </tr>
 <tr>
@@ -833,7 +833,7 @@
 <tr>
 <td>TRL (NASA scale)</td>
 <td>9 (fielded systems).</td>
-<td>2 (analytical model only; experimental validation pending — WP §6).</td>
+<td>Between TRL 2 (concept formulated) and TRL 3 (analytical proof-of-concept) — the first-order computational models and 45-unit-test simulation suite arguably push the project toward TRL 3, but no physical experiment has been performed (WP §6). The project is reported as TRL 2 for conservative accounting.</td>
 </tr>
 <tr>
 <td>Operating history</td>
@@ -864,7 +864,49 @@
 </table>
 <hr />
 <h2>Quantitative scorecard</h2>
-<p>A normalised one-page view of the comparison. The rubric is qualitative (—, –, 0, +, ++) and is intentionally honest about RIMT's "design target" status: a "+" or "++" in the RIMT column means <em>if the first-order model is reproduced in hardware</em>, not <em>measured today</em>.</p>
+<p>A normalised one-page view of the comparison. The rubric is qualitative and is intentionally honest about RIMT's "design target" status: a "+" or "++" in the RIMT column means <em>if the first-order model is reproduced in hardware</em>, not <em>measured today</em>.</p>
+<p><strong>Rubric legend</strong> (ASCII equivalents in parentheses to avoid en/em-dash confusion):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Mark</th>
+<th style="text-align: center;">ASCII</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>++</code></td>
+<td style="text-align: center;"><code>++</code></td>
+<td>Strong advantage</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>+</code></td>
+<td style="text-align: center;"><code>+</code></td>
+<td>Advantage</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>0</code></td>
+<td style="text-align: center;"><code>0</code></td>
+<td>Neutral</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>–</code></td>
+<td style="text-align: center;"><code>-</code></td>
+<td>Disadvantage</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>– –</code></td>
+<td style="text-align: center;"><code>--</code></td>
+<td>Strong disadvantage</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>?</code></td>
+<td style="text-align: center;"><code>?</code></td>
+<td>Unresolved / unknown</td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -1071,7 +1113,7 @@
 </tr>
 <tr>
 <td>Whale-watching tour boats</td>
-<td>Acoustic stealth removes the operator's own contribution to the disturbance regulations are tightening to limit</td>
+<td>Acoustic stealth removes the operator's own contribution to the disturbance that regulations are tightening to limit</td>
 <td>Near-term</td>
 </tr>
 <tr>
@@ -1273,11 +1315,12 @@
 <p><strong>Regulatory inertia.</strong> Even if RIMT were qualified by a classification society tomorrow, the regulatory acceptance pathway through IMO, flag-state administrations, insurance underwriters, and port authorities is multi-year. Conventional propulsion is the legal default.</p>
 <hr />
 <h2>Caveats and reading instructions</h2>
-<p>This is a <em>strategic</em> comparison rather than an <em>engineering</em> comparison. Many sub-aspects above hide further technical depth. In particular, every RIMT cell that quotes a number (η = 83 %, Pe ≈ 65, 50 N/m², 5.3 V, 60 m/s wave speed) comes from a first-order analytical model implemented and unit-tested in the companion repository (<code>simulations/rimt_simulation.py</code>, 42 tests passing). They are <em>upper bounds</em> under stated idealisations; the whitepaper §6 enumerates the experimental work needed to set realistic lower bounds.</p>
+<p>This is a <em>strategic</em> comparison rather than an <em>engineering</em> comparison. Many sub-aspects above hide further technical depth. In particular, every RIMT cell that quotes a number (η = 83 %, Pe ≈ 65, 50 N/m², 5.3 V, 60 m/s wave speed) comes from a first-order analytical model implemented and unit-tested in the companion repository (<code>simulations/rimt_simulation.py</code>, 45 tests passing). They are <em>upper bounds</em> under stated idealisations; the whitepaper §6 enumerates the experimental work needed to set realistic lower bounds.</p>
 <p>Conventional-propulsion figures are drawn from textbook, regulatory, and trade-press sources cited in the bibliography. Where ranges are given (e.g., "55–77 % open-water propeller efficiency"), the spread reflects real differences across vessel class and operating point rather than measurement uncertainty.</p>
 <p>The quantitative scorecard's <code>+</code>/<code>++</code>/<code>–</code>/<code>– –</code> marks are deliberately qualitative. A reader who wants a single numerical decision criterion should compute their own weighted sum using the weights that reflect their own application: a small-vessel recreational user weights <code>9. Safety — fire/strike</code> and <code>12. shallow water</code> highly; a container-shipping firm weights <code>7. range</code> and <code>15. TRL</code> highly; a navy weights <code>6. noise</code> and <code>9. safety</code> highly. The scorecard's purpose is to expose the trade-off structure, not to declare a winner.</p>
 <hr />
 <h2>References</h2>
+<p><em>The references below cover only the conventional-propulsion side of the comparison. All <code>WP refs [n]</code> cross-references in the table body are inherited from the whitepaper bibliography (<a href="../whitepaper/RIMT-whitepaper.md"><code>whitepaper/RIMT-whitepaper.md</code></a>, refs 1–7 and the cited textbooks block); please consult the whitepaper directly for the full citation entries.</em></p>
 <ol>
 <li>Global Maritime Forum. <em>A guide to the IMO's Net-Zero Framework</em>. https://globalmaritimeforum.org/news/a-guide-to-the-imos-net-zero-framework/</li>
 <li>Depco Power Systems. <em>Marine Diesel Engine Costs: New, Used &amp; Rebuilt Guide</em>. https://www.depco.com/faq/how-much-does-a-marine-diesel-engine-cost/</li>
@@ -1302,7 +1345,7 @@
 <p>For full transparency about where the comparison has unavoidable epistemic asymmetry:</p>
 <ul>
 <li><strong>Conventional column</strong> — numbers are drawn from publicly available textbook, industry-report, and trade-press sources cited in the bibliography. Where ranges are given, they reflect the spread across vessel classes and operating points in the original sources, not measurement uncertainty.</li>
-<li><strong>RIMT column</strong> — every quantitative claim traces back to the whitepaper (<a href="../whitepaper/RIMT-whitepaper.md"><code>whitepaper/RIMT-whitepaper.md</code></a>) or its companion simulation (<a href="../simulations/rimt_simulation.py"><code>simulations/rimt_simulation.py</code></a>, 42 unit tests passing). These are <em>first-order analytical upper bounds under stated idealisations</em>, not measurements. The whitepaper §6 (Limitations and Future Work) is the canonical list of what remains experimentally open.</li>
+<li><strong>RIMT column</strong> — every quantitative claim traces back to the whitepaper (<a href="../whitepaper/RIMT-whitepaper.md"><code>whitepaper/RIMT-whitepaper.md</code></a>) or its companion simulation (<a href="../simulations/rimt_simulation.py"><code>simulations/rimt_simulation.py</code></a>, 45 unit tests passing). These are <em>first-order analytical upper bounds under stated idealisations</em>, not measurements. The whitepaper §6 (Limitations and Future Work) is the canonical list of what remains experimentally open.</li>
 </ul>
 <p>Readers comparing a row across both columns are therefore comparing <em>measured empirical practice</em> against <em>modelled design target</em>. Where a row's RIMT cell uses a word like "designed," "modelled," "target," or "if validated," the asymmetry is explicit. Where it does not, the asymmetry remains and should be understood from this appendix.</p>
 <hr />

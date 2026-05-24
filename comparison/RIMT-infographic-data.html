@@ -233,7 +233,7 @@
 <tr>
 <td><strong>Underwater noise</strong></td>
 <td>180+ dB monopole source, dominated by propeller cavitation</td>
-<td>Hull-flow noise of the displacement hull alone</td>
+<td>Hull-flow noise of the displacement hull; on-board genset noise unchanged if a hybrid powertrain is used</td>
 </tr>
 <tr>
 <td><strong>Moving parts</strong></td>
@@ -295,7 +295,7 @@
 </tr>
 </tbody>
 </table>
-<p>All figures are order-of-magnitude planning estimates, not committed costs. Detail in the comparison document's Figure 5 specification.</p>
+<p>All figures are order-of-magnitude planning estimates of programme R&amp;D spend (cumulative funding required to reach each TRL milestone), <strong>not</strong> per-vessel BOM at maturity. The per-vessel BOM at volume maturity is plausibility-estimated at $\mathcal{O}(10^5)$ USD per 20 m vessel (WP §6) — a fundamentally different unit and scale. Detail in the comparison document's Figure 5 specification.</p>
 <h2>6. The honest caveat (one paragraph, bottom)</h2>
 <blockquote>
 <p>RIMT is a <strong>first-order analytical concept at TRL 2</strong>. No laboratory prototype has been built. The figures shown are <em>modelled upper bounds under stated idealisations</em> — not measurements. Realistic performance must be set by experiment. The work is published under <strong>CC BY-SA 4.0</strong> as a defensive disclosure: any individual, university, company, or research consortium is free to build, modify, and benefit from the technology, with the only obligation being attribution and same-licence sharing of derivative work.</p>
@@ -306,7 +306,7 @@
 <li><strong>GitHub repository:</strong> <a href="https://github.com/uchimata2/Project-Leviathan-RIMT">uchimata2/Project-Leviathan-RIMT</a></li>
 <li><strong>Whitepaper:</strong> <a href="../whitepaper/RIMT-whitepaper.md"><code>whitepaper/RIMT-whitepaper.md</code></a></li>
 <li><strong>Detailed comparison:</strong> <a href="RIMT-vs-conventional-comparison.md"><code>comparison/RIMT-vs-conventional-comparison.md</code></a></li>
-<li><strong>Open-source simulation (42 unit tests passing):</strong> <a href="../simulations/rimt_simulation.py"><code>simulations/rimt_simulation.py</code></a></li>
+<li><strong>Open-source simulation (45 unit tests passing):</strong> <a href="../simulations/rimt_simulation.py"><code>simulations/rimt_simulation.py</code></a></li>
 </ul>
 <hr />
 <h2>8. Suggested layout for the rendering tool</h2>
@@ -386,7 +386,7 @@
     &quot;subtitle&quot;: &quot;First-order analytical concept, TRL 2. Published as a defensive disclosure under CC BY-SA 4.0 so any builder can validate it.&quot;,
     &quot;author&quot;: &quot;Gábor Szabó&quot;,
     &quot;license&quot;: &quot;CC BY-SA 4.0 International&quot;,
-    &quot;doi_placeholder&quot;: &quot;10.5281/zenodo.20361267&quot;,
+    &quot;doi_id&quot;: &quot;10.5281/zenodo.20361267&quot;,
     &quot;source&quot;: &quot;WP §1, Comparison Executive Summary&quot;
   },
   &quot;hero_numbers&quot;: [
@@ -437,7 +437,7 @@
     {
       &quot;aspect&quot;: &quot;Underwater noise&quot;,
       &quot;conventional&quot;: &quot;180+ dB monopole source, dominated by propeller cavitation&quot;,
-      &quot;rimt&quot;: &quot;Hull-flow noise of the displacement hull alone&quot;,
+      &quot;rimt&quot;: &quot;Hull-flow noise of the displacement hull; engineering noise of any on-board generator unchanged if a hybrid powertrain is used&quot;,
       &quot;source&quot;: &quot;Comparison §6 + refs [7, 8]&quot;
     },
     {
@@ -591,6 +591,7 @@
     &quot;acoustic_spectrum&quot;: {
       &quot;title&quot;: &quot;Underwater acoustic signature comparison&quot;,
       &quot;caption&quot;: &quot;Projected RIMT spectrum is derived from the source-elimination argument, not measurement. Container-ship curve is after [7, 8]. Whale-vocalisation bands shown for context.&quot;,
+      &quot;data_provenance&quot;: &quot;Container-ship curve: measured / synthesised from refs [7, 8]. Electric-small-vessel and rimt_projected curves: illustrative projections derived from the source-elimination argument (no on-board genset; no propeller cavitation; no rotating-machinery broadband peak) — not measured spectra. Re-validate experimentally before quoting.&quot;,
       &quot;freq_hz&quot;: [10, 31, 100, 316, 1000, 3162, 10000, 31623, 100000],
       &quot;container_ship_db&quot;: [180, 178, 170, 155, 140, 135, 132, 130, 130],
       &quot;electric_small_vessel_db&quot;: [130, 128, 125, 120, 115, 112, 110, 108, 108],
@@ -608,6 +609,7 @@
     &quot;whitepaper&quot;: &quot;../whitepaper/RIMT-whitepaper.html&quot;,
     &quot;comparison&quot;: &quot;RIMT-vs-conventional-comparison.html&quot;,
     &quot;simulation&quot;: &quot;../simulations/rimt_simulation.py&quot;,
+    &quot;simulation_github&quot;: &quot;https://github.com/uchimata2/Project-Leviathan-RIMT/blob/main/simulations/rimt_simulation.py&quot;,
     &quot;github&quot;: &quot;https://github.com/uchimata2/Project-Leviathan-RIMT&quot;,
     &quot;doi&quot;: &quot;https://doi.org/10.5281/zenodo.20361267&quot;
   }

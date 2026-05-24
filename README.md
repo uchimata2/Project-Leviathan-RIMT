@@ -50,7 +50,7 @@ Project-Leviathan-RIMT/
 │                                          renders RIMT-infographic.html
 └── simulations/
     ├── rimt_simulation.py                 Three first-order analytical models
-    ├── test_rimt_simulation.py            Unit test suite (42 tests)
+    ├── test_rimt_simulation.py            Unit test suite (45 tests)
     └── requirements.txt                   Python dependencies
 ```
 
@@ -65,11 +65,11 @@ pip install -r simulations/requirements.txt
 python simulations/rimt_simulation.py
 ```
 
-Expected output (reference scenario: 10 m vessel, 30 m² hull, 20 knots):
+Expected output (reference scenario: 10 m vessel, 30 m² hull, 10 m/s ≈ 19.4 knots). The transcript below is abridged; the live script prints longer labels and additional intermediate quantities (Debye length, surface charge density, wave-fluid slip, etc.):
 
 ```
-Model 2 — Baseline:   η =  3.0%   V_drive = 200.0 V
-Model 3 — Optimised:  η = 83.0%   V_drive =   5.31 V
+Baseline (Model 2)              η =  3.0%   V_drive = 200.0 V
+Optimised — Ta₂O₅ 500 nm (Model 3)  η = 83.0%   V_drive =   5.31 V
 ```
 
 Run the test suite to verify correctness:
@@ -79,7 +79,20 @@ cd simulations
 pytest test_rimt_simulation.py -v
 ```
 
-All 42 tests should pass.
+All 45 tests should pass.
+
+### Reproducibility
+
+The simulation results above were obtained with the following toolchain (also encoded as `simulations/requirements.txt`):
+
+- **Python** 3.12 (≥ 3.9 supported)
+- **NumPy** ≥ 1.21 (any current 1.x or 2.x release)
+- **pytest** ≥ 7 (for running the unit tests)
+- **Operating system** Windows 11 (also tested transparently on Linux via CI-free containers)
+- **Expected runtime** Under 1 second for the full `main()` run; under 1 second for the full 45-test pytest pass
+- **Expected exact test count** 45 passed, 0 failed, 0 skipped
+
+Headline numerical results (η = 3.0 % / 83.0 %, V_drive = 200.0 V / 5.31 V, Pe ≈ 65, v_w = 60 m/s) are deterministic — no random seeds are used in the model — and reproduce exactly bit-for-bit across the supported toolchain.
 
 ---
 
@@ -90,10 +103,14 @@ All 42 tests should pass.
 | Debye length in seawater | κ⁻¹ ≈ 0.39 nm | EDL thickness at 0.6 M NaCl, 20°C |
 | Operating frequency | 2–5 MHz | Faradaic-suppression band, below dielectric heating onset |
 | Sawtooth waveform | t_r = 100 ns / t_f = 400 ns | 1:4 rise:fall asymmetry, period = 500 ns ⇒ f_c = 2 MHz |
+| Sawtooth form factor | K = 2.5 | RMS shape factor at r = 0.2, used in j_rms = K·σ_surf·f |
 | Péclet number | Pe ≈ 65 (ionic) | Electric-field ion transport dominates Brownian diffusion |
-| Wave propagation speed | v_w = 60 m/s (≈ 117 knots) | >> any vessel speed at f_c = 2 MHz, λ = 30 µm |
+| Wave propagation speed | v_w = 60 m/s (≈ 117 knots) | Wave-pattern kinematic, not vessel speed; >> any vessel speed at f_c = 2 MHz, λ = 30 µm |
 | Electrode geometry | w = 10 µm, g = 5 µm, λ = 30 µm | Finger width, inter-electrode gap, wavelength = 2(w+g) |
 | Dielectric (optimised) | Ta₂O₅, 500 nm ALD | εr ≈ 20–25, pinhole-free |
+| EDL coupling factor | α = 0.005 (Ta₂O₅) / 0.01 (Al₂O₃) | First-order coupling assumption between drive voltage and tangential EDL field |
+| Wave–fluid slip | v_slip = 0.2 m/s (tuned) / 1.0 m/s (baseline) | Sets the viscous-loss component of efficiency |
+| **Headline efficiency** | **η ≈ 83 % (tuned) / 3 % (baseline)** | First-order upper bounds; experimental validation pending |
 
 ---
 
@@ -111,16 +128,17 @@ If you build on, extend, or refer to this work, please cite:
 
 > Szabó, G. (2026). *Solid-State Marine Propulsion via Resonant Ionic Momentum Transfer (RIMT)* [Technical Disclosure]. Zenodo. https://doi.org/10.5281/zenodo.20361267
 
-BibTeX:
+BibTeX (using `@misc` per the convention for Zenodo deposits; an equivalent `@techreport` form is fine too if your bibliography style prefers it):
 ```bibtex
-@techreport{szabo2026rimt,
-  author      = {Szabó, Gábor},
-  title       = {Solid-State Marine Propulsion via Resonant Ionic Momentum Transfer ({RIMT})},
-  year        = {2026},
-  institution = {Zenodo},
-  type        = {Technical Disclosure},
-  doi         = {10.5281/zenodo.20361267},
-  url         = {https://doi.org/10.5281/zenodo.20361267}
+@misc{szabo2026rimt,
+  author       = {Szabó, Gábor},
+  title        = {Solid-State Marine Propulsion via Resonant Ionic Momentum Transfer ({RIMT}):
+                  Technical Disclosure \& Whitepaper},
+  year         = {2026},
+  howpublished = {Zenodo},
+  doi          = {10.5281/zenodo.20361267},
+  url          = {https://doi.org/10.5281/zenodo.20361267},
+  note         = {Concept DOI; resolves to the latest version. CC BY-SA 4.0.}
 }
 ```
 
@@ -146,4 +164,4 @@ You are free to share and adapt this material for any purpose, provided you give
 
 ## Defensive Publication Notice
 
-This repository constitutes a **defensive publication**. All material herein is placed in the public domain as prior art under CC BY-SA 4.0, effective from the date of the Zenodo DOI assignment. Any patent application filed after that date that covers the RIMT/SSIH architecture as described in the whitepaper is anticipated by this prior art.
+This repository constitutes a **defensive publication**. All material herein is placed in the public domain as prior art under CC BY-SA 4.0, effective from the date of the Zenodo DOI assignment. Any patent application filed after that date that claims subject matter described in the whitepaper *may be anticipated* by this prior art. The defensive-publication mechanism depends on a patent examiner's diligence in locating and citing the prior art; final patentability determinations rest with individual patent offices and courts in each relevant jurisdiction. This notice records the author's intent that the design space be kept open; it is not a unilateral declaration of unpatentability.

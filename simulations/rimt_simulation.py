@@ -123,8 +123,9 @@ def analyse_debye_layer(
 
     This is a theoretical upper-bound analysis.  The 1 MV/m tangential field
     is the pulsed peak achievable during the fast-rise edge of the sawtooth
-    waveform; it equals V_peak / g for the §3 design point (5.3 V / 5 µm).
-    It is not a sustained steady-state field.
+    waveform; it equals V_peak / g for the §3 design point (5.3 V / 5 µm
+    ≈ 1.06 MV/m, rounded to 1.0 MV/m in this default).  It is not a sustained
+    steady-state field.
 
     Parameters
     ----------
@@ -232,6 +233,9 @@ def parametric_performance(
                           Default 0.01 — derived from the capacitive voltage
                           division between the dielectric (C_diel) and the EDL
                           (C_dl) in series: α ≈ C_dl / (C_dl + C_diel).
+    sigma_seawater      : Bulk seawater conductivity [S m⁻¹]. Default SIGMA_SEAWATER
+                          (≈ 4.8 S/m at 35 PSU, 20 °C). Override for brackish
+                          (~0.5–2 S/m) or freshwater (<0.1 S/m) studies (WP §5.2).
 
     Returns
     -------
@@ -250,8 +254,8 @@ def parametric_performance(
 
     Ohmic heating (displacement current to/from the dielectric capacitance):
         i(t) = C · dV/dt   for the §3.3 asymmetric sawtooth (rise:fall = 1:4)
-        J_rms = K · σ_surf · f          with K = SAWTOOTH_FORM_FACTOR = 2.5
-        P_ohm = J_rms² · pitch / σ_seawater
+        j_rms = K · σ_surf · f          with K = SAWTOOTH_FORM_FACTOR = 2.5
+        P_ohm = j_rms² · pitch / σ_seawater
 
     Viscous slip dissipation:
         P_visc = (F/A)_required · v_slip
@@ -357,6 +361,10 @@ def tuned_performance(
                              diffuse EDL — smaller than alumina case because
                              the thinner / higher-k dielectric stores more of
                              the applied voltage on its own capacitance).
+    sigma_seawater         : Bulk seawater conductivity [S m⁻¹]. Default
+                             SIGMA_SEAWATER (≈ 4.8 S/m at 35 PSU, 20 °C).
+                             Override for brackish (~0.5–2 S/m) or freshwater
+                             (<0.1 S/m) studies (WP §5.2).
 
     Returns
     -------

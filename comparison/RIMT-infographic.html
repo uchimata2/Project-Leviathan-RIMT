@@ -119,7 +119,7 @@ h3 { font-size: 1.2rem; margin-bottom: 0.5rem; font-weight: 600; color: var(--te
   text-transform: uppercase;
   animation: cue 2.4s ease-in-out infinite;
 }
-.scroll-cue::after { content: " v"; }
+.scroll-cue::after { content: " \2193"; }  /* Unicode DOWNWARDS ARROW (\2193 = U+2193) */
 @keyframes cue {
   0%, 100% { transform: translate(-50%, 0); opacity: 0.6; }
   50%      { transform: translate(-50%, 8px); opacity: 1; }
@@ -601,7 +601,7 @@ const DATA = {
     "subtitle": "First-order analytical concept, TRL 2. Published as a defensive disclosure under CC BY-SA 4.0 so any builder can validate it.",
     "author": "Gábor Szabó",
     "license": "CC BY-SA 4.0 International",
-    "doi_placeholder": "10.5281/zenodo.20361267",
+    "doi_id": "10.5281/zenodo.20361267",
     "source": "WP §1, Comparison Executive Summary"
   },
   "hero_numbers": [
@@ -652,7 +652,7 @@ const DATA = {
     {
       "aspect": "Underwater noise",
       "conventional": "180+ dB monopole source, dominated by propeller cavitation",
-      "rimt": "Hull-flow noise of the displacement hull alone",
+      "rimt": "Hull-flow noise of the displacement hull; engineering noise of any on-board generator unchanged if a hybrid powertrain is used",
       "source": "Comparison §6 + refs [7, 8]"
     },
     {
@@ -1062,6 +1062,7 @@ const DATA = {
     "acoustic_spectrum": {
       "title": "Underwater acoustic signature comparison",
       "caption": "Projected RIMT spectrum is derived from the source-elimination argument, not measurement. Container-ship curve is after [7, 8]. Whale-vocalisation bands shown for context.",
+      "data_provenance": "Container-ship curve: measured / synthesised from refs [7, 8]. Electric-small-vessel and rimt_projected curves: illustrative projections derived from the source-elimination argument (no on-board genset; no propeller cavitation; no rotating-machinery broadband peak) — not measured spectra. Re-validate experimentally before quoting.",
       "freq_hz": [
         10,
         31,
@@ -1135,6 +1136,7 @@ const DATA = {
     "whitepaper": "../whitepaper/RIMT-whitepaper.html",
     "comparison": "RIMT-vs-conventional-comparison.html",
     "simulation": "../simulations/rimt_simulation.py",
+    "simulation_github": "https://github.com/uchimata2/Project-Leviathan-RIMT/blob/main/simulations/rimt_simulation.py",
     "github": "https://github.com/uchimata2/Project-Leviathan-RIMT",
     "doi": "https://doi.org/10.5281/zenodo.20361267"
   }

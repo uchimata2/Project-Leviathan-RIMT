@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solid-State Marine Propulsion via Resonant Ionic Momentum Transfer (RIMT)</title>
+
+  <!-- MathJax -- renders LaTeX math in the browser -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$']],
+        displayMath: [['$$', '$$']],
+        processEscapes: true
+      },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+
+  <style>
+    /* ---- Page layout ---- */
+    /* Page numbering uses CSS Paged Media @bottom-center.  In Chrome's
+       print dialog, enable "Headers and footers" so margin boxes render;
+       the empty top/bottom boxes below override Chrome's default URL/title
+       headers, leaving only the centered page counter. */
+    @page {
+      size: A4;
+      margin: 25mm 20mm 25mm 20mm;
+      @top-left     { content: ""; }
+      @top-center   { content: ""; }
+      @top-right    { content: ""; }
+      @bottom-left  { content: ""; }
+      @bottom-right { content: ""; }
+      @bottom-center {
+        content: "Page " counter(page) " of " counter(pages);
+        font-family: "Times New Roman", Times, serif;
+        font-size: 9pt;
+        color: #666;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 11pt;
+      line-height: 1.6;
+      color: #111;
+      max-width: 170mm;
+      margin: 0 auto;
+      padding: 10mm 0;
+    }
+
+    /* ---- Title block ---- */
+    h1 {
+      font-size: 16pt;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 4pt;
+    }
+    /* Metadata block directly under the H1 title (author/date/version/...).
+       Left-aligned, slightly smaller than body, line-height tight so that
+       the stacked <br>-separated lines read as a compact author block. */
+    h1 + p {
+      text-align: left;
+      font-size: 10pt;
+      color: #333;
+      line-height: 1.4;
+      margin-top: 8pt;
+      margin-bottom: 12pt;
+    }
+
+    /* ---- Section headings ---- */
+    h2 {
+      font-size: 13pt;
+      font-weight: bold;
+      border-bottom: 1px solid #aaa;
+      padding-bottom: 2pt;
+      margin-top: 18pt;
+      page-break-after: avoid;
+    }
+    h3 {
+      font-size: 11pt;
+      font-weight: bold;
+      margin-top: 12pt;
+      page-break-after: avoid;
+    }
+
+    /* ---- Abstract ---- */
+    h2#abstract + p,
+    h2:first-of-type + p {
+      margin: 8pt 12mm;
+      font-size: 10pt;
+    }
+
+    /* ---- Keywords ---- */
+    p strong:first-child {
+      font-weight: bold;
+    }
+
+    /* ---- Tables ---- */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9.5pt;
+      margin: 10pt 0;
+      page-break-inside: avoid;
+    }
+    th {
+      background: #e8e8e8;
+      border: 1px solid #999;
+      padding: 4pt 6pt;
+      text-align: left;
+      font-weight: bold;
+    }
+    td {
+      border: 1px solid #bbb;
+      padding: 3pt 6pt;
+      vertical-align: top;
+    }
+    tr:nth-child(even) td {
+      background: #f7f7f7;
+    }
+
+    /* ---- Code / equations ---- */
+    pre, code {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 9pt;
+      background: #f4f4f4;
+      padding: 2pt 4pt;
+      border-radius: 2px;
+    }
+    pre {
+      padding: 8pt;
+      overflow-x: auto;
+      page-break-inside: avoid;
+    }
+
+    /* ---- Horizontal rules ---- */
+    hr {
+      border: none;
+      border-top: 1px solid #ccc;
+      margin: 12pt 0;
+    }
+
+    /* ---- Blockquotes ---- */
+    blockquote {
+      border-left: 3px solid #aaa;
+      margin: 8pt 0 8pt 12pt;
+      padding: 4pt 8pt;
+      color: #444;
+      font-style: italic;
+    }
+
+    /* ---- Print overrides ---- */
+    @media print {
+      body { padding: 0; }
+      h2, h3 { page-break-after: avoid; }
+      p, li { orphans: 3; widows: 3; }
+      table { page-break-inside: avoid; }
+      a { color: #111; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Solid-State Marine Propulsion via Resonant Ionic Momentum Transfer (RIMT)</h1>
+<p><strong>Technical Disclosure &amp; Whitepaper</strong><br>
+<strong>Author:</strong> Gábor Szabó<br>
+<strong>Date:</strong> 2026-05-24<br>
+<strong>Version:</strong> 1.0.2<br>
+<strong>License:</strong> CC BY-SA 4.0 International<br>
+<strong>DOI:</strong> <a href="https://doi.org/10.5281/zenodo.20361267">10.5281/zenodo.20361267</a> (concept, always-latest)</p>
+<hr />
+<h2>Abstract</h2>
+<p>Modern marine propulsion remains dependent on mechanical screw propellers, a paradigm constrained by cavitation, turbulent vortex shedding, and fundamental momentum-theorem efficiency limits. This paper proposes and analyses Resonant Ionic Momentum Transfer (RIMT), a solid-state propulsion mechanism that converts the entire wetted hull surface of a vessel into a distributed electrokinetic engine. RIMT applies a MHz-frequency asymmetric traveling-wave potential via a sub-surface interdigitated electrode lattice, manipulating the Electrical Double Layer (EDL) of seawater to generate directed ionic flow through electro-osmotic coupling. Operation in the Faradaic-suppression band (2–5 MHz, where the per-half-cycle Faradaic charge falls below the water-splitting threshold) prevents electrolytic degradation, enabling efficient momentum injection without chemical loss. A modular 30 cm × 30 cm Active Tile architecture, driven by GaN wide-bandgap power electronics, provides fault tolerance, scalability, and adaptive frequency control. First-order computational models validate the mechanism: the Péclet number at the hull–fluid interface is $Pe \approx 65$, confirming that electric-field-driven ion transport dominates Brownian diffusion by nearly two orders of magnitude. Efficiency analysis under the proposed §3.3 asymmetric sawtooth waveform shows that an un-tuned configuration (1 µm Al$_2$O$_3$ dielectric, 200 V fixed drive) is dominated by ohmic heating in the seawater between electrodes (driven by the AC displacement current that charges the dielectric capacitor) and achieves only $\eta \approx 3\%$, demonstrating that adaptive voltage control is essential. An optimised design (500 nm Ta$_2$O$_5$ ALD dielectric, analytically tuned 5.3 V drive) reaches $\eta \approx 83\%$ (first-order upper bound; experimental validation pending), exceeding the practical efficiency ceiling of mechanical propulsion (~70–72%) by approximately ten percentage points. The author publishes this architecture as a prior-art disclosure under CC BY-SA 4.0, establishing open prior art and inviting experimental validation by the global research community.</p>
+<p><strong>Keywords:</strong> electro-osmosis, Electrical Double Layer, traveling-wave potential, marine propulsion, solid-state propulsion, GaN power electronics, seawater electrokinetics, ionic momentum transfer, boundary layer control, Faradaic suppression</p>
+<hr />
+<h2>1. Introduction</h2>
+<h3>1.1 The Physical Ceiling of Mechanical Propulsion</h3>
+<p>Marine vessels have been propelled by screw propellers since the mid-nineteenth century, and incremental refinements have pushed propulsive efficiency toward an empirical ceiling of approximately 70–72% for large commercial vessels under ideal conditions [10, ch. 6, 14]. The primary loss mechanisms are well understood: cavitation inception erodes thrust at high shaft speeds, turbulent vortex shedding from blade tips carries kinetic energy into the wake, and the Froude momentum relation ties energy expenditure to both the useful thrust and the wasteful acceleration of water mass in the propeller disk. Acoustic noise generated by these mechanisms is of increasing ecological concern, as low-frequency vessel noise disrupts cetacean communication and navigation across oceanic distances. These limitations are fundamental to the fluid-mechanical principle of point-source thrust generation: a propeller pushes water at a single location in the hull profile, and no geometry optimisation eliminates the underlying thermodynamic constraints.</p>
+<h3>1.2 Solid-State Alternatives and Their Constraints</h3>
+<p>Two classes of solid-state marine propulsion have been investigated as alternatives. Phase-change vaporisation systems, in which piezoelectric actuators generate micro-vapour jets, are thermodynamically non-viable at macroscopic scales: the latent heat of vaporisation of water (2,257 kJ/kg) places a prohibitive energy penalty on any propulsion scheme that must cyclically evaporate the working fluid. Magnetohydrodynamic (MHD) propulsion, which applies crossed magnetic and electric fields to generate Lorentz forces on conducting seawater, has been demonstrated at laboratory and vessel scale but requires superconducting magnetic coils to produce the flux densities needed for practical thrust densities, imposing mass, cryogenic infrastructure, and cost penalties that preclude commercial adoption. The Yamato-1 MHD demonstrator (Kobe, 1992) achieved approximately 6.6 knots in sea trials (design maximum 8 knots) with a propulsive efficiency well below that of contemporary diesel-driven vessels (Kan, Cheng, &amp; Zhuang, 2023, [7] §1), confirming these constraints experimentally.</p>
+<h3>1.3 The RIMT Concept</h3>
+<p>Resonant Ionic Momentum Transfer bypasses the limitations of both mechanical and MHD propulsion by operating directly on the Electrical Double Layer (EDL) present at any solid–electrolyte interface. In seawater, counter-ions (predominantly Na$^+$, balanced by Cl$^-$) accumulate within a thin Debye screening length ($\kappa^{-1} \approx 0.39$ nm at 0.6 M NaCl, 20°C) of a charged surface, forming a mobile ion sheath. By imposing a traveling-wave electric potential across a micro-electrode lattice embedded below the hull surface, RIMT applies a spatially asymmetric, directional electrostatic force to this ion sheath — "ratcheting" it along the hull in the desired propulsive direction via the electro-osmotic coupling mechanism formalised by Smoluchowski. As the ion layer moves, viscous coupling transfers linear momentum to the adjacent water bulk, generating thrust distributed across the entire wetted hull area. Simultaneously, this active boundary layer manipulation is hypothesised to attenuate the skin-friction drag component that, for displacement-mode vessels at moderate speeds, is reported in the naval-architecture literature to account for the majority of hull resistance [10, ch. 12]; the magnitude of this drag-reduction co-benefit is not quantified in this disclosure and is identified as a key experimental question (§6). RIMT therefore acts as a thrust generator and, plausibly, a drag attenuator, in either case altering the energy balance of vessel propulsion.</p>
+<p>The principal obstacle to electro-osmotic propulsion at MHz frequencies has historically been electrolysis: conventional DC or low-frequency AC fields split water into hydrogen and oxygen at the electrode surface, wasting energy and degrading hardware. RIMT resolves this in two reinforcing ways. First, the intact Ta$_2$O$_5$ dielectric coating (§3.2) is a Faradaic blocker: in normal operation no electrode metal contacts the electrolyte, so the interfacial current is dominantly capacitive (displacement) rather than Faradaic at all frequencies. Second, AC operation at the carrier frequency $f_c$ symmetrically charges and discharges the EDL within each cycle, so that on a per-cycle basis no DC current can drive water-splitting redox reactions to completion. The two mechanisms together motivate the engineered carrier window of $f_c \approx 2$–5 MHz: the lower bound is set well above any plausible electrode-discharge or pinhole-leakage timescale (giving substantial Faradaic-current headroom in the sense formalised in [8, ch. 6] and [9, ch. 9]), and the upper bound is set by dielectric-loss heating in the Ta$_2$O$_5$ film (§3.3). The 2 MHz figure is therefore a design margin rather than a sharp Faradaic-onset frequency. The system thus remains essentially non-Faradaic while still coupling electrostatic force to ionic momentum capacitively.</p>
+<hr />
+<h2>2. Related Work</h2>
+<p>Research on traveling-wave electro-osmosis (TWEO) has established rigorous theoretical and experimental foundations for net unidirectional fluid transport driven by propagating potential waves at electrode arrays. The theoretical framework for electrode-driven electro-osmosis was substantially advanced by Bazant and Squires (2004), whose treatment of induced-charge electro-osmosis formalised the non-linear coupling between applied AC fields and the diffuse ionic layer [5]. Building on this foundation, Shrestha, Kirkinis, and Olvera de la Cruz (2025) derived a universal framework for boundary-driven electrokinetic flows, demonstrating that a time-independent zero mode arising from quadratic nonlinearity in the Stokes equations generates net directed flow, and that this flow persists across a range of electrolyte concentrations and electrode geometries [1]. Earlier work characterised the role of ion mobility asymmetry: because Na$^+$ and Cl$^-$ differ in aqueous diffusivity (Na$^+$: $1.33 \times 10^{-9}$ m$^2$/s; Cl$^-$: $2.03 \times 10^{-9}$ m$^2$/s), a symmetric wave produces a small net flow in the direction of the faster species, while an intentionally asymmetric sawtooth waveform amplifies this asymmetry for enhanced directional control [3]. Electrode array geometry has been shown to significantly influence TWEO efficiency, with closer electrode pitch and optimised aspect ratios increasing electro-osmotic velocity for a given applied voltage [4]. Critically, flow reversal has been documented in TWEO systems at frequencies where steric effects in the dense Stern layer exceed the linear EDL approximation [6], establishing an upper frequency bound that RIMT system designs must respect.</p>
+<p>All published TWEO research to date has been conducted at microfluidic scales — capillaries, µm-channel devices, and laboratory electrode arrays — with no prior work proposing or analysing TWEO as a macroscopic hull propulsion mechanism. The only demonstrated electro-osmotic thruster at vehicle scale is the system of Hansen et al. (2020), who propelled a 5 kg unmanned underwater vehicle (UUV) at 2.2 cm/s using DC-driven glass micro-capillary arrays [2]. Although this work established proof-of-concept for electrokinetic vehicle propulsion, it employed a point-source thruster geometry analogous to a conventional jet nozzle, used DC operation with attendant electrolysis, and did not address the conversion of skin-friction drag into net thrust. High-frequency AC approaches to reducing electrolysis have been examined in the MHD propulsion context [7], but those systems still generate Lorentz forces via magnetic coil flux and do not operate on the EDL.</p>
+<p>RIMT is novel in the following specific respects: it is the first proposed system to apply MHz-frequency asymmetric traveling-wave potentials to a macroscopic hull-surface electrode array as a primary propulsion mechanism; it operates in the Faradaic-suppression band at MHz frequencies to inhibit electrolysis without magnetic infrastructure; it distributes propulsion across the entire wetted hull area rather than concentrating thrust at a point source; and it integrates a modular GaN-driven active-tile architecture enabling adaptive frequency and voltage control. No prior patent or scientific publication identified in a comprehensive search describes this combination.</p>
+<hr />
+<h2>3. System Architecture</h2>
+<h3>3.1 Electrode Geometry: The Interdigitated Lattice</h3>
+<p>Thrust generation in RIMT depends on the interaction between the traveling-wave electric field and the mobile ion sheath within the EDL. To maximise the field gradient at the hull–water interface while maintaining structural robustness, the electrode layer employs an interdigitated electrode (IDE) geometry. The three geometric parameters used throughout this paper are: the electrode finger width $w = 10$ µm; the inter-electrode gap $g = 5$ µm (the seawater-conduction length across which the tangential field falls between adjacent fingers); and the full spatial wavelength of the alternating-polarity pattern $\lambda = 2(w + g) = 30$ µm (the distance over which the traveling wave imprints one complete potential cycle). $g$ is the relevant length scale for ohmic loss between electrodes and for the §4.2 Péclet calculation; $\lambda$ sets the wave propagation kinematics in §3.3. Electrode material is gold or platinum-plated copper, selected for high electrical conductivity ($\sigma_\mathrm{Au} = 4.1 \times 10^7$ S/m), adhesion to the underlying substrate, and compatibility with the ALD process window for the overlying dielectric (electrodes are buried beneath the dielectric in normal operation; see §3.2 — direct seawater corrosion resistance is therefore not the primary requirement). The electrode fingers are patterned in a herringbone or chevron configuration rather than simple parallel lines; this directs the lateral thrust component and prevents the accumulation of static concentration boundary layers that would otherwise reduce EDL-coupling efficiency over prolonged operation.</p>
+<h3>3.2 The Dielectric Barrier</h3>
+<p>The electrode array is separated from direct contact with seawater by a thin conformal dielectric layer that serves two functions: it prevents DC current flow and thus suppresses electrolysis, and it presents a high-k capacitive interface to the EDL. The material of choice is tantalum pentoxide (Ta$_2$O$_5$) deposited by atomic layer deposition (ALD) to a thickness of 500 nm. ALD is selected because it produces pinhole-free, conformally uniform films over the complex electrode surface topology — a prerequisite for eliminating localised electrolysis initiation sites. The dielectric constant of Ta$_2$O$_5$ ($\varepsilon_r \approx 25$) is approximately six-fold higher than SiO$_2$ ($\varepsilon_r \approx 3.9$), allowing the 500 nm layer to achieve equivalent EDL-coupling capacitance to a 2.5 µm SiO$_2$ film at substantially reduced thickness, thereby maximising the electric field at the dielectric–water interface for a given applied voltage. Hafnium dioxide (HfO$_2$, $\varepsilon_r \approx 20$–25) is identified as an equivalent alternative where Ta$_2$O$_5$ ALD tooling is unavailable. The complete tile layer stack, from hull outward, is: (1) vessel hull substrate (composite or steel); (2) patterned IDE electrode layer (gold or platinum-plated copper); (3) 500 nm ALD Ta$_2$O$_5$ dielectric; (4) optional hydrophobic anti-fouling overcoat. The electrodes are therefore buried beneath the dielectric, never in direct contact with seawater under normal operating conditions.</p>
+<h3>3.3 GaN Power Electronics and Waveform Generation</h3>
+<p>The driving electronics for each active tile constitute the Power Electronics Module (PEM). Gallium nitride (GaN) high-electron-mobility transistors (HEMTs) are selected as the switching elements because their low gate charge ($Q_g < 5$ nC for representative 650 V parts such as the GaN Systems GS66508T [11]) permits switching at 5 MHz with total gate-drive loss expected to remain below a few percent of total tile power, enabling efficient generation of the MHz-range waveforms required by RIMT. Comparable silicon MOSFET devices at 5 MHz would dissipate a substantially larger fraction of input power in switching losses (often double-digit percent at these frequencies and voltages), rendering them unsuitable.</p>
+<p>The waveform generation logic synthesises an asymmetric sawtooth carrier signal at a fixed frequency $f_c$ in the range 2–5 MHz on each electrode group. The asymmetry is deliberate and quantified: a rise time of $t_r = 100$ ns rapidly displaces the ion sheath ("the grab"), followed by a fall time of $t_f = 400$ ns that allows the field to reset without pulling the ions back ("the release"). The full period $T = t_r + t_f = 500$ ns therefore corresponds to a fundamental carrier of $f_c = 2$ MHz; the 1:4 rise-to-fall ratio is the dominant design point and creates the net unidirectional momentum bias that distinguishes RIMT from symmetric AC electro-osmosis. The carrier frequency window is bounded below by the Faradaic-suppression margin (§1.3) — operation at $f_c \geq 2$ MHz keeps the interfacial current dominantly capacitive even in the presence of small dielectric imperfections — and above by the onset of significant dielectric-loss heating in the Ta$_2$O$_5$ layer ($f_c \lesssim 10$–20 MHz); operation within the 2–5 MHz window balances both constraints. The traveling wave spatial pattern is created by imposing a controlled, incrementally advancing phase offset across successive electrode groups along the hull. Because the carrier frequency is fixed, the wave propagation speed is:</p>
+<p>$$v_w = f_c \cdot \lambda$$</p>
+<p>With $f_c = 2$ MHz and $\lambda = 30$ µm, $v_w = 60$ m/s (≈ 117 knots), which substantially exceeds any achievable vessel speed. The wave therefore continuously outruns the ship at all operating conditions, maintaining unidirectional ion ratcheting without requiring frequency adjustment. Thrust magnitude is controlled by adjusting drive voltage and pulse duty cycle; thrust direction is reversed by inverting the electrode phase sequence. The central propulsion management system adjusts drive amplitude in proportion to the demanded thrust and compensates for tile faults and salinity variation in real time.</p>
+<h3>3.4 Active Tile Architecture</h3>
+<p>The complete system — electrode lattice, dielectric coating, power electronics, and control infrastructure — constitutes the Solid-State Ionic Hull (SSIH). The SSIH hull surface is covered with modular Active Tiles measuring 30 cm × 30 cm. Each tile consists of the electrode-plus-dielectric laminate bonded to the hull substrate, a dedicated GaN PEM mounted on the reverse face in a potted housing, and a standardised low-voltage DC bus connector supplying tile power and bidirectional communication with the vessel's central propulsion management system. This modular architecture confers three operational advantages. First, fault isolation is automatic: the local GaN controller continuously monitors tile impedance and, upon detecting a short circuit from dielectric breach, permanently de-energises the affected tile within a few microseconds — comparable to the response time of contemporary GaN desaturation-protection ICs (e.g., the Texas Instruments UCC27282-family isolated GaN drivers, whose datasheet specifies typical desaturation-protect propagation delay of 100–250 ns plus the gate-discharge interval, giving a total fault-clear time on the order of 1–3 µs) — before thermal runaway can develop. Second, the architecture is designed for substantial fault tolerance — the target specification calls for the vessel to sustain on the order of 15% tile attrition while maintaining full cruising speed via central-controller redistribution of thrust load across healthy tiles; this design target is contingent on the per-tile thrust headroom characterised in §4.4 and on the central controller's actuator authority, both of which require experimental validation. Third, scalability is platform-independent: the same tile specification surfaces a 5 m recreational vessel, a 20 m yacht, or a 300 m container ship, with propulsive capacity scaling linearly with wetted hull area.</p>
+<h3>3.5 Parameter Summary</h3>
+<p>The table below consolidates all design and operating parameters used in §4 for ease of reference.</p>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Quantity</th>
+<th>Value</th>
+<th>Source / §</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$w$</td>
+<td>Electrode finger width</td>
+<td>10 µm</td>
+<td>§3.1</td>
+</tr>
+<tr>
+<td>$g$</td>
+<td>Inter-electrode gap (Model 3 design)</td>
+<td>5 µm</td>
+<td>§3.1, §4.2</td>
+</tr>
+<tr>
+<td>$g$</td>
+<td>Inter-electrode gap (Model 2 baseline, looser PCB-class pitch)</td>
+<td>10 µm</td>
+<td>§4.4</td>
+</tr>
+<tr>
+<td>$\lambda$</td>
+<td>Wavelength of potential pattern, $2(w+g)$</td>
+<td>30 µm</td>
+<td>§3.1, §3.3</td>
+</tr>
+<tr>
+<td>$d$</td>
+<td>Ta$_2$O$_5$ dielectric thickness (Model 3)</td>
+<td>500 nm</td>
+<td>§3.2</td>
+</tr>
+<tr>
+<td>$d$</td>
+<td>Al$_2$O$_3$ dielectric thickness (Model 2)</td>
+<td>1 µm</td>
+<td>§4.4</td>
+</tr>
+<tr>
+<td>$\varepsilon_r^\mathrm{coat}$</td>
+<td>Ta$_2$O$_5$ relative permittivity</td>
+<td>20–25</td>
+<td>§3.2</td>
+</tr>
+<tr>
+<td>$\varepsilon_r^\mathrm{water}$</td>
+<td>Seawater relative permittivity</td>
+<td>80</td>
+<td>§4.1</td>
+</tr>
+<tr>
+<td>$\mu$</td>
+<td>Seawater dynamic viscosity (35 PSU, 20 °C)</td>
+<td>$1.08 \times 10^{-3}$ Pa·s</td>
+<td>§4.1</td>
+</tr>
+<tr>
+<td>$\sigma_\mathrm{sw}$</td>
+<td>Seawater conductivity</td>
+<td>≈ 5 S/m</td>
+<td>§5.2</td>
+</tr>
+<tr>
+<td>$D$</td>
+<td>NaCl mutual diffusivity (25 °C)</td>
+<td>$1.61 \times 10^{-9}$ m²/s</td>
+<td>§4.2</td>
+</tr>
+<tr>
+<td>$\zeta$</td>
+<td>Zeta potential (Ta$_2$O$_5$/seawater)</td>
+<td>$-30$ mV</td>
+<td>§4.1</td>
+</tr>
+<tr>
+<td>$\kappa^{-1}$</td>
+<td>Debye screening length (0.6 M NaCl, 20 °C)</td>
+<td>0.39 nm</td>
+<td>§1.3</td>
+</tr>
+<tr>
+<td>$f_c$</td>
+<td>Carrier frequency</td>
+<td>2 MHz (window 2–5 MHz)</td>
+<td>§3.3</td>
+</tr>
+<tr>
+<td>$T$</td>
+<td>Period</td>
+<td>500 ns</td>
+<td>§3.3</td>
+</tr>
+<tr>
+<td>$t_r : t_f$</td>
+<td>Sawtooth rise:fall ratio</td>
+<td>100 ns : 400 ns (1 : 4)</td>
+<td>§3.3</td>
+</tr>
+<tr>
+<td>$K$</td>
+<td>Sawtooth RMS form factor $\sqrt{1/r + 1/(1-r)}$</td>
+<td>2.5</td>
+<td>§4.3</td>
+</tr>
+<tr>
+<td>$v_w$</td>
+<td>Wave propagation speed $f_c\lambda$</td>
+<td>60 m/s</td>
+<td>§3.3</td>
+</tr>
+<tr>
+<td>$V$</td>
+<td>Drive voltage (Model 3, tuned)</td>
+<td>5.3 V</td>
+<td>§4.4</td>
+</tr>
+<tr>
+<td>$V$</td>
+<td>Drive voltage (Model 2, fixed)</td>
+<td>200 V</td>
+<td>§4.4</td>
+</tr>
+<tr>
+<td>$\alpha$</td>
+<td>EDL coupling factor (Model 3 / Model 2)</td>
+<td>0.005 / 0.01</td>
+<td>§4.1</td>
+</tr>
+<tr>
+<td>$v_\mathrm{slip}$</td>
+<td>Wave–fluid velocity slip (Model 3 / Model 2)</td>
+<td>0.2 / 1.0 m/s</td>
+<td>§4.3</td>
+</tr>
+<tr>
+<td>Pe</td>
+<td>Péclet number at boundary</td>
+<td>≈ 65</td>
+<td>§4.2</td>
+</tr>
+<tr>
+<td>$\eta$</td>
+<td>First-order efficiency (Model 3 / Model 2)</td>
+<td>83 % / 3 %</td>
+<td>§4.4</td>
+</tr>
+</tbody>
+</table>
+<p><em>Reference-temperature note.</em> All thermo-transport parameters in this table are evaluated at 20 °C (293 K) — the sim default — except the NaCl mutual diffusivity $D$, which is quoted at the conventional literature reference temperature of 25 °C. The temperature dependence of $D$ over 20–25 °C is approximately +9 % (1.48 → 1.61 × 10$^{-9}$ m²/s); choosing the higher-temperature value is the more conservative (Pe-reducing) choice for the §4.2 Péclet calculation. A uniform 20 °C parameter set would raise Pe from ≈ 65 to ≈ 71 without changing any other conclusion in this paper.</p>
+<hr />
+<h2>4. Theoretical Basis and Computational Results</h2>
+<h3>4.1 Electro-Osmotic Velocity</h3>
+<p>The directed fluid velocity generated at the hull–water interface by the traveling-wave potential is given by the Smoluchowski electro-osmotic velocity:</p>
+<p>$$v_{eo} = \frac{\varepsilon_0 \varepsilon_r |\zeta| E_\parallel}{\mu}$$</p>
+<p>where $\varepsilon_0 = 8.854 \times 10^{-12}$ F/m is the vacuum permittivity, $\varepsilon_r = 80$ is the relative permittivity of seawater, $\zeta \approx -30$ mV is the zeta potential of the Ta$_2$O$_5$–seawater interface (literature value near seawater pH ~8), $E_\parallel$ is the tangential (along-surface) electric field at the EDL slip plane, and $\mu = 1.08 \times 10^{-3}$ Pa·s is the dynamic viscosity of seawater at 20°C, 35 PSU. The quantity $E_\parallel$ is the field component parallel to the hull surface that drives ion transport; it is not the normal field through the dielectric thickness. $E_\parallel$ arises from the lateral potential gradient between adjacent electrode groups at the dielectric–fluid interface and depends on drive voltage, inter-electrode spacing, and the capacitive voltage division between the dielectric and the EDL.</p>
+<p>For the Section 3 design point (tuned drive voltage $V \approx 5.3$ V across an inter-electrode gap of $g = 5$ µm), the peak tangential field on the fast-rise edge of the sawtooth is $E_\parallel \approx V/g \approx 1.06$ MV/m. Substituting into the Smoluchowski expression with $|\zeta| = 30$ mV gives a peak electro-osmotic velocity of</p>
+<p>$$v_{eo}^{\mathrm{peak}} = \frac{(8.854\times 10^{-12})(80)(0.030)(1.06\times 10^6)}{1.08\times 10^{-3}} \approx 0.021 \;\mathrm{m\,s^{-1}}.$$</p>
+<p>The time-averaged $v_{eo}$ is approximately half this peak (sawtooth duty), giving an effective ionic drift of $\sim 10$ mm/s at the slip plane. This is small in absolute terms but is the velocity of the <em>ion sheath only</em>; the wave-train above moves at $v_w = 60$ m/s and the ion sheath is continually re-acquired as each wave passes. Thrust per unit area is built up by the time-averaged momentum injected per cycle, not by $v_{eo}$ directly.</p>
+<p>The fraction of the drive voltage that appears tangentially in the diffuse layer (rather than dropped capacitively across the dielectric) is captured by the dimensionless coupling parameter $\alpha$ used in the §4.3 model. To first order $\alpha \approx C_{\mathrm{dl}}/(C_{\mathrm{dl}} + C_{\mathrm{diel}})$, where $C_{\mathrm{dl}} = \varepsilon_0\varepsilon_r/\kappa^{-1}$ is the diffuse-layer capacitance and $C_{\mathrm{diel}} = \varepsilon_0\varepsilon_{r,\mathrm{coat}}/d$ is the dielectric capacitance per unit area. For the Ta$_2$O$_5$ 500 nm design this evaluates to $\alpha \approx 0.005$; for 1 µm Al$_2$O$_3$, $\alpha \approx 0.01$. These values dominate the achievable thrust density and are an explicit sensitivity parameter in the companion simulation.</p>
+<h3>4.2 Péclet Number Validation</h3>
+<p>For the traveling-wave field to exert deterministic control over ion trajectories — rather than having directed motion lost to thermal diffusion — the Péclet number at the boundary must exceed unity:</p>
+<p>$$Pe = \frac{v_{eo} \cdot L}{D}$$</p>
+<p>where $L = 5$ µm is the inter-electrode gap (characteristic length scale of the IDE geometry) and $D \approx 1.61 \times 10^{-9}$ m$^2$/s is the mutual diffusion coefficient of NaCl in water (literature value at 25 °C; see §3.5 footnote on reference temperatures). Using the §4.1 peak Smoluchowski velocity $v_{eo}^{\mathrm{peak}} \approx 0.021$ m/s — which is the kinematically relevant scale for the convective transport set by the fast-rise edge of the sawtooth:</p>
+<p>$$Pe = \frac{0.021 \times 5 \times 10^{-6}}{1.61 \times 10^{-9}} \approx 65.$$</p>
+<p>A Péclet number of order $10^2$ confirms that electrostatic ion transport dominates Brownian diffusion by nearly two orders of magnitude, validating the assumption of deterministic ionic control at this electrode geometry. The corresponding Péclet number based on the wave propagation speed ($v_w = 60$ m/s) is several orders of magnitude larger, indicating that the traveling-wave pattern itself is convectively imprinted on the ion sheath without diffusive smearing.</p>
+<h3>4.3 First-Order Efficiency Model</h3>
+<p>Propulsive efficiency was calculated using a suite of three first-order analytical models implemented in Python. Model 1 (Debye layer fundamentals) establishes the theoretical capacity of the EDL interface using a pulsed peak tangential field of $E_\parallel \approx V/g \approx 1$ MV/m, derived from the Section 3 design point ($V \approx 5.3$ V across $g = 5$ µm). This is the peak field on the fast-rise edge of the sawtooth, not a continuous level, and confirms that the available thrust density exceeds the design requirement by approximately three orders of magnitude, validating the mechanism in principle. Models 2 and 3 evaluate specific hardware configurations at realistic operating conditions. Each model computes: (i) available thrust density from capacitively induced surface charge and the dielectrically-divided tangential field (using $\alpha$ as in §4.1); (ii) ohmic heating from the displacement current driven through the dielectric capacitance — for the §3.3 asymmetric sawtooth this gives $j_{\mathrm{rms}} = K\,\sigma_{\mathrm{surf}}\,f$ (current density, A m$^{-2}$) with $K = \sqrt{1/r + 1/(1-r)} = 2.5$ at the 1:4 rise:fall ratio ($r = t_r/T = 0.2$); and (iii) viscous dissipation from the absolute wave–fluid velocity slip $v_{\mathrm{slip}}$ at the EDL (independent of vessel speed, set by the wave-fluid coupling quality). Net propulsive efficiency is defined as:</p>
+<p>$$\eta = \frac{F_{thrust} \cdot v_{ship}}{P_{input}}$$</p>
+<p>where $F_{thrust}$ is the net hull-surface thrust force, $v_{ship}$ is vessel velocity, and $P_{input}$ is total electrical input power including all losses. The full model and validation test suite (45 unit tests, all passing) are available in the companion repository at <code>simulations/rimt_simulation.py</code>.</p>
+<h3>4.4 Efficiency Results</h3>
+<p>Two reference design points were evaluated against a representative scenario (10 m boat, 30 m² wetted hull, 10 m/s at 1 500 N total thrust). The scenario is illustrative — a slim semi-displacement hull operating well below planing; thrust-density requirements for planing-mode 10 m hulls at 20 knots would be 2–5× higher and would shift the operating point on both Models 2 and 3 accordingly. The un-tuned baseline configuration (Model 2) uses a 1 µm aluminium oxide (Al$_2$O$_3$) dielectric at a fixed drive voltage of 200 V with a 1.0 m/s wave–fluid velocity slip — representative of a first-generation tile manufactured with conventional plasma-enhanced chemical vapour deposition (PECVD), standard electrode surface finish, a 10 µm inter-electrode gap (the looser pitch typical of standard PCB lithography, contrasted with the 5 µm Model 3 design value), and no adaptive drive control. At the §3.3 carrier frequency of 2 MHz this configuration achieves only $\eta \approx 3\%$. The dominant loss is AC ohmic heating in the seawater between electrodes (driven by the displacement current that charges the dielectric capacitor each half-cycle): the surface charge density at 200 V on a 1 µm Al$_2$O$_3$ stack is high, and the §3.3 sawtooth drives an RMS current density of $j_{\mathrm{rms}} \approx 9 \times 10^4$ A m$^{-2}$ at 2 MHz for the Model 2 baseline, falling to $j_{\mathrm{rms}} \approx 9 \times 10^3$ A m$^{-2}$ at the Model 3 tuned drive (where the ≈ 38× lower drive voltage suppresses the displacement current proportionally). This baseline therefore does not demonstrate viability of RIMT; it demonstrates that <em>fixed high-voltage drive on a thick low-k dielectric is unworkable</em> and that adaptive voltage control matched to the demanded thrust is essential.</p>
+<p>The optimised configuration (Model 3) employs the 500 nm Ta$_2$O$_5$ ALD dielectric with analytical solution of the thrust equation for the minimum drive voltage. For the design thrust density of 50 N m$^{-2}$, the solved drive voltage is $V \approx 5.3$ V, achievable with a synchronised traveling wave producing a residual $v_{\mathrm{slip}} \approx 0.2$ m/s at the EDL. This configuration achieves $\eta \approx 83\%$ — an upper bound under the first-order model assumptions, but well above the practical efficiency ceiling of mechanical propulsors (~70–72%). The improvement over the baseline comes from three reinforcing effects: (i) the higher-k thinner dielectric stores more capacitance per unit voltage, reducing the drive amplitude needed for the same surface charge; (ii) the analytically-tuned drive voltage is approximately 38× lower than the un-tuned baseline, reducing the $V^2$-scaled displacement current by roughly three orders of magnitude; and (iii) the 2× tighter electrode pitch shortens the ohmic conduction path between electrodes. Propellers and waterjets incur irreducible losses through vortex wake formation, cavitation at high shaft speeds, and mechanical drivetrain friction; hull-surface electro-osmosis avoids all three by distributing momentum transfer across the entire wetted area at sub-cavitation velocities with no moving parts. The 83 % figure remains a first-order upper bound: experimental validation is required to characterise the reduction due to non-ideal EDL behaviour, surface roughness, organic fouling, turbulent boundary layer disruption, and the steric flow-reversal regime identified in §2.</p>
+<p>The efficiency narrative is therefore as follows: a naive baseline with fixed high drive voltage is dominated by ohmic loss and is non-viable ($\eta \approx 3\%$); adaptive voltage matching combined with an ALD-grade high-k dielectric reaches $\eta \approx 83\%$ in first-order modelling, comfortably above the practical ceiling of mechanical propulsion. Realised efficiency in hardware is expected to be lower than the modelled upper bound but is the critical experimental quantity that this disclosure invites the community to measure.</p>
+<h3>4.5 Wave-vs-Fluid Frame Momentum Transfer</h3>
+<p>The propagating wave (kinematic speed $v_w = 60$ m/s in the hull frame, §3.3) outruns the ion sheath drift velocity ($v_{eo} \sim 0.02$ m/s, §4.1) by more than three orders of magnitude. The system therefore operates in the regime where each successive wave cycle re-acquires a fresh segment of ion sheath, asymmetrically displaces it along the direction of wave propagation during the fast-rise phase ("the grab"), and releases it during the slow-fall phase before the field reverses. The net momentum injected into the fluid per cycle is the time-integral of the body force on the EDL counter-ions; it does not depend on whether the ion sheath itself reaches $v_w$. This is the same time-independent zero-mode mechanism formalised by Shrestha, Kirkinis, and Olvera de la Cruz [1] for traveling-wave electro-osmosis at microfluidic scale. RIMT inherits this mechanism but operates it across the macroscopic hull surface with the parameter regime ($f_c$, $\lambda$, $\zeta$) selected for marine seawater rather than laboratory electrolytes.</p>
+<p>It is instructive to verify directly that the ions are not required to track the wave. The aqueous mobility of Na$^+$ is $\mu_{\mathrm{Na^+}} \approx 5.2 \times 10^{-8}$ m$^2$/(V$\cdot$s); at the peak tangential field $E_\parallel \approx 1$ MV/m, the instantaneous drift velocity is $v_{\mathrm{drift}} \approx \mu_{\mathrm{Na^+}} E_\parallel \approx 0.05$ m/s. In one half-period of the 2 MHz carrier ($T/2 = 250$ ns) an ion at this drift velocity advances only $v_{\mathrm{drift}}\cdot T/2 \approx 12$ nm — three orders of magnitude shorter than the 15 µm half-wavelength of the electrode pattern. Ions therefore oscillate locally at amplitudes well below $\lambda/2$ while the wave sweeps past at $v_w$; net flow arises from the quadratic-in-field zero mode of [1], not from ions surfing the wave.</p>
+<p>Within the established electrokinetic taxonomy, RIMT is best classified as <strong>induced-charge traveling-wave electro-osmosis with dielectric blocking</strong> (the compound label "IC-TWEO" is introduced here as a convenience tag for the combined regime and is not a term of art in the cited literature, where the constituent induced-charge [5], traveling-wave [1, 3, 4], and dielectric-blocking concepts are covered separately): the 500 nm Ta$_2$O$_5$ overcoat acts as the polarisable dielectric of induced-charge electro-osmosis [5] while the spatially advancing phase pattern across the electrode lattice supplies the traveling-wave component [1, 3, 4]. The dielectric simultaneously enforces the Faradaic-blocking condition (§1.3), distinguishing RIMT from the bare-electrode ACEO/TWEO devices in the cited microfluidics literature.</p>
+<p>A complete frame-by-frame momentum analysis of the release phase — specifically, whether the released ion sheath transfers its acquired momentum to bulk water with the efficiency assumed in §4.4 or back-scatters a fraction of it — is identified as an experimental and computational open question (§6).</p>
+<hr />
+<h2>5. Environmental Challenges and Active Mitigation</h2>
+<h3>5.1 Bio-Fouling and Biological Adhesion</h3>
+<p>Marine bio-fouling — the sequential colonisation of submerged surfaces by dissolved organics, bacteria (primary biofilm), diatoms, and macro-foulers (barnacles, mussels) — poses the most significant operational threat to the SSIH. Any biological layer interposed between the dielectric surface and the water bulk acts as an additional insulating layer, attenuating the electric field at the EDL and degrading thrust proportionally to the increase in effective dielectric thickness. RIMT is hypothesised to suppress the early stages of bio-fouling through a single mechanism intrinsic to its operating principle: MHz-range oscillating tangential electric fields have been reported in laboratory studies to disrupt protein adsorption and bacterial adhesion (the AC anti-fouling literature, e.g., AC-EF studies on stainless and titanium electrodes), and the local shear stress generated at the EDL slip plane by the ratcheting ion sheath is hypothesised to mechanically detach loosely adherent organic precursor films before stable biofilm formation. The magnitude of these effects on a Ta$_2$O$_5$ surface under realistic seawater flow conditions has not been characterised, and quantitative bio-fouling validation is identified in §6 as a key experimental question.</p>
+<p>Note that an intact 500 nm Ta$_2$O$_5$ dielectric blocks Faradaic current at all operating frequencies (this is its design purpose); therefore <em>the SSIH cannot use electrolytic bubble generation as a cleaning mechanism through the intact dielectric</em>. If active electrolytic cleaning is demonstrated to be operationally necessary, it would require a dedicated sacrificial electrode region with a thinned or deliberately permeable dielectric — a design option that this disclosure does not specify and that would need to be developed and validated separately.</p>
+<h3>5.2 Salinity and Conductivity Variation</h3>
+<p>RIMT performance depends on the ion concentration and conductivity of the surrounding water, both of which vary significantly between open ocean ($\sigma \approx 5$ S/m), coastal estuaries ($\sigma \approx 0.5$–2 S/m), and freshwater river channels ($\sigma < 0.1$ S/m). As ion concentration decreases, the Debye length increases ($\kappa^{-1} \propto c^{-1/2}$, where $c$ is the ionic concentration; this maps to $\sigma^{-1/2}$ only when ion mobilities are constant), the EDL becomes more diffuse, and electro-osmotic coupling efficiency decreases. The PEM mitigates this through continuous real-time impedance sensing: as the vessel transits from high to low salinity, the controller increases peak drive voltage and adjusts pulse width to maintain constant momentum transfer for the available charge carrier density. Vessels designed exclusively for freshwater operation can specify a thinner dielectric (e.g., 100 nm HfO$_2$) to increase baseline capacitance and partially compensate for reduced ion concentration.</p>
+<h3>5.3 Physical Damage and Fault Isolation</h3>
+<p>The 500 nm dielectric layer is the most mechanically vulnerable element of the SSIH. Breaching of this layer by abrasion, impact debris, or penetrating marine growth creates a low-impedance path from the driven electrode directly to seawater, producing a tile-level short circuit. The per-tile GaN controller detects the resulting current spike and permanently de-energises the tile within a few microseconds (consistent with the desaturation-protect propagation delay of representative isolated GaN drivers — see §3.4) — isolating the fault before thermal damage can propagate to adjacent tiles or the DC bus. The vessel's central propulsion management system registers the fault, recalculates thrust distribution across remaining healthy tiles, and increases drive parameters proportionally to maintain target vessel speed. Physical repair requires replacement of the affected tile module — a procedure achievable without drydocking for accessible hull areas.</p>
+<hr />
+<h2>6. Limitations and Future Work</h2>
+<p>This disclosure is text-and-equation only: explanatory figures (hull-stack-up cross-section, IDE traveling-wave schematic, Active Tile system diagram) are deliberately omitted from version 1.0 and are reserved for a follow-up revision. The §3.5 parameter summary table is intended to compensate for the absence of figures at the level needed for reviewers to reconstruct the geometry.</p>
+<p>The analysis presented in this disclosure is theoretical and computational; no laboratory prototype of the RIMT/SSIH system has been constructed or tested as of the date of publication. The efficiency values of 3% (un-tuned baseline) and 83% (optimised) are derived from first-order analytical models assuming an ideal planar EDL, Newtonian fluid behaviour within the boundary layer, spatially uniform electrode performance, and the absence of organic fouling, dissolved gases, or turbulent disruption of the ion sheath. Real-world performance will deviate from these values, and experimental characterisation is essential before any vessel-scale application can be rigorously evaluated.</p>
+<p>Several specific open questions require empirical resolution. First, the precise usable frequency window must be determined experimentally: the steric flow reversal identified by Olesen et al. (2010) sets an upper frequency bound [6] that depends on electrolyte concentration and electrode geometry in ways not fully captured by linearised EDL theory, and the optimal sawtooth asymmetry must be validated against this constraint. Second, the bio-fouling suppression claim — specifically the protein-adhesion disruption mechanism at MHz frequencies — requires controlled in vitro and in situ validation. Third, the thrust efficiency of the proposed interdigitated electrode geometry at 30 µm pitch has not been measured; scaling from microfluidic TWEO results to hull-scale arrays may introduce edge effects and parasitic capacitances not present in idealised geometries. Fourth, the long-term durability of a 500 nm ALD Ta$_2$O$_5$ dielectric under continuous electrochemical cycling, thermal cycling, and physical stress in a marine environment is unknown.</p>
+<p>Future work proposed by the author includes: (a) construction of a bench-scale ionic plate test cell (10 cm × 10 cm interdigitated gold electrode array on PCB substrate in a controlled saltwater tank, driven by a GaN evaluation board, with thrust measured by a torsion balance — the required sensitivity is approximately 0.5 N for the design thrust density of 50 N m$^{-2}$ on a 0.01 m$^2$ test plate, well within the resolution of commercially available laboratory torsion balances of ±10 mN class) to validate the first-order model and characterise the steric reversal frequency — a simpler dielectric such as Parylene-C or a high-quality ceramic dip-coat is sufficient for this bench-scale validation and substantially reduces prototype cost relative to full ALD processing; (b) a detailed component-level cost model for a production 20 m vessel SSIH installation; (c) development and simulation of salinity-adaptive control algorithms for estuarine and freshwater transit; (d) experimental characterisation of the hypothesised AC-EF bio-fouling suppression effect under marine flow conditions; (e) experimental quantification of any skin-friction drag reduction co-benefit (§1.3) under hull-scale flow; and (f) an environmental impact assessment of the MHz-range electromagnetic fields on representative marine organisms at realistic hull-surface flux densities, evaluated against the ICNIRP 1998 general-public reference levels for the 100 kHz–10 MHz band (E-field limit 87 V/m) and the analogous IEEE C95.1 occupational exposure standard.</p>
+<p>A note on manufacturing economics is warranted here. The two primary cost drivers for production SSIH tiles are: (i) the sub-15 µm interdigitated electrode patterning on flexible substrate, which requires semiconductor-grade photolithographic processing not available through standard PCB fabrication channels; and (ii) the 500 nm ALD dielectric, whose per-area cost on large-area flexible substrates is governed by the maturity of roll-to-roll ALD processes that are in active industrial development but not yet available as catalogue marine-supply products. GaN module procurement and hull installation are secondary cost drivers within established markets. The case for eventual cost competitiveness with conventional diesel-mechanical drivetrains — which range from approximately &#36;50,000 to &#36;120,000 USD installed for a mid-range 20 m vessel (Depco Power Systems, <em>Marine Diesel Engine Costs: New, Used &amp; Rebuilt Guide</em>, https://www.depco.com/faq/how-much-does-a-marine-diesel-engine-cost/) — rests on two well-documented manufacturing trends: the steep learning curves of large-area flexible electronics fabrication, and the ongoing commoditisation of GaN wide-bandgap power devices driven by the electric vehicle and power-conversion industries. A first-of-kind prototype installation would carry substantially higher per-unit costs than a volume-production installation; cost parity is plausible at mature production scale once roll-to-roll flexible lithography and large-area ALD reach industrial readiness, but this projection remains speculative. An order-of-magnitude plausibility figure of $\mathcal{O}(10^5)$ USD per 20 m vessel installation at volume maturity is consistent with conventional diesel-mechanical drivetrain costs in the same size class, but no rigorous bottom-up bill-of-materials has been carried out; such a study is identified as a necessary precondition for any commercialisation decision.</p>
+<hr />
+<h2>7. Conclusion</h2>
+<p>The Solid-State Ionic Hull (SSIH) driven by Resonant Ionic Momentum Transfer represents a conceptually distinct departure from all prior marine propulsion paradigms. Rather than generating thrust by displacing water at a mechanical point source, RIMT manipulates the pre-existing Electrical Double Layer of seawater across the entire hull surface via GaN-driven traveling-wave electrostatics, generating net directional thrust and — if the hypothesised skin-friction drag attenuation (§1.3, §6) is realised in hardware — simultaneously reducing the dominant resistance component of the hull. The physics underlying this mechanism — electro-osmotic coupling, Debye layer theory, and traveling-wave electrophoresis — are well-established at microscale; RIMT proposes their first application at macroscopic hull scale, enabled by the commercial maturity of GaN wide-bandgap power electronics and high-k ALD dielectric deposition.</p>
+<p>First-order computational modelling confirms thermodynamic viability of the optimised design: an un-tuned baseline with fixed high drive voltage is dominated by AC ohmic loss in the seawater between electrodes and is non-viable ($\eta \approx 3\%$). An ALD-optimised design with analytically tuned drive voltage reaches $\eta \approx 83\%$ (first-order upper bound; experimental validation pending), exceeding the practical efficiency ceiling of mechanical propulsion (~70–72% [10]) by approximately ten percentage points. This improvement is achieved by distributing momentum transfer across the entire wetted hull surface at sub-cavitation velocities with no moving parts. The modular Active Tile architecture ensures fault tolerance, platform independence, and field-serviceable maintainability. As a practical operational consequence of eliminating external rotating machinery, SSIH vessels have no minimum propulsion draft, no propeller-strike risk in shallow water, and no acoustic signature from mechanical drivetrain components. The open publication of this architecture under CC BY-SA 4.0 establishes prior art, prevents proprietary patent capture of this design space, and invites the global research and engineering community to build on, validate, and extend this work freely.</p>
+<hr />
+<h2>Acknowledgments</h2>
+<p>This work was conceived and developed by Gábor Szabó (independent researcher). Theoretical analysis, literature survey, and manuscript preparation were conducted with AI research assistance from Google Gemini and Claude (Anthropic). No external funding was received for this work. This disclosure is released under the Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA 4.0).</p>
+<h2>Conflict of Interest Statement</h2>
+<p>The author declares no competing financial interests.</p>
+<h2>Data Availability Statement</h2>
+<p>All simulation source code, unit tests, the Markdown source of this paper, the companion side-by-side comparison document, and the interactive infographic data package are openly available at https://github.com/uchimata2/Project-Leviathan-RIMT (concept DOI <a href="https://doi.org/10.5281/zenodo.20361267">10.5281/zenodo.20361267</a>; always-latest version). The companion simulation <code>simulations/rimt_simulation.py</code> implements the three first-order models described in §4 and is the authoritative source for all efficiency figures quoted in this paper. The accompanying test suite <code>simulations/test_rimt_simulation.py</code> (45 unit tests, all passing) acts as a machine-checked specification of the numerical results.</p>
+<h2>Dual-Use Considerations</h2>
+<p>RIMT is a dual-use technology. Defensive publication accelerates all potential adopters — civilian, research, and military. By publishing this architecture as open prior art under CC BY-SA 4.0, the author explicitly prevents patent capture by any single actor; the disclosure does not, and cannot, prevent state or non-state actors from independently developing the technology in secret. The author considers this trade-off — open advancement versus restricted control — preferable to patent enclosure, and notes that the most plausible early adopters identified in the companion comparison document (naval unmanned underwater vehicles, low-acoustic-signature surface combatants) carry the same dual-use considerations as any acoustic-stealth or hull-electronics innovation in the open literature.</p>
+<h2>How to Cite</h2>
+<p>Please cite this work using the concept DOI (always resolves to the latest version):</p>
+<pre><code class="language-bibtex">@misc{szabo2026rimt,
+  author       = {Szabó, Gábor},
+  title        = {Solid-State Marine Propulsion via Resonant Ionic Momentum Transfer (RIMT):
+                  Technical Disclosure \&amp; Whitepaper},
+  year         = {2026},
+  howpublished = {Zenodo},
+  doi          = {10.5281/zenodo.20361267},
+  url          = {https://doi.org/10.5281/zenodo.20361267},
+  note         = {Concept DOI; resolves to the latest version. CC BY-SA 4.0.}
+}
+</code></pre>
+<hr />
+<h2>References</h2>
+<ol>
+<li>
+<p>Shrestha, A., Kirkinis, E., &amp; Olvera de la Cruz, M. (2025). Universal behaviour in boundary-driven electrokinetic flows. <em>Journal of Fluid Mechanics</em>, 1010, A50. https://doi.org/10.1017/jfm.2025.288 (preprint, with original title "Universal behavior in traveling wave electroosmosis": arXiv:2401.15426, https://doi.org/10.48550/arXiv.2401.15426)</p>
+</li>
+<li>
+<p>Hansen, T. E., Stern, A., Thuppul, A., &amp; Diez, F. J. (2020). Scalable electro-osmotic thruster for stealthy, extreme condition underwater propulsion. <em>Journal of Offshore Mechanics and Arctic Engineering</em>, 142(1), 014503. https://doi.org/10.1115/1.4044634</p>
+</li>
+<li>
+<p>González, A., Ramos, A., García-Sánchez, P., &amp; Castellanos, A. (2008). Effect of the difference in ion mobilities on traveling-wave electro-osmosis. <em>arXiv:0803.1055</em>. https://doi.org/10.48550/arXiv.0803.1055</p>
+</li>
+<li>
+<p>Hrdlička, J., Patel, N. S., &amp; Snita, D. (2014). Traveling wave electroosmosis: the influence of electrode array geometry. <em>Electrophoresis</em>, 35(12–13), 1790–1794. https://doi.org/10.1002/elps.201300614 (PMID: 24723297)</p>
+</li>
+<li>
+<p>Bazant, M. Z., &amp; Squires, T. M. (2004). Induced-charge electrokinetic phenomena: theory and microfluidic applications. <em>Physical Review Letters</em>, 92(6), 066101. https://doi.org/10.1103/PhysRevLett.92.066101</p>
+</li>
+<li>
+<p>Olesen, L. H., Bazant, M. Z., &amp; Bruus, H. (2010). Strongly nonlinear dynamics of electrolytes in large AC voltages. <em>Physical Review E</em>, 82(1), 011501. https://doi.org/10.1103/PhysRevE.82.011501 (arXiv:0908.3501)</p>
+</li>
+<li>
+<p>Kan, K. L. J., Cheng, K. W. E., &amp; Zhuang, H.-C. (2023). Electric analysis of the maritime application high-frequency magnetohydrodynamic thruster. <em>Energies</em>, 16(16), 6021. https://doi.org/10.3390/en16166021</p>
+</li>
+<li>
+<p>Bard, A. J., &amp; Faulkner, L. R. (2001). <em>Electrochemical Methods: Fundamentals and Applications</em> (2nd ed.). Wiley. — Chapter 6 (kinetics and overpotential).</p>
+</li>
+<li>
+<p>Schmickler, W., &amp; Santos, E. (2010). <em>Interfacial Electrochemistry</em> (2nd ed.). Springer. — Chapter 9 (electrode kinetics).</p>
+</li>
+<li>
+<p>Carlton, J. S. (2018). <em>Marine Propellers and Propulsion</em> (4th ed.). Butterworth-Heinemann. — Chapter 6 (propeller theories), Chapter 12 (resistance and propulsion), Chapter 14 (efficiency limits).</p>
+</li>
+<li>
+<p>GaN Systems (2018). <em>GS66508T 650 V Enhancement Mode GaN Transistor</em> — datasheet, Rev. 180422, https://gansystems.com.</p>
+</li>
+</ol>
+<hr />
+<p><em>Technical Disclosure published under CC BY-SA 4.0 · DOI: <a href="https://doi.org/10.5281/zenodo.20361267">10.5281/zenodo.20361267</a> · Project Leviathan</em></p>
+
+</body>
+</html>

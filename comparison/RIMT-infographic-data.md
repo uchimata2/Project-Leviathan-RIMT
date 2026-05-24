@@ -36,7 +36,7 @@ Render as four side-by-side icon pairs (conventional ← → RIMT).
 | Aspect | Conventional today | RIMT if validated |
 |---|---|---|
 | **Direct emissions** | CO₂, NOₓ, SOₓ, PM, oil-spill risk | Zero direct |
-| **Underwater noise** | 180+ dB monopole source, dominated by propeller cavitation | Hull-flow noise of the displacement hull alone |
+| **Underwater noise** | 180+ dB monopole source, dominated by propeller cavitation | Hull-flow noise of the displacement hull; on-board genset noise unchanged if a hybrid powertrain is used |
 | **Moving parts** | Hundreds to thousands per drivetrain | Zero in the propulsion path |
 | **Propeller strikes on marine life** | Tens to hundreds of large cetaceans killed annually in shipping lanes; recreational injuries to swimmers and pinnipeds | Eliminated — no external rotating element |
 
@@ -64,7 +64,7 @@ A small staircase chart of milestones, illustrating that early validation is **c
 | 3 m sub-scale vessel demonstrator | Research consortium | $5 M |
 | 10 m in-water vessel demonstrator | Industry / national programme | $20 M |
 
-All figures are order-of-magnitude planning estimates, not committed costs. Detail in the comparison document's Figure 5 specification.
+All figures are order-of-magnitude planning estimates of programme R&D spend (cumulative funding required to reach each TRL milestone), **not** per-vessel BOM at maturity. The per-vessel BOM at volume maturity is plausibility-estimated at $\mathcal{O}(10^5)$ USD per 20 m vessel (WP §6) — a fundamentally different unit and scale. Detail in the comparison document's Figure 5 specification.
 
 ## 6. The honest caveat (one paragraph, bottom)
 
@@ -76,7 +76,7 @@ All figures are order-of-magnitude planning estimates, not committed costs. Deta
 - **GitHub repository:** [uchimata2/Project-Leviathan-RIMT](https://github.com/uchimata2/Project-Leviathan-RIMT)
 - **Whitepaper:** [`whitepaper/RIMT-whitepaper.md`](../whitepaper/RIMT-whitepaper.md)
 - **Detailed comparison:** [`comparison/RIMT-vs-conventional-comparison.md`](RIMT-vs-conventional-comparison.md)
-- **Open-source simulation (42 unit tests passing):** [`simulations/rimt_simulation.py`](../simulations/rimt_simulation.py)
+- **Open-source simulation (45 unit tests passing):** [`simulations/rimt_simulation.py`](../simulations/rimt_simulation.py)
 
 ---
 
@@ -131,7 +131,7 @@ Every numerical claim carries a `source` field pointing at its canonical locatio
     "subtitle": "First-order analytical concept, TRL 2. Published as a defensive disclosure under CC BY-SA 4.0 so any builder can validate it.",
     "author": "Gábor Szabó",
     "license": "CC BY-SA 4.0 International",
-    "doi_placeholder": "10.5281/zenodo.20361267",
+    "doi_id": "10.5281/zenodo.20361267",
     "source": "WP §1, Comparison Executive Summary"
   },
   "hero_numbers": [
@@ -182,7 +182,7 @@ Every numerical claim carries a `source` field pointing at its canonical locatio
     {
       "aspect": "Underwater noise",
       "conventional": "180+ dB monopole source, dominated by propeller cavitation",
-      "rimt": "Hull-flow noise of the displacement hull alone",
+      "rimt": "Hull-flow noise of the displacement hull; engineering noise of any on-board generator unchanged if a hybrid powertrain is used",
       "source": "Comparison §6 + refs [7, 8]"
     },
     {
@@ -336,6 +336,7 @@ Every numerical claim carries a `source` field pointing at its canonical locatio
     "acoustic_spectrum": {
       "title": "Underwater acoustic signature comparison",
       "caption": "Projected RIMT spectrum is derived from the source-elimination argument, not measurement. Container-ship curve is after [7, 8]. Whale-vocalisation bands shown for context.",
+      "data_provenance": "Container-ship curve: measured / synthesised from refs [7, 8]. Electric-small-vessel and rimt_projected curves: illustrative projections derived from the source-elimination argument (no on-board genset; no propeller cavitation; no rotating-machinery broadband peak) — not measured spectra. Re-validate experimentally before quoting.",
       "freq_hz": [10, 31, 100, 316, 1000, 3162, 10000, 31623, 100000],
       "container_ship_db": [180, 178, 170, 155, 140, 135, 132, 130, 130],
       "electric_small_vessel_db": [130, 128, 125, 120, 115, 112, 110, 108, 108],
@@ -353,6 +354,7 @@ Every numerical claim carries a `source` field pointing at its canonical locatio
     "whitepaper": "../whitepaper/RIMT-whitepaper.html",
     "comparison": "RIMT-vs-conventional-comparison.html",
     "simulation": "../simulations/rimt_simulation.py",
+    "simulation_github": "https://github.com/uchimata2/Project-Leviathan-RIMT/blob/main/simulations/rimt_simulation.py",
     "github": "https://github.com/uchimata2/Project-Leviathan-RIMT",
     "doi": "https://doi.org/10.5281/zenodo.20361267"
   }

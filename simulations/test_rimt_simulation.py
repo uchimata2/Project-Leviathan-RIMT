@@ -9,13 +9,16 @@ Run with:
     python test_rimt_simulation.py
 """
 
+import io
 import math
 import unittest
+from contextlib import redirect_stdout
 
 from rimt_simulation import (
     analyse_debye_layer,
     parametric_performance,
     tuned_performance,
+    main,
     DebyeLayerResult,
     PerformanceResult,
     EPSILON_0,
@@ -337,6 +340,37 @@ class TestSalinityOverride(unittest.TestCase):
         r_ocean    = tuned_performance(VESSEL_SPEED, HULL_AREA, THRUST_PER_M2, sigma_seawater=4.8)
         r_brackish = tuned_performance(VESSEL_SPEED, HULL_AREA, THRUST_PER_M2, sigma_seawater=0.5)
         self.assertGreater(r_brackish.ohmic_loss_W_m2, r_ocean.ohmic_loss_W_m2)
+
+
+# ---------------------------------------------------------------------------
+# Main entrypoint smoke test (regression guard for README "Expected output")
+# ---------------------------------------------------------------------------
+
+class TestMainSmoke(unittest.TestCase):
+    """Capture main() stdout and assert the headline numbers / labels render.
+
+    If main()'s format strings drift from the values asserted in the README
+    "Expected output" block, this test fires immediately. Cheap regression
+    guard for the cross-doc invariants in [[project-rimt-data-sync-registry]].
+    """
+
+    def setUp(self):
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            main()
+        self.out = buf.getvalue()
+
+    def test_headline_efficiencies_present(self):
+        self.assertIn("3.0 %", self.out)
+        self.assertIn("83.0 %", self.out)
+
+    def test_drive_voltages_present(self):
+        self.assertIn("200.00 V", self.out)
+        self.assertIn("5.31 V", self.out)
+
+    def test_model_labels_present(self):
+        self.assertIn("Baseline (Model 2)", self.out)
+        self.assertIn("Optimised", self.out)
 
 
 if __name__ == "__main__":

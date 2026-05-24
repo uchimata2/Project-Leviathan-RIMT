@@ -3,8 +3,8 @@
 
 **Companion document to:** *Solid-State Marine Propulsion via Resonant Ionic Momentum Transfer (RIMT) — Technical Disclosure & Whitepaper*<br>
 **Author:** Gábor Szabó<br>
-**Date:** 2026-05-23<br>
-**Version:** 1.0<br>
+**Date:** 2026-05-24<br>
+**Version:** 1.0.2<br>
 **License:** CC BY-SA 4.0 International
 
 ---
@@ -36,7 +36,7 @@ The structured comparison below covers 15 categories. RIMT's strengths cluster a
 | Sub-aspect | Conventional propulsion | RIMT |
 |---|---|---|
 | Energy conversion chain | Chemical (fuel) → thermal (combustion) → mechanical (crankshaft) → rotational (shaft) → hydrodynamic (propeller) → thrust. Each stage is loss-bearing. | Electrical (DC bus) → high-frequency AC (GaN PEM) → tangential electric field across EDL → directed ion drift → viscous coupling to bulk water → thrust (WP §3.3, §4). |
-| Thrust generation mechanism | Point-source: a rotating screw accelerates a column of water aft, generating Newtonian reaction force. Local cavitation and tip vortices set the practical ceiling. | Distributed: every cm² of hull surface acts as a momentum source. No vortex shedding, no cavitation, no minimum local flow velocity required (WP §1.3, §7). |
+| Thrust generation mechanism | Point-source: a rotating screw accelerates a column of water aft, generating Newtonian reaction force. Local cavitation and tip vortices set the practical ceiling. | Distributed: every cm² of hull surface acts as a momentum source. No vortex shedding, no cavitation, no minimum local flow velocity required (WP §1.3, §7). Cooling design must accommodate stationary-vessel operation, since the only thermal sink for the GaN PEMs at zero vessel speed is conductive heat flow to still water through the hull. |
 | Working-fluid interaction | The fluid is accelerated in bulk through a discrete actuator (propeller, waterjet). | The fluid's existing ion population is "ratcheted" along the hull within the Debye layer; bulk water moves via viscous coupling from the ion sheath outward (WP §1.3, §4.1). |
 | Frequency / time-scale | Shaft RPM ranges from ~100 rpm (large two-stroke) to ~6 000 rpm (high-speed outboard). | Carrier frequency 2–5 MHz; full traveling-wave period 500 ns; rise:fall asymmetry 1:4 (WP §3.3). |
 | Underlying physical theory | Froude–Rankine momentum theory of propellers; Bernoulli/energy balance; cavitation criteria; viscous boundary-layer theory. | Smoluchowski electro-osmotic flow; Debye–Hückel EDL theory; induced-charge traveling-wave electro-osmosis (IC-TWEO) [WP refs 1, 3, 4, 5]. |
@@ -49,7 +49,7 @@ The structured comparison below covers 15 categories. RIMT's strengths cluster a
 | Propulsive efficiency (wake-to-water, hull-clean) | ~55–77 % open-water propeller efficiency; ~70–72 % practical ceiling on optimised commercial vessels (Carlton 2018; [4]). | Modelled η ≈ 83 % (WP §4.4, Model 3, tuned). Baseline (Model 2, fixed 200 V, 1 µm Al₂O₃) is η ≈ 3 % — demonstrates that adaptive voltage matching is essential. |
 | Total wall-plug or fuel-to-thrust efficiency | Two-stroke diesel: ~50 % brake thermal × ~70 % propeller × ~95 % transmission ≈ 33 % at design load [4, 13]. Four-stroke and high-speed engines fall to 25 % or below. | Modelled ~83 % wall-plug (electrical input to useful thrust); on a battery-electric vessel the upstream charging chain (~92 % grid → ~95 % battery round-trip) reduces well-to-wake by a further ~10 %. |
 | Thrust density | ~10⁴–10⁵ N/m² at the propeller disk, integrated over a fraction of a percent of hull area. | Design target 50 N/m² distributed across the full wetted hull (WP §4.4); for a 30 m² hull this gives 1 500 N total thrust at the §4.4 design point. |
-| Top speed | Routine 12–25 knots commercial; planing recreational craft 30–60 knots; high-performance jets >60 knots. | Not bounded by the actuator (wave propagation v_w ≈ 60 m/s ≈ 117 knots, WP §3.3); top speed is set by hull form drag and onboard electrical power, not the RIMT mechanism. |
+| Top speed | Routine 12–25 knots commercial; planing recreational craft 30–60 knots; high-performance jets >60 knots. | The wave-pattern propagation speed v_w = 60 m/s ≈ 117 knots (WP §3.3) substantially exceeds any conceivable vessel speed, so the actuator is not the speed-limiting element. Vessel top speed is set by hull-form drag and onboard electrical power, not the RIMT mechanism. (v_w is a wave kinematic, not a vessel-speed claim.) |
 | Low-speed maneuverability | Propellers below ~30 % design RPM lose efficiency steeply (down to ~40 %); rudders need flow to be effective; bow thrusters are added complexity. | Thrust direction is electronically reversible by inverting the electrode phase sequence; differential tile activation provides yaw/sway authority without rudders or thrusters (WP §3.3). |
 | Acceleration / response time | Throttle-up-to-thrust latency seconds to tens of seconds (engine speed-up, shaft inertia, prop wash establishment). | Electronic; full thrust reversal within carrier-frequency time scales (microseconds), constrained in practice by DC bus dynamics and crew safety (WP §3.3, §3.4). |
 | Reversibility | Reverse gear or controllable-pitch propeller; mechanical complexity scales with ship size. | Phase-sequence inversion; no mechanical reverse gear. |
@@ -61,7 +61,7 @@ The structured comparison below covers 15 categories. RIMT's strengths cluster a
 |---|---|---|
 | CAPEX, mid-range 20 m vessel | Engine alone $20k–$120k+ per unit, plus shaft, prop, gearbox, controls; installed package typically $50k–$120k [2]. | No verified BOM yet; whitepaper plausibility estimate $\mathcal{O}(10^5)$ USD at volume maturity (WP §6) is contingent on (i) sub-15 µm flexible-substrate lithography and (ii) large-area ALD reaching catalogue-marine readiness. First-of-kind prototype installations would be substantially higher. |
 | CAPEX scaling | Roughly linear with shaft power; gearbox and shaft costs scale faster than engine cost above 10 MW. | Roughly linear with wetted hull area, since the SSIH is a tiled architecture (WP §3.4). 30 cm × 30 cm tiles allow per-unit cost learning curves familiar from flexible electronics. |
-| OPEX (annual energy) | Marine diesel fuel cost dominates; biofouling adds up to 40 % overhead. Mid-range 20 m yacht with 200 hrs/yr usage: typical $7k–$15k fuel + $5k–$15k servicing (order of magnitude; varies widely with cruise speed and bunker price). | Electrical energy at modelled 83 % wall-plug efficiency; battery-electric or hybrid energy source. Annual energy cost depends on local electricity tariff and usage profile; at $0.20/kWh and the same 200 hrs/yr usage, on the order of $1k–$4k for the same hull. The OPEX gap widens with carbon pricing and bunker-fuel surcharges. |
+| OPEX (annual energy) | Marine diesel fuel cost dominates; biofouling adds up to 40 % overhead. Mid-range 20 m yacht at a representative 200 hrs/yr usage (typical for owner-operated mid-latitude recreational yachts; ranges from ~100 hrs/yr in cold-climate seasonal use to ~300 hrs/yr in chartered or year-round operation): typical $7k–$15k fuel + $5k–$15k servicing (rough order of magnitude; varies widely with cruise speed and bunker price). | Electrical energy at modelled 83 % wall-plug efficiency; battery-electric or hybrid energy source. Annual energy cost depends on local electricity tariff and usage profile; at $0.20/kWh and the same 200 hrs/yr usage, on the order of $1k–$4k for the same hull. The OPEX gap widens with carbon pricing and bunker-fuel surcharges. |
 | Maintenance cost | Routine oil changes, impeller/cooling-pump service, injector/turbo overhaul, prop polish, shaft seal, dry-dock antifouling repaint every 1–3 years. | No moving parts; per-tile replacement on failure (WP §3.4); no antifouling repaint cycle if the AC-EF antifouling effect is realised — otherwise comparable to a coated steel hull. |
 | Lifetime / replacement interval | Heavy commercial diesel: 25 000–40 000 hrs to major overhaul; recreational gasoline outboard: 2 000–3 000 hrs. | Unknown; bounded by Ta₂O₅ dielectric lifetime under continuous electrochemical cycling — explicitly identified in WP §6 as an open experimental question. |
 | Total cost of ownership sensitivity | Highly sensitive to bunker fuel price, carbon-pricing legislation, biofouling growth rate. | Sensitive to electricity price, dielectric MTBF, and tile failure rate. Insensitive to fuel-price shocks. |
@@ -82,7 +82,7 @@ The structured comparison below covers 15 categories. RIMT's strengths cluster a
 
 | Sub-aspect | Conventional propulsion | RIMT |
 |---|---|---|
-| Number of moving parts | Hundreds to thousands per drivetrain (pistons, valves, rings, bearings, gears, shafts, cooling pumps, fuel pumps, injectors, governor, prop blades, shaft seals). | Zero in the propulsion path. Cooling fans on GaN PEMs are the only rotating elements, and they can be solid-state too (Peltier) if needed. |
+| Number of moving parts | Hundreds to thousands per drivetrain (pistons, valves, rings, bearings, gears, shafts, cooling pumps, fuel pumps, injectors, governor, prop blades, shaft seals). | Zero in the propulsion path (the vessel as a whole still has the usual non-propulsion mechanical systems — bilge pumps, steering linkages, hatches, HVAC fans). Cooling fans on GaN PEMs are the only rotating elements within the propulsion chain, and they can be replaced by solid-state Peltier cooling if needed. |
 | Distinct subsystems | Engine, fuel system, lubrication, cooling, exhaust, gearbox, shaft, propeller, control. | Active tile array, DC bus distribution, central propulsion management controller, salinity sensor network. |
 | Control system | Modern ECMs are sophisticated but the underlying actuator (combustion) is fundamentally analog. | Inherently digital: every tile is an addressable element of a phased array. State-of-the-art digital propulsion. |
 | Software / firmware | Engine control units: tens to hundreds of thousands of LOC, mostly safety-critical real-time. | PEM firmware (per-tile): waveform synthesis, fault detection, impedance sensing. Central controller: thrust allocation, salinity adaptation, fault re-routing. Software footprint substantial but conventionally architected (motor-drive parallels). |
@@ -97,8 +97,8 @@ The structured comparison below covers 15 categories. RIMT's strengths cluster a
 | Other GHGs | NOₓ, methane slip (LNG engines), N₂O. IMO Tier III enforced in ECA zones. | None directly. |
 | Criteria pollutants | SOₓ, NOₓ, particulate matter (PM), CO. MARPOL Annex VI sulfur cap 0.5 % global, 0.1 % in ECAs. | None. |
 | Oil / fuel spill risk | Significant: hull breach, engine-room leaks, bunkering accidents. Decades of regulation (OPA-90, MARPOL Annex I). | None; no liquid hydrocarbon onboard for the propulsion system. Battery thermal runaway is the analogous risk and is a separate hazard from the propulsion mechanism. |
-| Underwater noise | Container ship monopole source level ~183–188 dB re 1 µPa @ 1 m, predominantly below 40 Hz from prop cavitation + machinery vibration [7, 8]. IMO Experience Building Phase ends MEPC 85 in 2026; mandatory measures on the table after that [5, 6]. | The two dominant acoustic sources of a conventional vessel — propeller cavitation and rotating-machinery vibration — are absent by construction. The 2 MHz drive carrier is electrical, not acoustic; in seawater (σ ≈ 5 S/m) the EM skin depth at 2 MHz is ~16 cm, so the field does not propagate beyond the immediate hull boundary. The dominant emitted signature reduces to residual hull-flow noise of the displacement hull itself. |
-| Cetacean and fish strike | Direct propeller strike kills tens to hundreds of large cetaceans annually in shipping lanes; small recreational propeller strikes injure swimmers and pinnipeds. | No external rotating element; no propeller-strike mechanism. Strike risk reduces to the hull's own impact profile. |
+| Underwater noise | Container ship monopole source level ~180 dB re 1 µPa @ 1 m (with peak measurements in the 180–188 dB range across the cited studies), predominantly below 40 Hz from prop cavitation + machinery vibration [7, 8]. IMO Experience Building Phase ends MEPC 85 in 2026; mandatory measures on the table after that [5, 6]. | The two dominant acoustic sources of a conventional vessel — propeller cavitation and rotating-machinery vibration — are absent by construction. The 2 MHz drive carrier is electrical, not acoustic; in seawater (σ ≈ 5 S/m) the EM skin depth at 2 MHz is ~16 cm, so the field does not propagate beyond the immediate hull boundary. The dominant emitted signature reduces to residual hull-flow noise of the displacement hull itself. |
+| Cetacean and fish strike | Direct propeller and hull strike contribute tens to hundreds of documented large-cetacean mortalities annually in shipping lanes globally (IWC ship-strike database; regional NOAA right-whale records). Small recreational propeller strikes injure swimmers and pinnipeds. | No external rotating element; no propeller-strike mechanism. Strike risk reduces to the hull's own impact profile. |
 | Biofouling and antifouling paint | Industry pays ~$30B/yr extra fuel from biofouling; antifouling paints (copper, biocides) themselves are pollutants and increasingly restricted. | The MHz field is hypothesised to suppress early-stage organic adhesion (WP §5.1); if validated this eliminates copper-biocide paint runoff. Validation required. |
 | Ballast water cross-contamination | Major invasive-species vector; BWM Convention 2017 mandates treatment. | Unchanged — ballast is a separate system. |
 | End-of-life disposal | Engines and exhaust components contain hazardous metals; oil residues; complex recycling. | Tiles contain noble-metal electrodes (recoverable), Ta₂O₅ (inert), GaN (recoverable), copper wiring. Solid-state assembly is conceptually cleaner to disassemble; needs an actual recycling pathway designed. |
@@ -177,7 +177,7 @@ The structured comparison below covers 15 categories. RIMT's strengths cluster a
 | Sub-aspect | Conventional propulsion | RIMT |
 |---|---|---|
 | Smallest practical vessel (jet ski, dinghy) | Mature: 2-stroke outboards, electric outboards, jet drives. | A single 30 cm × 30 cm tile delivers ~5 N of thrust at design density; thirty tiles ≈ 150 N — adequate for a one-person craft. Scaling to jet-ski speeds (40+ knots) requires increased thrust density, an open question. |
-| Mid-range (10–20 m yacht, small ferry) | The reference design point in the whitepaper. | The whitepaper's reference design point (30 m² hull, 1 500 N at 10 m/s; WP §4.4). |
+| Mid-range (10–20 m yacht, small ferry) | Conventional 10–20 m yachts use 50–200 hp diesel inboards or 60–300 hp outboards; small ferries use 200–800 kW diesel-electric drives. Well-served by existing OEMs across all sub-segments. | The whitepaper's reference design point (30 m² hull, 1 500 N at 10 m/s; WP §4.4). |
 | Large commercial (100 m+ container, tanker) | Slow-speed two-stroke diesel; the most efficient configuration available today. | Hundreds to thousands of tiles; tile count scales with wetted area. Aggregated power draw at sea is non-trivial — requires battery/genset/nuclear sizing well beyond present marine-electric norms. |
 | Mega-vessel (300 m+) | Routine; 80 MW main engines common; up to ~110 MW (Triple-E class). | Theoretically scalable; at scale the limiting factor becomes onboard electricity generation, not the actuator. |
 | Naval / military | Sophisticated diesel-electric or nuclear-electric drives with quieting measures. | Acoustic-signature elimination is a significant theoretical advantage for stealth applications. Identified as natural high-value early adopter sector if classification can be obtained. |
@@ -199,7 +199,7 @@ The structured comparison below covers 15 categories. RIMT's strengths cluster a
 
 | Sub-aspect | Conventional propulsion | RIMT |
 |---|---|---|
-| TRL (NASA scale) | 9 (fielded systems). | 2 (analytical model only; experimental validation pending — WP §6). |
+| TRL (NASA scale) | 9 (fielded systems). | Between TRL 2 (concept formulated) and TRL 3 (analytical proof-of-concept) — the first-order computational models and 45-unit-test simulation suite arguably push the project toward TRL 3, but no physical experiment has been performed (WP §6). The project is reported as TRL 2 for conservative accounting. |
 | Operating history | 150 + years for steam/diesel; 60 + years for modern slow-speed two-stroke. | None as a fielded system; component technologies (GaN power electronics, ALD Ta₂O₅, IDE electrokinetics) individually mature. |
 | Open vs. proprietary | OEMs hold thousands of patents on engine internals; basic configurations are off-patent. | Defensive publication under CC BY-SA 4.0; the design space is being deliberately kept open. |
 | Patent landscape | Dense at the component level; clear at the architectural level. | Prior-art disclosure deliberately blocks proprietary capture (WP §7); first-mover patent risk is reduced by this strategy. |
@@ -210,7 +210,18 @@ The structured comparison below covers 15 categories. RIMT's strengths cluster a
 
 ## Quantitative scorecard
 
-A normalised one-page view of the comparison. The rubric is qualitative (—, –, 0, +, ++) and is intentionally honest about RIMT's "design target" status: a "+" or "++" in the RIMT column means *if the first-order model is reproduced in hardware*, not *measured today*.
+A normalised one-page view of the comparison. The rubric is qualitative and is intentionally honest about RIMT's "design target" status: a "+" or "++" in the RIMT column means *if the first-order model is reproduced in hardware*, not *measured today*.
+
+**Rubric legend** (ASCII equivalents in parentheses to avoid en/em-dash confusion):
+
+| Mark | ASCII | Meaning |
+|:---:|:---:|---|
+| `++` | `++` | Strong advantage |
+| `+`  | `+`  | Advantage |
+| `0`  | `0`  | Neutral |
+| `–`  | `-`  | Disadvantage |
+| `– –` | `--` | Strong disadvantage |
+| `?` | `?` | Unresolved / unknown |
 
 | Category | Conventional | RIMT (modelled) | Decisive factor |
 |---|:---:|:---:|---|
@@ -279,7 +290,7 @@ Conventional propellers strike, deafen, and disturb marine fauna. Where the miss
 | Application | Why RIMT fits | Plausibility |
 |---|---|---|
 | Marine-reserve patrol and ranger vessels | No propeller strike on manatees, turtles, sea lions, dugongs; near-silent operation | Near-term (small craft, regional pilots) |
-| Whale-watching tour boats | Acoustic stealth removes the operator's own contribution to the disturbance regulations are tightening to limit | Near-term |
+| Whale-watching tour boats | Acoustic stealth removes the operator's own contribution to the disturbance that regulations are tightening to limit | Near-term |
 | Cetacean and pinniped research vessels | Removes the dominant source of self-induced acoustic interference in passive-sonar studies | Near-term |
 | Coral-reef and seagrass survey craft | Zero-draft capability; no prop-wash sediment plume; no propeller damage to shallow benthic habitat | Near-term |
 | Polar research vessels (in open water) | Low underwater radiated noise reduces displacement of monitored marine mammals; no exhaust contamination of clean-air samples | Mid-term (ice-abrasion qualification gates broader use) |
@@ -356,7 +367,7 @@ A reader looking for the **lowest-risk early validation** should focus on **Near
 
 ## Caveats and reading instructions
 
-This is a *strategic* comparison rather than an *engineering* comparison. Many sub-aspects above hide further technical depth. In particular, every RIMT cell that quotes a number (η = 83 %, Pe ≈ 65, 50 N/m², 5.3 V, 60 m/s wave speed) comes from a first-order analytical model implemented and unit-tested in the companion repository (`simulations/rimt_simulation.py`, 42 tests passing). They are *upper bounds* under stated idealisations; the whitepaper §6 enumerates the experimental work needed to set realistic lower bounds.
+This is a *strategic* comparison rather than an *engineering* comparison. Many sub-aspects above hide further technical depth. In particular, every RIMT cell that quotes a number (η = 83 %, Pe ≈ 65, 50 N/m², 5.3 V, 60 m/s wave speed) comes from a first-order analytical model implemented and unit-tested in the companion repository (`simulations/rimt_simulation.py`, 45 tests passing). They are *upper bounds* under stated idealisations; the whitepaper §6 enumerates the experimental work needed to set realistic lower bounds.
 
 Conventional-propulsion figures are drawn from textbook, regulatory, and trade-press sources cited in the bibliography. Where ranges are given (e.g., "55–77 % open-water propeller efficiency"), the spread reflects real differences across vessel class and operating point rather than measurement uncertainty.
 
@@ -365,6 +376,8 @@ The quantitative scorecard's `+`/`++`/`–`/`– –` marks are deliberately qua
 ---
 
 ## References
+
+*The references below cover only the conventional-propulsion side of the comparison. All `WP refs [n]` cross-references in the table body are inherited from the whitepaper bibliography ([`whitepaper/RIMT-whitepaper.md`](../whitepaper/RIMT-whitepaper.md), refs 1–7 and the cited textbooks block); please consult the whitepaper directly for the full citation entries.*
 
 1. Global Maritime Forum. *A guide to the IMO's Net-Zero Framework*. https://globalmaritimeforum.org/news/a-guide-to-the-imos-net-zero-framework/
 2. Depco Power Systems. *Marine Diesel Engine Costs: New, Used & Rebuilt Guide*. https://www.depco.com/faq/how-much-does-a-marine-diesel-engine-cost/
@@ -393,7 +406,7 @@ The quantitative scorecard's `+`/`++`/`–`/`– –` marks are deliberately qua
 For full transparency about where the comparison has unavoidable epistemic asymmetry:
 
 - **Conventional column** — numbers are drawn from publicly available textbook, industry-report, and trade-press sources cited in the bibliography. Where ranges are given, they reflect the spread across vessel classes and operating points in the original sources, not measurement uncertainty.
-- **RIMT column** — every quantitative claim traces back to the whitepaper ([`whitepaper/RIMT-whitepaper.md`](../whitepaper/RIMT-whitepaper.md)) or its companion simulation ([`simulations/rimt_simulation.py`](../simulations/rimt_simulation.py), 42 unit tests passing). These are *first-order analytical upper bounds under stated idealisations*, not measurements. The whitepaper §6 (Limitations and Future Work) is the canonical list of what remains experimentally open.
+- **RIMT column** — every quantitative claim traces back to the whitepaper ([`whitepaper/RIMT-whitepaper.md`](../whitepaper/RIMT-whitepaper.md)) or its companion simulation ([`simulations/rimt_simulation.py`](../simulations/rimt_simulation.py), 45 unit tests passing). These are *first-order analytical upper bounds under stated idealisations*, not measurements. The whitepaper §6 (Limitations and Future Work) is the canonical list of what remains experimentally open.
 
 Readers comparing a row across both columns are therefore comparing *measured empirical practice* against *modelled design target*. Where a row's RIMT cell uses a word like "designed," "modelled," "target," or "if validated," the asymmetry is explicit. Where it does not, the asymmetry remains and should be understood from this appendix.
 

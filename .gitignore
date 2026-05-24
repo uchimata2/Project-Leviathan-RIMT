@@ -4,5 +4,7 @@ __pycache__/
 *.pyo
 .pytest_cache/
 
-# Export artefacts (HTML is intermediate; PDF is uploaded to Zenodo)
-whitepaper/RIMT-whitepaper.html
+# All print HTML and the interactive infographic are committed to the repo so
+# that readers without Python can preview the docs directly from the GitHub
+# web view; only Python cache directories are excluded. (Phase 10 audit #26
+# removed the asymmetric WP-HTML exclusion that previously existed here.)

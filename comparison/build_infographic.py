@@ -213,7 +213,7 @@ h3 { font-size: 1.2rem; margin-bottom: 0.5rem; font-weight: 600; color: var(--te
   text-transform: uppercase;
   animation: cue 2.4s ease-in-out infinite;
 }
-.scroll-cue::after { content: " v"; }
+.scroll-cue::after { content: " \2193"; }  /* Unicode DOWNWARDS ARROW (\2193 = U+2193) */
 @keyframes cue {
   0%, 100% { transform: translate(-50%, 0); opacity: 0.6; }
   50%      { transform: translate(-50%, 8px); opacity: 1; }
