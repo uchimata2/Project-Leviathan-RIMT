@@ -11,10 +11,10 @@ Usage:
     python build_infographic.py
 
 Input:
-    github-repo/comparison/RIMT-infographic-data.md      (fenced ```json block)
+    comparison/RIMT-infographic-data.md      (fenced ```json block)
 
 Output:
-    github-repo/comparison/RIMT-infographic.html
+    comparison/RIMT-infographic.html
 
 Data invariants:
     Every numeric claim in the JSON block carries a `source` field. The
@@ -28,10 +28,10 @@ import re
 import sys
 from pathlib import Path
 
-# parents[2] = repo root from github-repo/comparison/
-REPO_ROOT = Path(__file__).resolve().parents[2]
-SRC_MD = REPO_ROOT / "github-repo" / "comparison" / "RIMT-infographic-data.md"
-OUT_HTML = REPO_ROOT / "github-repo" / "comparison" / "RIMT-infographic.html"
+# parents[1] = repo root from comparison/
+REPO_ROOT = Path(__file__).resolve().parents[1]
+SRC_MD = REPO_ROOT / "comparison" / "RIMT-infographic-data.md"
+OUT_HTML = REPO_ROOT / "comparison" / "RIMT-infographic.html"
 
 REQUIRED_KEYS = [
     "doc_meta", "hero_numbers", "before_after", "where_it_shines",

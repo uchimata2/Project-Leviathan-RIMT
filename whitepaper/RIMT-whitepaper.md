@@ -5,7 +5,7 @@
 **Date:** 2026-05-23<br>
 **Version:** 1.0<br>
 **License:** CC BY-SA 4.0 International<br>
-**DOI:** [to be assigned upon Zenodo upload]
+**DOI:** [10.5281/zenodo.20361267](https://doi.org/10.5281/zenodo.20361267) (concept, always-latest)
 
 ---
 
@@ -205,7 +205,7 @@ This work was conceived and developed by Gábor Szabó (independent researcher).
 
 ## Code and Data Availability
 
-All simulation source code, unit tests, and the LaTeX/Markdown source of this paper are available at https://github.com/uchimata2/Project-Leviathan-RIMT (to be published upon GitHub repository creation). The companion simulation `simulations/rimt_simulation.py` implements the three first-order models described in §4 and is the authoritative source for all efficiency figures quoted in this paper. The accompanying test suite `simulations/test_rimt_simulation.py` (42 unit tests) acts as a machine-checked specification of the numerical results.
+All simulation source code, unit tests, and the Markdown source of this paper are available at https://github.com/uchimata2/Project-Leviathan-RIMT. The companion simulation `simulations/rimt_simulation.py` implements the three first-order models described in §4 and is the authoritative source for all efficiency figures quoted in this paper. The accompanying test suite `simulations/test_rimt_simulation.py` (42 unit tests) acts as a machine-checked specification of the numerical results.
 
 ---
 
@@ -234,4 +234,4 @@ All simulation source code, unit tests, and the LaTeX/Markdown source of this pa
 
 ---
 
-*Technical Disclosure published under CC BY-SA 4.0 · DOI: [to be assigned upon Zenodo upload] · Project Leviathan*
+*Technical Disclosure published under CC BY-SA 4.0 · DOI: [10.5281/zenodo.20361267](https://doi.org/10.5281/zenodo.20361267) · Project Leviathan*

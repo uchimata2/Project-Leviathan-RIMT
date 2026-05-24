@@ -6,9 +6,9 @@ Usage:
     python export_html.py
 
 Outputs:
-    github-repo/whitepaper/RIMT-whitepaper.html
-    github-repo/comparison/RIMT-vs-conventional-comparison.html
-    github-repo/comparison/RIMT-infographic-data.html
+    whitepaper/RIMT-whitepaper.html
+    comparison/RIMT-vs-conventional-comparison.html
+    comparison/RIMT-infographic-data.html
 
 Each generated .html is print-ready: open in Chrome, Ctrl+P, Save as PDF.
 
@@ -28,24 +28,24 @@ except ImportError:
 # ---------------------------------------------------------------------------
 # Paths and document list
 # ---------------------------------------------------------------------------
-# This script lives at <repo>/github-repo/whitepaper/export_html.py
-# parents[0] = whitepaper, parents[1] = github-repo, parents[2] = repo root
-REPO_ROOT = Path(__file__).resolve().parents[2]
+# This script lives at <repo>/whitepaper/export_html.py
+# parents[0] = whitepaper, parents[1] = repo root
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 DOCUMENTS = [
     {
-        "md": REPO_ROOT / "github-repo" / "whitepaper" / "RIMT-whitepaper.md",
-        "html": REPO_ROOT / "github-repo" / "whitepaper" / "RIMT-whitepaper.html",
+        "md": REPO_ROOT / "whitepaper" / "RIMT-whitepaper.md",
+        "html": REPO_ROOT / "whitepaper" / "RIMT-whitepaper.html",
         "title": "Solid-State Marine Propulsion via Resonant Ionic Momentum Transfer (RIMT)",
     },
     {
-        "md": REPO_ROOT / "github-repo" / "comparison" / "RIMT-vs-conventional-comparison.md",
-        "html": REPO_ROOT / "github-repo" / "comparison" / "RIMT-vs-conventional-comparison.html",
+        "md": REPO_ROOT / "comparison" / "RIMT-vs-conventional-comparison.md",
+        "html": REPO_ROOT / "comparison" / "RIMT-vs-conventional-comparison.html",
         "title": "RIMT vs. Conventional Marine Propulsion -- Comparative Analysis",
     },
     {
-        "md": REPO_ROOT / "github-repo" / "comparison" / "RIMT-infographic-data.md",
-        "html": REPO_ROOT / "github-repo" / "comparison" / "RIMT-infographic-data.html",
+        "md": REPO_ROOT / "comparison" / "RIMT-infographic-data.md",
+        "html": REPO_ROOT / "comparison" / "RIMT-infographic-data.html",
         "title": "RIMT Infographic Data Package",
     },
 ]

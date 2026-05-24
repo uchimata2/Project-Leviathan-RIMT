@@ -72,8 +72,8 @@ All figures are order-of-magnitude planning estimates, not committed costs. Deta
 
 ## 7. Where to find more
 
-- **DOI:** [to be assigned upon Zenodo upload — placeholder `10.5281/zenodo.XXXXXXX`]
-- **GitHub repository:** Project Leviathan — RIMT
+- **DOI (concept, always-latest):** [`10.5281/zenodo.20361267`](https://doi.org/10.5281/zenodo.20361267)
+- **GitHub repository:** [uchimata2/Project-Leviathan-RIMT](https://github.com/uchimata2/Project-Leviathan-RIMT)
 - **Whitepaper:** [`whitepaper/RIMT-whitepaper.md`](../whitepaper/RIMT-whitepaper.md)
 - **Detailed comparison:** [`comparison/RIMT-vs-conventional-comparison.md`](RIMT-vs-conventional-comparison.md)
 - **Open-source simulation (42 unit tests passing):** [`simulations/rimt_simulation.py`](../simulations/rimt_simulation.py)
@@ -131,7 +131,7 @@ Every numerical claim carries a `source` field pointing at its canonical locatio
     "subtitle": "First-order analytical concept, TRL 2. Published as a defensive disclosure under CC BY-SA 4.0 so any builder can validate it.",
     "author": "Gábor Szabó",
     "license": "CC BY-SA 4.0 International",
-    "doi_placeholder": "10.5281/zenodo.XXXXXXX",
+    "doi_placeholder": "10.5281/zenodo.20361267",
     "source": "WP §1, Comparison Executive Summary"
   },
   "hero_numbers": [
@@ -354,11 +354,11 @@ Every numerical claim carries a `source` field pointing at its canonical locatio
     "comparison": "RIMT-vs-conventional-comparison.html",
     "simulation": "../simulations/rimt_simulation.py",
     "github": "https://github.com/uchimata2/Project-Leviathan-RIMT",
-    "doi": "https://doi.org/10.5281/zenodo.XXXXXXX"
+    "doi": "https://doi.org/10.5281/zenodo.20361267"
   }
 }
 ```
 
 ---
 
-*Generated as supporting material for the RIMT Technical Disclosure, CC BY-SA 4.0 · Project Leviathan · DOI: [to be assigned upon Zenodo upload]*
+*Generated as supporting material for the RIMT Technical Disclosure, CC BY-SA 4.0 · Project Leviathan · DOI: [10.5281/zenodo.20361267](https://doi.org/10.5281/zenodo.20361267) (concept, always-latest)*

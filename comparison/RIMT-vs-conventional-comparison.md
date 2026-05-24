@@ -380,11 +380,11 @@ The quantitative scorecard's `+`/`++`/`–`/`– –` marks are deliberately qua
 12. ScienceDirect topic. *Propeller Efficiency*. https://www.sciencedirect.com/topics/engineering/propeller-efficiency
 13. MAN Energy Solutions. *Efficiency of MAN B&W two-stroke engines* (stationary applications). https://www.man-es.com/docs/default-source/document-sync-archive/efficiency-of-man-b-w-two-stroke-engines-eng.pdf
 14. International Whaling Commission. *Anthropogenic sound*. https://iwc.int/management-and-conservation/environment/anthropogenic-sound
-15. RIMT Whitepaper — *Solid-State Marine Propulsion via Resonant Ionic Momentum Transfer (RIMT)*, Szabó (2026). Same Zenodo deposit / `github-repo/whitepaper/RIMT-whitepaper.md`. All "WP §" cross-references in this document refer to that file.
+15. RIMT Whitepaper — *Solid-State Marine Propulsion via Resonant Ionic Momentum Transfer (RIMT)*, Szabó (2026). Same Zenodo deposit / [`whitepaper/RIMT-whitepaper.md`](../whitepaper/RIMT-whitepaper.md). All "WP §" cross-references in this document refer to that file.
 
 ---
 
-*Companion document to the RIMT Technical Disclosure, published under CC BY-SA 4.0 · Project Leviathan · DOI: [to be assigned upon Zenodo upload]*
+*Companion document to the RIMT Technical Disclosure, published under CC BY-SA 4.0 · Project Leviathan · DOI: [10.5281/zenodo.20361267](https://doi.org/10.5281/zenodo.20361267) (concept, always-latest)*
 
 ---
 
@@ -393,7 +393,7 @@ The quantitative scorecard's `+`/`++`/`–`/`– –` marks are deliberately qua
 For full transparency about where the comparison has unavoidable epistemic asymmetry:
 
 - **Conventional column** — numbers are drawn from publicly available textbook, industry-report, and trade-press sources cited in the bibliography. Where ranges are given, they reflect the spread across vessel classes and operating points in the original sources, not measurement uncertainty.
-- **RIMT column** — every quantitative claim traces back to the whitepaper (`github-repo/whitepaper/RIMT-whitepaper.md`) or its companion simulation (`github-repo/simulations/rimt_simulation.py`, 42 unit tests passing). These are *first-order analytical upper bounds under stated idealisations*, not measurements. The whitepaper §6 (Limitations and Future Work) is the canonical list of what remains experimentally open.
+- **RIMT column** — every quantitative claim traces back to the whitepaper ([`whitepaper/RIMT-whitepaper.md`](../whitepaper/RIMT-whitepaper.md)) or its companion simulation ([`simulations/rimt_simulation.py`](../simulations/rimt_simulation.py), 42 unit tests passing). These are *first-order analytical upper bounds under stated idealisations*, not measurements. The whitepaper §6 (Limitations and Future Work) is the canonical list of what remains experimentally open.
 
 Readers comparing a row across both columns are therefore comparing *measured empirical practice* against *modelled design target*. Where a row's RIMT cell uses a word like "designed," "modelled," "target," or "if validated," the asymmetry is explicit. Where it does not, the asymmetry remains and should be understood from this appendix.
 

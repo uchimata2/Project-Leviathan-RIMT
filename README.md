@@ -1,7 +1,7 @@
 # Project Leviathan — Solid-State Ionic Hull (SSIH)
 ### Resonant Ionic Momentum Transfer (RIMT): A Proposed Solid-State Marine Propulsion Architecture
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20361267.svg)](https://doi.org/10.5281/zenodo.20361267)
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 
 ---
@@ -109,7 +109,7 @@ See [Section 2 — Related Work](whitepaper/RIMT-whitepaper.md#2-related-work) f
 
 If you build on, extend, or refer to this work, please cite:
 
-> Szabó, G. (2026). *Solid-State Marine Propulsion via Resonant Ionic Momentum Transfer (RIMT)* [Technical Disclosure]. Zenodo. https://doi.org/10.5281/zenodo.XXXXXXX
+> Szabó, G. (2026). *Solid-State Marine Propulsion via Resonant Ionic Momentum Transfer (RIMT)* [Technical Disclosure]. Zenodo. https://doi.org/10.5281/zenodo.20361267
 
 BibTeX:
 ```bibtex
@@ -119,12 +119,12 @@ BibTeX:
   year        = {2026},
   institution = {Zenodo},
   type        = {Technical Disclosure},
-  doi         = {10.5281/zenodo.XXXXXXX},
-  url         = {https://doi.org/10.5281/zenodo.XXXXXXX}
+  doi         = {10.5281/zenodo.20361267},
+  url         = {https://doi.org/10.5281/zenodo.20361267}
 }
 ```
 
-*Replace `XXXXXXX` with the actual Zenodo record ID after publication.*
+*The DOI above is the **concept DOI** — it always resolves to the latest version on Zenodo.*
 
 ---
 
