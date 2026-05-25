@@ -263,6 +263,19 @@ HTML_TEMPLATE = """\
       font-style: italic;
     }}
 
+    /* ---- Figures ---- */
+    figure {{
+      margin: 10pt 0;
+      text-align: center;
+      page-break-inside: avoid;
+    }}
+    figcaption {{
+      font-size: 10pt;
+      color: #444;
+      margin-top: 4pt;
+      text-align: left;
+    }}
+
     /* ---- Print overrides ---- */
     @media print {{
       body {{ padding: 0; }}

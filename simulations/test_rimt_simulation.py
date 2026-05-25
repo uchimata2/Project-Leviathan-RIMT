@@ -18,9 +18,11 @@ from rimt_simulation import (
     analyse_debye_layer,
     parametric_performance,
     tuned_performance,
+    sensitivity_sweep,
     main,
     DebyeLayerResult,
     PerformanceResult,
+    SensitivityPoint,
     EPSILON_0,
     EPSILON_R_WATER,
     VISCOSITY_WATER,
@@ -371,6 +373,57 @@ class TestMainSmoke(unittest.TestCase):
     def test_model_labels_present(self):
         self.assertIn("Baseline (Model 2)", self.out)
         self.assertIn("Optimised", self.out)
+
+
+# ---------------------------------------------------------------------------
+# Sensitivity sweep — WP §4.4.2
+# ---------------------------------------------------------------------------
+
+class TestSensitivitySweep(unittest.TestCase):
+    """Validate sensitivity_sweep output structure and monotone behaviour."""
+
+    def setUp(self):
+        self.sweep = sensitivity_sweep(
+            vessel_speed_m_s    = VESSEL_SPEED,
+            thrust_density_N_m2 = THRUST_PER_M2,
+        )
+
+    def test_returns_all_four_axes(self):
+        """Result dict must contain exactly the four documented axes."""
+        self.assertEqual(set(self.sweep.keys()), {"alpha", "v_slip", "sigma", "f_c"})
+
+    def test_each_point_is_sensitivity_point(self):
+        """Every element in every axis must be a SensitivityPoint."""
+        for pts in self.sweep.values():
+            for pt in pts:
+                self.assertIsInstance(pt, SensitivityPoint)
+                self.assertIsInstance(pt.result, PerformanceResult)
+
+    def test_reference_point_reproduces_headline(self):
+        """α = 0.005, v_slip = 0.2, σ = 5.0, f_c = 2 MHz → η ≈ 83 % (±2 %)."""
+        alpha_pts = self.sweep["alpha"]
+        ref = next(p for p in alpha_pts if abs(p.param_value - 0.005) < 1e-9)
+        self.assertAlmostEqual(ref.result.efficiency, 0.83, delta=0.02)
+
+    def test_alpha_axis_monotone_increasing(self):
+        """η must increase strictly as α increases (higher coupling → less ohmic loss)."""
+        etas = [p.result.efficiency for p in self.sweep["alpha"]]
+        self.assertTrue(all(etas[i] < etas[i+1] for i in range(len(etas)-1)))
+
+    def test_v_slip_axis_monotone_decreasing(self):
+        """η must decrease as v_slip increases (more viscous dissipation)."""
+        etas = [p.result.efficiency for p in self.sweep["v_slip"]]
+        self.assertTrue(all(etas[i] > etas[i+1] for i in range(len(etas)-1)))
+
+    def test_sigma_axis_monotone_increasing(self):
+        """η must increase with σ_seawater (higher conductivity → lower ohmic loss)."""
+        etas = [p.result.efficiency for p in self.sweep["sigma"]]
+        self.assertTrue(all(etas[i] < etas[i+1] for i in range(len(etas)-1)))
+
+    def test_fc_axis_monotone_decreasing(self):
+        """η must fall sharply as f_c rises (ohmic loss scales as f²)."""
+        etas = [p.result.efficiency for p in self.sweep["f_c"]]
+        self.assertTrue(all(etas[i] > etas[i+1] for i in range(len(etas)-1)))
 
 
 if __name__ == "__main__":

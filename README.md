@@ -17,9 +17,9 @@ Operating in the **Faradaic-suppression band** (~2–5 MHz) inhibits electrolyti
 | Configuration | Dielectric | Drive | Slip (m/s) | Efficiency |
 |---|---|---|---|---|
 | Un-tuned baseline (Model 2) | Al₂O₃, 1 µm PECVD | 200 V fixed | 1.0 | **η ≈ 3%** (ohmic-loss dominated) |
-| Optimised (Model 3) | Ta₂O₅, 500 nm ALD | 5.3 V tuned | 0.2 | **η ≈ 83%** (above the ~70–72% propeller ceiling) |
+| Optimised (Model 3) | Ta₂O₅, 500 nm ALD | 5.3 V tuned | 0.2 | **η ≈ 83%** tile-boundary at α = 0.005 (above the ~70–72% propeller ceiling; full battery-to-thrust chain ≈ 80%); sensitivity band η ≈ 52–96 % across α ∈ [0.001, 0.05] |
 
-*Both numbers are first-order upper bounds under the §3.3 asymmetric sawtooth waveform; experimental validation is pending. The 3% baseline illustrates that fixed-voltage drive on a thick low-k dielectric is non-viable — adaptive voltage control is essential. No laboratory prototype has been built. See [Limitations](whitepaper/RIMT-whitepaper.md#6-limitations-and-future-work).*
+*Both numbers are first-order upper bounds under the §3.3 asymmetric sawtooth waveform; η = 83% is tile-boundary efficiency (electrical input to tile → useful thrust; DC bus + GaN PEM losses not included — see WP §4.3). Experimental validation pending. The 3% baseline illustrates that fixed-voltage drive on a thick low-k dielectric is non-viable — adaptive voltage control is essential. No laboratory prototype has been built. See [Limitations](whitepaper/RIMT-whitepaper.md#6-limitations-and-future-work).*
 
 ---
 
@@ -32,7 +32,13 @@ Project-Leviathan-RIMT/
 │   ├── RIMT-whitepaper.md                 Full technical disclosure (Markdown)
 │   ├── RIMT-whitepaper.html               Print-ready HTML (MathJax)
 │   ├── RIMT-whitepaper.pdf                PDF export for citation and archival
-│   └── export_html.py                     Markdown → HTML converter (all docs)
+│   ├── export_html.py                     Markdown → HTML converter (all docs)
+│   └── figures/
+│       ├── build_figures.py               SVG figure generator (Figs 1–3, 5)
+│       ├── fig-1.svg                      IDE layer-stack cross-section
+│       ├── fig-2.svg                      Asymmetric sawtooth waveform
+│       ├── fig-3.svg                      Energy conversion chain
+│       └── fig-5.svg                      η-vs-σ conductivity sensitivity
 ├── comparison/
 │   ├── RIMT-vs-conventional-comparison.md Companion: 15-table side-by-side
 │   │                                      comparison vs. conventional marine
@@ -50,7 +56,7 @@ Project-Leviathan-RIMT/
 │                                          renders RIMT-infographic.html
 └── simulations/
     ├── rimt_simulation.py                 Three first-order analytical models
-    ├── test_rimt_simulation.py            Unit test suite (45 tests)
+    ├── test_rimt_simulation.py            Unit test suite (52 tests)
     └── requirements.txt                   Python dependencies
 ```
 
@@ -79,7 +85,7 @@ cd simulations
 pytest test_rimt_simulation.py -v
 ```
 
-All 45 tests should pass.
+All 52 tests should pass.
 
 ### Reproducibility
 
@@ -89,8 +95,8 @@ The simulation results above were obtained with the following toolchain (also en
 - **NumPy** ≥ 1.21 (any current 1.x or 2.x release)
 - **pytest** ≥ 7 (for running the unit tests)
 - **Operating system** Windows 11 (also tested transparently on Linux via CI-free containers)
-- **Expected runtime** Under 1 second for the full `main()` run; under 1 second for the full 45-test pytest pass
-- **Expected exact test count** 45 passed, 0 failed, 0 skipped
+- **Expected runtime** Under 1 second for the full `main()` run; under 1 second for the full 52-test pytest pass
+- **Expected exact test count** 52 passed, 0 failed, 0 skipped
 
 Headline numerical results (η = 3.0 % / 83.0 %, V_drive = 200.0 V / 5.31 V, Pe ≈ 65, v_w = 60 m/s) are deterministic — no random seeds are used in the model — and reproduce exactly bit-for-bit across the supported toolchain.
 
@@ -108,9 +114,9 @@ Headline numerical results (η = 3.0 % / 83.0 %, V_drive = 200.0 V / 5.31 V, Pe 
 | Wave propagation speed | v_w = 60 m/s (≈ 117 knots) | Wave-pattern kinematic, not vessel speed; >> any vessel speed at f_c = 2 MHz, λ = 30 µm |
 | Electrode geometry | w = 10 µm, g = 5 µm, λ = 30 µm | Finger width, inter-electrode gap, wavelength = 2(w+g) |
 | Dielectric (optimised) | Ta₂O₅, 500 nm ALD | εr ≈ 20–25, pinhole-free |
-| EDL coupling factor | α = 0.005 (Ta₂O₅) / 0.01 (Al₂O₃) | First-order coupling assumption between drive voltage and tangential EDL field |
+| EDL coupling factor | α = 0.005 (Ta₂O₅) / 0.01 (Al₂O₃) | Phenomenological coupling parameter — *not derived*; must be measured experimentally (WP §4.1, §4.4.1) |
 | Wave–fluid slip | v_slip = 0.2 m/s (tuned) / 1.0 m/s (baseline) | Sets the viscous-loss component of efficiency |
-| **Headline efficiency** | **η ≈ 83 % (tuned) / 3 % (baseline)** | First-order upper bounds; experimental validation pending |
+| **Headline efficiency** | **η ≈ 83 % tile-boundary (tuned) / 3 % (baseline)** | First-order upper bounds (tile-boundary definition; full chain ≈ 80%); experimental validation pending |
 
 ---
 

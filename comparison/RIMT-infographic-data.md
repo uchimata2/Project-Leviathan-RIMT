@@ -23,7 +23,7 @@ Use as five large numerical tiles in a horizontal strip at the top of the infogr
 
 | Number | Label | Source |
 |---|---|---|
-| **83 %** | First-order modelled wall-plug efficiency (electrical input to useful thrust) | RIMT whitepaper §4.4 (Model 3, optimised) |
+| **83 %** | First-order modelled tile-boundary efficiency at the assumed coupling factor α = 0.005 (DC bus + GaN PEM losses not included; full chain ≈ 80 %; sensitivity band 52–96 % across the literature-plausible α range — see WP §4.4.1) | RIMT whitepaper §4.4 (Model 3, optimised) |
 | **0** | Moving parts in the propulsion path | RIMT design (whitepaper §3) |
 | **$30 B / yr** | Annual cost of propeller biofouling to global shipping today — would be largely eliminated if RIMT's antifouling co-benefit holds | Comparison ref [10] |
 | **~ 3 %** | Share of global CO₂ from international shipping today, with IMO target of net-zero by ≈ 2050 | Comparison refs [1, 3] |
@@ -76,7 +76,7 @@ All figures are order-of-magnitude planning estimates of programme R&D spend (cu
 - **GitHub repository:** [uchimata2/Project-Leviathan-RIMT](https://github.com/uchimata2/Project-Leviathan-RIMT)
 - **Whitepaper:** [`whitepaper/RIMT-whitepaper.md`](../whitepaper/RIMT-whitepaper.md)
 - **Detailed comparison:** [`comparison/RIMT-vs-conventional-comparison.md`](RIMT-vs-conventional-comparison.md)
-- **Open-source simulation (45 unit tests passing):** [`simulations/rimt_simulation.py`](../simulations/rimt_simulation.py)
+- **Open-source simulation (52 unit tests passing):** [`simulations/rimt_simulation.py`](../simulations/rimt_simulation.py)
 
 ---
 
@@ -139,7 +139,7 @@ Every numerical claim carries a `source` field pointing at its canonical locatio
       "value": 83,
       "counter_from": 0,
       "unit_suffix": " %",
-      "label": "First-order modelled wall-plug efficiency (electrical input to useful thrust)",
+      "label": "First-order modelled tile-boundary efficiency at assumed coupling α = 0.005 (DC bus + GaN PEM losses not included; full chain ≈ 80 %; sensitivity band 52–96 % across the literature-plausible α range; see WP §4.4.1)",
       "source": "WP §4.4 (Model 3, optimised)"
     },
     {
@@ -256,10 +256,11 @@ Every numerical claim carries a `source` field pointing at its canonical locatio
           {"label": "Battery electric energy", "retained": 100},
           {"label": "DC bus (~99 %)", "retained": 99},
           {"label": "GaN PEM AC synthesis (~97 %)", "retained": 96},
-          {"label": "EDL coupling + ohmic + viscous", "retained": 83}
+          {"label": "Tile EDL (tile η = 83 %, full chain ≈ 80 %)", "retained": 80}
         ]
       },
-      "source": "WP §4.4, Comparison §1 + §2, Comparison Appendix B Figure 1"
+      "note": "Tile-boundary definition: WP §4.3 defines η = P_useful / P_tile_input (DC bus and GaN PEM losses not included). Full battery-to-thrust chain = 0.99 × 0.97 × 0.83 ≈ 80 %. The WP §4.4 headline figure of 83 % is tile-only; the 80 % here is the cumulative end-to-end result shown in this chart.",
+      "source": "WP §4.4, §4.3 (boundary definition), Comparison §1 + §2, Comparison Appendix B Figure 1"
     },
     "scorecard_radar": {
       "title": "Quantitative scorecard — RIMT (modelled) vs. conventional",

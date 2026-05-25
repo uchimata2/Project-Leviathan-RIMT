@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 260"
+     style="display:block;max-width:100%;margin:0.5em auto;font-family:'Times New Roman',serif">
+  <defs>
+    <marker id="f2r" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#333"/>
+    </marker>
+    <marker id="f2l" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+      <path d="M7,0 L0,2.5 L7,5 Z" fill="#333"/>
+    </marker>
+    <marker id="f2rc" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#922b21"/>
+    </marker>
+    <marker id="f2lc" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+      <path d="M7,0 L0,2.5 L7,5 Z" fill="#922b21"/>
+    </marker>
+    <marker id="f2rb" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#1a5276"/>
+    </marker>
+    <marker id="f2lb" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+      <path d="M7,0 L0,2.5 L7,5 Z" fill="#1a5276"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="260" fill="white"/>
+
+  <!-- Axes -->
+  <line x1="65" y1="185" x2="520" y2="185" stroke="#333" stroke-width="1.5" marker-end="url(#f2r)"/>
+  <line x1="70" y1="190" x2="70" y2="22"  stroke="#333" stroke-width="1.5" marker-end="url(#f2r)"/>
+
+  <!-- Axis labels -->
+  <text x="527" y="189" font-size="13" fill="#333" font-style="italic">t</text>
+  <text x="44"  y="35"  font-size="13" fill="#333" font-style="italic">V</text>
+  <text x="70"  y="200" text-anchor="middle" font-size="10" fill="#555">0</text>
+
+  <!-- V_drive dashed reference line -->
+  <line x1="62" y1="35" x2="516" y2="35" stroke="#ccc" stroke-width="1" stroke-dasharray="5,4"/>
+  <text x="57" y="38" text-anchor="end" font-size="11" font-style="italic" fill="#1a5276">V</text>
+
+  <!-- Light grid lines at 100, 200, ..., 900 ns -->
+  <!-- x = 70 + ns*0.44  -->
+  <line x1="114" y1="30" x2="114" y2="185" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="158" y1="30" x2="158" y2="185" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="202" y1="30" x2="202" y2="185" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="246" y1="30" x2="246" y2="185" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="290" y1="30" x2="290" y2="185" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="334" y1="30" x2="334" y2="185" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="378" y1="30" x2="378" y2="185" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="422" y1="30" x2="422" y2="185" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="466" y1="30" x2="466" y2="185" stroke="#f0f0f0" stroke-width="1"/>
+
+  <!-- Shaded grab/release regions (cycle 1 only for clarity) -->
+  <polygon points="70,185 114,35 114,185"  fill="#fadbd8" fill-opacity="0.6"/>
+  <polygon points="114,35 290,185 114,185" fill="#d6eaf8" fill-opacity="0.4"/>
+
+  <!-- Waveform (2 full cycles) -->
+  <!-- vertices: (70,185) (114,35) (290,185) (334,35) (510,185) -->
+  <polyline points="70,185 114,35 290,185 334,35 510,185"
+            fill="none" stroke="#2471a3" stroke-width="2.5" stroke-linejoin="miter"/>
+
+  <!-- "grab" / "release" region labels -->
+  <text x="92"  y="125" text-anchor="middle" font-size="11" fill="#922b21" font-style="italic">grab</text>
+  <text x="202" y="125" text-anchor="middle" font-size="11" fill="#1a5276" font-style="italic">release</text>
+
+  <!-- === Dimension annotations (cycle 1) === -->
+
+  <!-- t_r: x=70..114 at y=207 -->
+  <line x1="70" y1="207" x2="114" y2="207" stroke="#922b21" stroke-width="1"
+        marker-start="url(#f2lc)" marker-end="url(#f2rc)"/>
+  <text x="92" y="222" text-anchor="middle" font-size="12" fill="#922b21">
+    <tspan font-style="italic">t</tspan><tspan baseline-shift="sub" font-size="9">r</tspan><tspan> = 100 ns</tspan>
+  </text>
+
+  <!-- t_f: x=114..290 at y=207 -->
+  <line x1="114" y1="207" x2="290" y2="207" stroke="#1a5276" stroke-width="1"
+        marker-start="url(#f2lb)" marker-end="url(#f2rb)"/>
+  <text x="202" y="222" text-anchor="middle" font-size="12" fill="#1a5276">
+    <tspan font-style="italic">t</tspan><tspan baseline-shift="sub" font-size="9">f</tspan><tspan> = 400 ns</tspan>
+  </text>
+
+  <!-- T: x=70..290 at y=234 -->
+  <line x1="70"  y1="234" x2="290" y2="234" stroke="#555" stroke-width="1"
+        marker-start="url(#f2l)" marker-end="url(#f2r)"/>
+  <line x1="70"  y1="229" x2="70"  y2="239" stroke="#555" stroke-width="1"/>
+  <line x1="290" y1="229" x2="290" y2="239" stroke="#555" stroke-width="1"/>
+  <text x="180" y="250" text-anchor="middle" font-size="12" fill="#555">
+    <tspan font-style="italic">T</tspan><tspan> = 500 ns  (</tspan><tspan font-style="italic">f</tspan><tspan baseline-shift="sub" font-size="9">c</tspan><tspan> = 2 MHz)</tspan>
+  </text>
+
+  <!-- x-axis labels -->
+  <text x="290" y="199" text-anchor="middle" font-size="10" fill="#777">500 ns</text>
+  <text x="510" y="199" text-anchor="middle" font-size="10" fill="#777">1000 ns</text>
+</svg>

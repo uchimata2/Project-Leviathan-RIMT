@@ -151,6 +151,19 @@
       font-style: italic;
     }
 
+    /* ---- Figures ---- */
+    figure {
+      margin: 10pt 0;
+      text-align: center;
+      page-break-inside: avoid;
+    }
+    figcaption {
+      font-size: 10pt;
+      color: #444;
+      margin-top: 4pt;
+      text-align: left;
+    }
+
     /* ---- Print overrides ---- */
     @media print {
       body { padding: 0; }
@@ -189,7 +202,7 @@
 <tbody>
 <tr>
 <td><strong>83 %</strong></td>
-<td>First-order modelled wall-plug efficiency (electrical input to useful thrust)</td>
+<td>First-order modelled tile-boundary efficiency at the assumed coupling factor α = 0.005 (DC bus + GaN PEM losses not included; full chain ≈ 80 %; sensitivity band 52–96 % across the literature-plausible α range — see WP §4.4.1)</td>
 <td>RIMT whitepaper §4.4 (Model 3, optimised)</td>
 </tr>
 <tr>
@@ -306,7 +319,7 @@
 <li><strong>GitHub repository:</strong> <a href="https://github.com/uchimata2/Project-Leviathan-RIMT">uchimata2/Project-Leviathan-RIMT</a></li>
 <li><strong>Whitepaper:</strong> <a href="../whitepaper/RIMT-whitepaper.md"><code>whitepaper/RIMT-whitepaper.md</code></a></li>
 <li><strong>Detailed comparison:</strong> <a href="RIMT-vs-conventional-comparison.md"><code>comparison/RIMT-vs-conventional-comparison.md</code></a></li>
-<li><strong>Open-source simulation (45 unit tests passing):</strong> <a href="../simulations/rimt_simulation.py"><code>simulations/rimt_simulation.py</code></a></li>
+<li><strong>Open-source simulation (52 unit tests passing):</strong> <a href="../simulations/rimt_simulation.py"><code>simulations/rimt_simulation.py</code></a></li>
 </ul>
 <hr />
 <h2>8. Suggested layout for the rendering tool</h2>
@@ -394,7 +407,7 @@
       &quot;value&quot;: 83,
       &quot;counter_from&quot;: 0,
       &quot;unit_suffix&quot;: &quot; %&quot;,
-      &quot;label&quot;: &quot;First-order modelled wall-plug efficiency (electrical input to useful thrust)&quot;,
+      &quot;label&quot;: &quot;First-order modelled tile-boundary efficiency at assumed coupling α = 0.005 (DC bus + GaN PEM losses not included; full chain ≈ 80 %; sensitivity band 52–96 % across the literature-plausible α range; see WP §4.4.1)&quot;,
       &quot;source&quot;: &quot;WP §4.4 (Model 3, optimised)&quot;
     },
     {
@@ -511,10 +524,11 @@
           {&quot;label&quot;: &quot;Battery electric energy&quot;, &quot;retained&quot;: 100},
           {&quot;label&quot;: &quot;DC bus (~99 %)&quot;, &quot;retained&quot;: 99},
           {&quot;label&quot;: &quot;GaN PEM AC synthesis (~97 %)&quot;, &quot;retained&quot;: 96},
-          {&quot;label&quot;: &quot;EDL coupling + ohmic + viscous&quot;, &quot;retained&quot;: 83}
+          {&quot;label&quot;: &quot;Tile EDL (tile η = 83 %, full chain ≈ 80 %)&quot;, &quot;retained&quot;: 80}
         ]
       },
-      &quot;source&quot;: &quot;WP §4.4, Comparison §1 + §2, Comparison Appendix B Figure 1&quot;
+      &quot;note&quot;: &quot;Tile-boundary definition: WP §4.3 defines η = P_useful / P_tile_input (DC bus and GaN PEM losses not included). Full battery-to-thrust chain = 0.99 × 0.97 × 0.83 ≈ 80 %. The WP §4.4 headline figure of 83 % is tile-only; the 80 % here is the cumulative end-to-end result shown in this chart.&quot;,
+      &quot;source&quot;: &quot;WP §4.4, §4.3 (boundary definition), Comparison §1 + §2, Comparison Appendix B Figure 1&quot;
     },
     &quot;scorecard_radar&quot;: {
       &quot;title&quot;: &quot;Quantitative scorecard — RIMT (modelled) vs. conventional&quot;,

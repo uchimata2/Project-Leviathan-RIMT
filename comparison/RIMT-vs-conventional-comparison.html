@@ -151,6 +151,19 @@
       font-style: italic;
     }
 
+    /* ---- Figures ---- */
+    figure {
+      margin: 10pt 0;
+      text-align: center;
+      page-break-inside: avoid;
+    }
+    figcaption {
+      font-size: 10pt;
+      color: #444;
+      margin-top: 4pt;
+      text-align: left;
+    }
+
     /* ---- Print overrides ---- */
     @media print {
       body { padding: 0; }
@@ -167,8 +180,8 @@
 <h2>A Side-by-Side Comparative Analysis</h2>
 <p><strong>Companion document to:</strong> <em>Solid-State Marine Propulsion via Resonant Ionic Momentum Transfer (RIMT) — Technical Disclosure &amp; Whitepaper</em><br>
 <strong>Author:</strong> Gábor Szabó<br>
-<strong>Date:</strong> 2026-05-24<br>
-<strong>Version:</strong> 1.0.2<br>
+<strong>Date:</strong> 2026-05-25<br>
+<strong>Version:</strong> 1.1<br>
 <strong>License:</strong> CC BY-SA 4.0 International</p>
 <hr />
 <h2>Reader's note</h2>
@@ -178,7 +191,7 @@
 <hr />
 <h2>Executive Summary</h2>
 <p>Conventional marine propulsion — overwhelmingly diesel-mechanical, with growing electric and hybrid variants — is a mature, regulated, and commoditised industry. A modern slow-speed two-stroke marine diesel reaches ~50 % brake thermal efficiency [13]; its open-water propeller adds another 55–70 % conversion to thrust [4]; hull resistance, drivetrain losses, and biofouling drop the wake-to-water number further. End-to-end fuel-energy-to-useful-thrust efficiency for a clean, well-trimmed merchant ship sits in the 25–35 % band, and biofouling alone is documented to cost the global industry on the order of &#36;30 billion annually in extra fuel [10]. Underwater noise and CO₂ emissions are under increasing regulatory pressure: the IMO's 2023 Revised GHG Strategy targets net-zero shipping by or around 2050, with binding interim cuts in 2030 and 2040 [1, 3]; underwater radiated noise guidelines exit their Experience Building Phase at MEPC 85 in 2026, with mandatory measures on the table [5, 6].</p>
-<p>RIMT proposes an entirely different mechanism: a MHz-frequency asymmetric traveling-wave potential applied across a hull-embedded micro-electrode lattice manipulates the Electrical Double Layer (EDL) of seawater, converting the entire wetted hull into a distributed solid-state actuator with no moving parts (WP §1.3, §3). First-order modelling places the optimised configuration at η ≈ 83 % (first-order upper bound; WP §4.4) versus a non-viable fixed-voltage baseline at η ≈ 3 %, and identifies adaptive voltage control as the dominant lever. If — and it remains a substantial <em>if</em> — laboratory validation reproduces even the lower half of this range under realistic seawater, fouling, and turbulence conditions, RIMT could in principle address several of the regulatory and ecological pressures facing conventional propulsion: it has no combustion, no propeller, no acoustic signature from rotating machinery, and no minimum draft.</p>
+<p>RIMT proposes an entirely different mechanism: a MHz-frequency asymmetric traveling-wave potential applied across a hull-embedded micro-electrode lattice manipulates the Electrical Double Layer (EDL) of seawater, converting the entire wetted hull into a distributed solid-state actuator with no moving parts (WP §1.3, §3). First-order modelling places the optimised configuration at tile-boundary η ≈ 83 % (first-order upper bound; WP §4.4; DC bus and GaN PEM losses not included; full chain ≈ 80 %) versus a non-viable fixed-voltage baseline at η ≈ 3 %, and identifies adaptive voltage control as the dominant lever. If — and it remains a substantial <em>if</em> — laboratory validation reproduces even the lower half of this range under realistic seawater, fouling, and turbulence conditions, RIMT could in principle address several of the regulatory and ecological pressures facing conventional propulsion: it has no combustion, no propeller, no acoustic signature from rotating machinery, and no minimum draft.</p>
 <p>The structured comparison below covers 15 categories. RIMT's strengths cluster around environmental, regulatory, mechanical-simplicity, and safety axes; its weaknesses are concentrated in three areas: (i) technology readiness (TRL 2 vs. TRL 9 — first-order theory vs. fielded systems), (ii) production maturity (sub-15 µm flexible-substrate lithography and large-area ALD are emerging industrial processes, not catalogue marine-supply items), and (iii) operational envelope at low salinity (freshwater performance is reduced by the same physics that makes the system work in seawater). The document closes with a quantitative scorecard, a "where RIMT could win" narrative, and a "where conventional wins" narrative.</p>
 <hr />
 <h2>Comparison Tables</h2>
@@ -220,7 +233,7 @@
 <tr>
 <td>Theoretical efficiency ceiling</td>
 <td>Propeller open-water efficiency limited to ~70–77 % under ideal load; the same hull has 25–35 % well-to-wake when fuel-to-shaft losses are included [4, 13].</td>
-<td>First-order upper bound η ≈ 83 % wall-plug to useful thrust for the optimised configuration (WP §4.4); realised efficiency requires experimental confirmation.</td>
+<td>First-order upper bound tile-boundary η ≈ 83 % (electrical input to tile → useful thrust; DC bus and GaN PEM losses not included — see WP §4.3 boundary definition) for the optimised configuration at the assumed phenomenological coupling factor α = 0.005 (WP §4.4, §4.4.1 sensitivity table); full battery-to-thrust chain ≈ 80 %; realised efficiency requires experimental confirmation of α on the proposed Ta₂O₅ stack.</td>
 </tr>
 </tbody>
 </table>
@@ -237,12 +250,12 @@
 <tr>
 <td>Propulsive efficiency (wake-to-water, hull-clean)</td>
 <td>~55–77 % open-water propeller efficiency; ~70–72 % practical ceiling on optimised commercial vessels (Carlton 2018; [4]).</td>
-<td>Modelled η ≈ 83 % (WP §4.4, Model 3, tuned). Baseline (Model 2, fixed 200 V, 1 µm Al₂O₃) is η ≈ 3 % — demonstrates that adaptive voltage matching is essential.</td>
+<td>Modelled tile-boundary η ≈ 83 % at the assumed coupling α = 0.005 (WP §4.4, Model 3, tuned; DC bus and GaN PEM losses not included — see WP §4.3 boundary definition); WP §4.4.1 reports the sensitivity band η ≈ 52–96 % across the literature-plausible range α ∈ [0.001, 0.05]. Baseline (Model 2, fixed 200 V, 1 µm Al₂O₃) is η ≈ 3 % — demonstrates that adaptive voltage matching is essential.</td>
 </tr>
 <tr>
 <td>Total wall-plug or fuel-to-thrust efficiency</td>
 <td>Two-stroke diesel: ~50 % brake thermal × ~70 % propeller × ~95 % transmission ≈ 33 % at design load [4, 13]. Four-stroke and high-speed engines fall to 25 % or below.</td>
-<td>Modelled ~83 % wall-plug (electrical input to useful thrust); on a battery-electric vessel the upstream charging chain (~92 % grid → ~95 % battery round-trip) reduces well-to-wake by a further ~10 %.</td>
+<td>Modelled tile-boundary η ≈ 83 % (WP §4.4 Model 3; EDL electrical input to tile → useful thrust; DC bus and GaN PEM losses not included); full battery-to-thrust chain ≈ 0.99 × 0.97 × 0.83 ≈ 80 %; on a battery-electric vessel the upstream charging chain (~92 % grid → ~95 % battery round-trip) reduces well-to-wake by a further ~10 %.</td>
 </tr>
 <tr>
 <td>Thrust density</td>
@@ -299,7 +312,7 @@
 <tr>
 <td>OPEX (annual energy)</td>
 <td>Marine diesel fuel cost dominates; biofouling adds up to 40 % overhead. Mid-range 20 m yacht at a representative 200 hrs/yr usage (typical for owner-operated mid-latitude recreational yachts; ranges from ~100 hrs/yr in cold-climate seasonal use to ~300 hrs/yr in chartered or year-round operation): typical &#36;7k–&#36;15k fuel + &#36;5k–&#36;15k servicing (rough order of magnitude; varies widely with cruise speed and bunker price).</td>
-<td>Electrical energy at modelled 83 % wall-plug efficiency; battery-electric or hybrid energy source. Annual energy cost depends on local electricity tariff and usage profile; at &#36;0.20/kWh and the same 200 hrs/yr usage, on the order of &#36;1k–&#36;4k for the same hull. The OPEX gap widens with carbon pricing and bunker-fuel surcharges.</td>
+<td>Electrical energy at modelled tile-boundary η ≈ 83 % (full chain ≈ 80 %; WP §4.3 boundary); battery-electric or hybrid energy source. Annual energy cost depends on local electricity tariff and usage profile; at &#36;0.20/kWh and the same 200 hrs/yr usage, on the order of &#36;1k–&#36;4k for the same hull. The OPEX gap widens with carbon pricing and bunker-fuel surcharges.</td>
 </tr>
 <tr>
 <td>Maintenance cost</td>
@@ -591,7 +604,7 @@
 <tr>
 <td>EMI / RF safety</td>
 <td>Negligible; mechanical system.</td>
-<td>MHz tangential fields are confined within the EDL by the dielectric and are not radiating antennas; radiated EMI is bounded by tile geometry and shielding, but quantitative MHz radiated-field measurements at hull scale are an explicit open question (WP §6).</td>
+<td>MHz tangential fields are confined within the EDL by the dielectric and are not radiating antennas; EM skin depth in seawater bounds external radiation (δ ≈ 16 cm at 2 MHz). The binding constraint is in-hull coupling to the vessel's own GMDSS DSC receiver (2.187 5 MHz) and maritime mobile HF band (4–5 MHz); three mitigation paths are available (shielding, antenna placement, carrier-frequency selection). Quantitative EMI measurements at hull scale are an explicit open question. See WP §5.4.</td>
 </tr>
 </tbody>
 </table>
@@ -833,7 +846,7 @@
 <tr>
 <td>TRL (NASA scale)</td>
 <td>9 (fielded systems).</td>
-<td>Between TRL 2 (concept formulated) and TRL 3 (analytical proof-of-concept) — the first-order computational models and 45-unit-test simulation suite arguably push the project toward TRL 3, but no physical experiment has been performed (WP §6). The project is reported as TRL 2 for conservative accounting.</td>
+<td>Between TRL 2 (concept formulated) and TRL 3 (analytical proof-of-concept) — the first-order computational models and 52-unit-test simulation suite arguably push the project toward TRL 3, but no physical experiment has been performed (WP §6). The project is reported as TRL 2 for conservative accounting.</td>
 </tr>
 <tr>
 <td>Operating history</td>
@@ -927,7 +940,7 @@
 <td>2. Performance — efficiency</td>
 <td style="text-align: center;">+</td>
 <td style="text-align: center;">++</td>
-<td>70–72 % ceiling vs. 83 % modelled upper bound</td>
+<td>70–72 % ceiling vs. 83 % tile-boundary modelled upper bound (full chain ≈ 80 %)</td>
 </tr>
 <tr>
 <td>3. Economics — OPEX</td>
@@ -1315,7 +1328,7 @@
 <p><strong>Regulatory inertia.</strong> Even if RIMT were qualified by a classification society tomorrow, the regulatory acceptance pathway through IMO, flag-state administrations, insurance underwriters, and port authorities is multi-year. Conventional propulsion is the legal default.</p>
 <hr />
 <h2>Caveats and reading instructions</h2>
-<p>This is a <em>strategic</em> comparison rather than an <em>engineering</em> comparison. Many sub-aspects above hide further technical depth. In particular, every RIMT cell that quotes a number (η = 83 %, Pe ≈ 65, 50 N/m², 5.3 V, 60 m/s wave speed) comes from a first-order analytical model implemented and unit-tested in the companion repository (<code>simulations/rimt_simulation.py</code>, 45 tests passing). They are <em>upper bounds</em> under stated idealisations; the whitepaper §6 enumerates the experimental work needed to set realistic lower bounds.</p>
+<p>This is a <em>strategic</em> comparison rather than an <em>engineering</em> comparison. Many sub-aspects above hide further technical depth. In particular, every RIMT cell that quotes a number (tile-boundary η = 83 % / full-chain ≈ 80 %, Pe ≈ 65, 50 N/m², 5.3 V, 60 m/s wave speed) comes from a first-order analytical model implemented and unit-tested in the companion repository (<code>simulations/rimt_simulation.py</code>, 52 tests passing). They are <em>upper bounds</em> under stated idealisations; the whitepaper §6 enumerates the experimental work needed to set realistic lower bounds.</p>
 <p>Conventional-propulsion figures are drawn from textbook, regulatory, and trade-press sources cited in the bibliography. Where ranges are given (e.g., "55–77 % open-water propeller efficiency"), the spread reflects real differences across vessel class and operating point rather than measurement uncertainty.</p>
 <p>The quantitative scorecard's <code>+</code>/<code>++</code>/<code>–</code>/<code>– –</code> marks are deliberately qualitative. A reader who wants a single numerical decision criterion should compute their own weighted sum using the weights that reflect their own application: a small-vessel recreational user weights <code>9. Safety — fire/strike</code> and <code>12. shallow water</code> highly; a container-shipping firm weights <code>7. range</code> and <code>15. TRL</code> highly; a navy weights <code>6. noise</code> and <code>9. safety</code> highly. The scorecard's purpose is to expose the trade-off structure, not to declare a winner.</p>
 <hr />
@@ -1345,24 +1358,124 @@
 <p>For full transparency about where the comparison has unavoidable epistemic asymmetry:</p>
 <ul>
 <li><strong>Conventional column</strong> — numbers are drawn from publicly available textbook, industry-report, and trade-press sources cited in the bibliography. Where ranges are given, they reflect the spread across vessel classes and operating points in the original sources, not measurement uncertainty.</li>
-<li><strong>RIMT column</strong> — every quantitative claim traces back to the whitepaper (<a href="../whitepaper/RIMT-whitepaper.md"><code>whitepaper/RIMT-whitepaper.md</code></a>) or its companion simulation (<a href="../simulations/rimt_simulation.py"><code>simulations/rimt_simulation.py</code></a>, 45 unit tests passing). These are <em>first-order analytical upper bounds under stated idealisations</em>, not measurements. The whitepaper §6 (Limitations and Future Work) is the canonical list of what remains experimentally open.</li>
+<li><strong>RIMT column</strong> — every quantitative claim traces back to the whitepaper (<a href="../whitepaper/RIMT-whitepaper.md"><code>whitepaper/RIMT-whitepaper.md</code></a>) or its companion simulation (<a href="../simulations/rimt_simulation.py"><code>simulations/rimt_simulation.py</code></a>, 52 unit tests passing). These are <em>first-order analytical upper bounds under stated idealisations</em>, not measurements. The whitepaper §6 (Limitations and Future Work) is the canonical list of what remains experimentally open.</li>
 </ul>
 <p>Readers comparing a row across both columns are therefore comparing <em>measured empirical practice</em> against <em>modelled design target</em>. Where a row's RIMT cell uses a word like "designed," "modelled," "target," or "if validated," the asymmetry is explicit. Where it does not, the asymmetry remains and should be understood from this appendix.</p>
 <hr />
-<h2>Appendix B — Planned figures and visualisation specifications</h2>
-<p>This document is currently text-only. The figure specifications below are written so that the actual rendering can be done by any plotting tool (matplotlib, Mermaid, D3, Napkin, Adobe Express, an LLM with image generation, etc.) without further questions to the author. All numbers come from the comparison tables above or from cited sources in the bibliography.</p>
+<h2>Appendix B — Figures and visualisation specifications</h2>
+<p>Figure 1 (energy conversion chain) is rendered below. Figures 2–6 retain their full specifications for reference; static rendered versions are deferred to v1.2 (the interactive infographic at <code>RIMT-infographic.html</code> already provides interactive versions of Figures 3–5).</p>
 <h3>Figure 1 — Energy conversion chain, side-by-side (Sankey or block diagram)</h3>
 <p><strong>Purpose.</strong> Show the same input (1 unit of primary energy) flowing through the two propulsion stacks, with each loss stage labelled.</p>
 <p><strong>Conventional stack (top row):</strong></p>
 <p>Fuel chemical energy (100 %) → combustion (≈ 50 % retained, 50 % heat loss) → transmission + shaft (≈ 95 %) → propeller open-water (≈ 70 %) → hull-clean useful thrust ≈ 33 %. Stage values from Section 1 and Section 2 of this document and WP §4.</p>
 <p><strong>RIMT stack (bottom row):</strong></p>
-<p>Battery electric energy (100 %) → DC bus (≈ 99 %) → GaN PEM AC synthesis (≈ 97 %) → EDL traveling-wave coupling + ohmic loss + viscous coupling (combined ≈ 87 % in the §4.4 Model 3 reference point) → useful thrust ≈ 83 %. Numbers from the optimised reference point in WP §4.4.</p>
+<p>Battery electric energy (100 %) → DC bus (≈ 99 %) → GaN PEM AC synthesis (≈ 97 %) → EDL traveling-wave coupling + ohmic loss + viscous coupling (tile-boundary η = 83 % — WP §4.4 headline; see §4.3 for boundary definition) → useful thrust ≈ 80 % full chain (0.99 × 0.97 × 0.83). Numbers from the optimised reference point in WP §4.4.</p>
 <p><strong>Visual notes.</strong> Use proportional band widths if drawn as Sankey; identical input width for both stacks so the difference in retained thrust is visually obvious. Loss bands in muted red; retained band in cool blue.</p>
+<!-- FIGURE_1_START -->
+<figure style="margin:1.2em 0;text-align:center">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 310"
+     style="display:block;max-width:100%;margin:0.5em auto;font-family:'Times New Roman',serif">
+  <defs>
+    <marker id="f3d" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="310" fill="white"/>
+
+  <!-- Divider -->
+  <line x1="318" y1="8" x2="318" y2="295" stroke="#ddd" stroke-width="1"/>
+
+  <!-- Column headers -->
+  <text x="157" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#111">Conventional propulsion</text>
+  <text x="476" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#111">RIMT (modelled)</text>
+
+  <!-- ========== Conventional chain (left column, x origin = 15) ========== -->
+
+  <!-- Stage 1: 100%, w=230 -->
+  <rect x="15" y="28" width="230" height="34" fill="#27ae60" stroke="#1e8449" stroke-width="1"/>
+  <text x="130" y="50" text-anchor="middle" font-size="12" fill="white" font-weight="bold">Fuel chemical energy &#x2013; 100%</text>
+
+  <!-- Loss label + arrow -->
+  <text x="250" y="68" font-size="11" fill="#c0392b">&#x2212;50 % combustion</text>
+  <line x1="127" y1="62" x2="127" y2="72" stroke="#555" stroke-width="1.5" marker-end="url(#f3d)"/>
+
+  <!-- Stage 2: 50%, w=115 -->
+  <rect x="15" y="74" width="115" height="34" fill="#f39c12" stroke="#d68910" stroke-width="1"/>
+  <text x="72" y="96" text-anchor="middle" font-size="12" fill="white" font-weight="bold">50%</text>
+
+  <!-- Loss label + arrow -->
+  <text x="134" y="113" font-size="11" fill="#c0392b">&#x2212;2.5 % shaft</text>
+  <line x1="72" y1="108" x2="72" y2="118" stroke="#555" stroke-width="1.5" marker-end="url(#f3d)"/>
+
+  <!-- Stage 3: 47.5%, w=109 -->
+  <rect x="15" y="120" width="109" height="34" fill="#e67e22" stroke="#d35400" stroke-width="1"/>
+  <text x="69" y="142" text-anchor="middle" font-size="12" fill="white" font-weight="bold">47.5%</text>
+
+  <!-- Loss label + arrow -->
+  <text x="128" y="159" font-size="11" fill="#c0392b">&#x2212;14 % propeller</text>
+  <line x1="69" y1="154" x2="69" y2="164" stroke="#555" stroke-width="1.5" marker-end="url(#f3d)"/>
+
+  <!-- Stage 4: 33%, w=76 -->
+  <rect x="15" y="166" width="76" height="34" fill="#e74c3c" stroke="#cb4335" stroke-width="1"/>
+  <text x="53" y="188" text-anchor="middle" font-size="12" fill="white" font-weight="bold">&#x2248;33%</text>
+  <text x="96" y="188" font-size="11" fill="#555">useful thrust</text>
+
+  <!-- ========== RIMT chain (right column, x origin = 330) ========== -->
+
+  <!-- Stage 1: 100%, w=230 -->
+  <rect x="330" y="28" width="230" height="34" fill="#2980b9" stroke="#1f618d" stroke-width="1"/>
+  <text x="445" y="50" text-anchor="middle" font-size="12" fill="white" font-weight="bold">Battery electric &#x2013; 100%</text>
+
+  <!-- Loss label + arrow -->
+  <text x="563" y="68" font-size="11" fill="#1a5276">&#x2212;1 % DC bus</text>
+  <line x1="445" y1="62" x2="445" y2="72" stroke="#555" stroke-width="1.5" marker-end="url(#f3d)"/>
+
+  <!-- Stage 2: 99%, w=228 -->
+  <rect x="330" y="74" width="228" height="34" fill="#2471a3" stroke="#1f618d" stroke-width="1"/>
+  <text x="444" y="96" text-anchor="middle" font-size="12" fill="white" font-weight="bold">99%</text>
+
+  <!-- Loss label + arrow -->
+  <text x="561" y="113" font-size="11" fill="#1a5276">&#x2212;3 % GaN PEM</text>
+  <line x1="444" y1="108" x2="444" y2="118" stroke="#555" stroke-width="1.5" marker-end="url(#f3d)"/>
+
+  <!-- Stage 3: 96%, w=221 -->
+  <rect x="330" y="120" width="221" height="34" fill="#1a6ea0" stroke="#154360" stroke-width="1"/>
+  <text x="440" y="142" text-anchor="middle" font-size="12" fill="white" font-weight="bold">96%</text>
+
+  <!-- Loss label + arrow -->
+  <text x="554" y="159" font-size="11" fill="#1a5276">&#x2212;16 % tile losses</text>
+  <line x1="440" y1="154" x2="440" y2="164" stroke="#555" stroke-width="1.5" marker-end="url(#f3d)"/>
+
+  <!-- Stage 4: 80% full chain (tile eta = 83%); w=184 -->
+  <rect x="330" y="166" width="184" height="34" fill="#27ae60" stroke="#1e8449" stroke-width="1"/>
+  <text x="422" y="188" text-anchor="middle" font-size="12" fill="white" font-weight="bold">&#x2248;80%</text>
+  <text x="518" y="188" font-size="11" fill="#555">useful thrust&#x2020;</text>
+
+  <!-- Comparison dashed link -->
+  <line x1="91" y1="194" x2="330" y2="194" stroke="#bbb" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="319" y="218" text-anchor="end" font-size="11" fill="#555" font-style="italic">83% vs 33%</text>
+
+  <!-- Stage labels (right of conventional, left of RIMT) -->
+  <text x="155" y="42"  font-size="10" fill="#888">fuel input</text>
+  <text x="155" y="88"  font-size="10" fill="#888">after combustion</text>
+  <text x="155" y="134" font-size="10" fill="#888">after shaft</text>
+  <text x="155" y="180" font-size="10" fill="#888">propeller thrust</text>
+
+  <!-- Footnote + source note -->
+  <text x="320" y="243" text-anchor="middle" font-size="10" fill="#888" font-style="italic">&#x2020; Full chain = 0.99 &#xd7; 0.97 &#xd7; tile &#x3b7; (83 %) &#x2248; 80 %. WP &#xa7;4.4 headline 83 % is tile-boundary (&#xa7;4.3 definition).</text>
+  <text x="320" y="257" text-anchor="middle" font-size="10" fill="#888" font-style="italic">Conventional: Comparison doc &#xa7;1&#x2013;2. RIMT: WP &#xa7;4.4 (Model 3, &#x3b1; = 0.005). Numbers rounded.</text>
+</svg>
+<figcaption style="font-size:10pt;color:#444;margin-top:4pt;text-align:left"><strong>Figure 3.</strong> Energy conversion chain: conventional diesel-mechanical propulsion (left) vs. RIMT battery-electric propulsion (right). Bar width is proportional to the cumulative retained fraction of the input energy. Conventional: fuel chemical energy &rarr; combustion (&times;50%) &rarr; transmission + shaft (&times;95%) &rarr; propeller open-water (&times;70%) &rarr; &approx;33% useful thrust. RIMT: battery electric &rarr; DC bus (&times;99%) &rarr; GaN PEM (&times;97%) &rarr; tile EDL (tile-boundary &eta; = 83%, WP &sect;4.4) &rarr; &approx;80% full-chain useful thrust (0.99&times;0.97&times;0.83). The WP &sect;4.4 headline &eta;&nbsp;&asymp;&nbsp;83% is the tile-boundary efficiency (electrical input to tile &rarr; useful thrust; DC bus and GaN PEM losses not included &mdash; see WP &sect;4.3 for boundary definition). Numbers rounded.</figcaption>
+</figure>
+<!-- FIGURE_1_END -->
+
 <h3>Figure 2 — Quantitative scorecard as a radar chart</h3>
 <p><strong>Purpose.</strong> A single image that conveys the trade-off structure of the 20-row scorecard at a glance.</p>
 <p><strong>Axes (20):</strong> the 20 rows of the Quantitative Scorecard, in the order printed.</p>
 <p><strong>Mapping <code>+</code>/<code>++</code>/<code>–</code>/<code>– –</code> to numeric axis values:</strong> <code>– –</code> = 1, <code>–</code> = 2, <code>0</code> = 3, <code>+</code> = 4, <code>++</code> = 5. For the "TRL" axis (RIMT = <code>– –</code>), keep the asymmetry visible — do not normalise it away.</p>
 <p><strong>Two overlaid polygons:</strong> Conventional in one colour, RIMT (modelled) in another, both translucent. Add a small caption restating the "modelled, not measured" caveat.</p>
+<p><em>Rendered figure deferred to v1.2. The specification above documents the intended content.</em></p>
 <h3>Figure 3 — Application landscape quadrant</h3>
 <p><strong>Purpose.</strong> Position each application from the Application Landscape section on a 2-D plane.</p>
 <p><strong>Axes.</strong>
@@ -1451,6 +1564,7 @@
 </tbody>
 </table>
 <p><strong>Visual notes.</strong> The "sweet spot" — upper-right — is where RIMT is both highly valuable to the customer <em>and</em> the customer is most willing to accept technology risk. This is where the dots cluster from the hobby/toys/recreation, marine-science, and small-craft niches. Label that region "natural early adopters."</p>
+<p><em>Rendered figure deferred to v1.2. An interactive version is available in the companion infographic (<code>RIMT-infographic.html</code>).</em></p>
 <h3>Figure 4 — CO₂ reduction sensitivity to fleet adoption</h3>
 <p><strong>Purpose.</strong> Quantify the upside of RIMT for shipping-decarbonisation policy makers.</p>
 <p><strong>Anchor numbers (from the IMO baseline cited in [1, 3]):</strong>
@@ -1463,6 +1577,7 @@
 - Hypothetical RIMT adoption curve: 0 % of fleet by 2030, 5 % by 2035, 20 % by 2040, 50 % by 2050 (illustrative — not a forecast)
 - CO₂ avoided = baseline minus RIMT-share-displaced — shade the avoided area</p>
 <p><strong>Caveat to put in the caption:</strong> the RIMT share assumes RIMT propulsion is paired with renewable grid electricity. Adoption percentages are illustrative for sensitivity analysis only, not a forecast.</p>
+<p><em>Rendered figure deferred to v1.2. An interactive version is available in the companion infographic (<code>RIMT-infographic.html</code>).</em></p>
 <h3>Figure 5 — TRL pathway and indicative cost-to-validate</h3>
 <p><strong>Purpose.</strong> Help a potential R&amp;D sponsor see the rough scale of what is being asked for.</p>
 <p><strong>X-axis:</strong> years from t = 0 (= first funded prototype).</p>
@@ -1510,6 +1625,7 @@
 </tbody>
 </table>
 <p><strong>Caveat in caption:</strong> numbers are order-of-magnitude planning estimates, not commitments. The whitepaper §6 lists the experimental work each milestone embeds.</p>
+<p><em>Rendered figure deferred to v1.2. An interactive version is available in the companion infographic (<code>RIMT-infographic.html</code>).</em></p>
 <h3>Figure 6 (optional) — Acoustic signature comparison</h3>
 <p><strong>Purpose.</strong> Make the underwater-noise advantage concrete to a non-engineer reader.</p>
 <p><strong>X-axis:</strong> frequency, 10 Hz to 100 kHz, log scale.</p>
@@ -1520,6 +1636,7 @@
 - RIMT projected: hull-flow noise of the displacement hull alone, ≈ 110 dB at 10 Hz, ≈ 90 dB above 1 kHz (projected from the source-elimination argument in Section 6).</p>
 <p><strong>Shaded overlay:</strong> cetacean vocalisation bands (blue whale 10–40 Hz; humpback 30 Hz–8 kHz; killer whale 0.5–40 kHz; sperm-whale clicks 5–25 kHz).</p>
 <p><strong>Caveat in caption:</strong> the RIMT curve is a projection from the source-elimination argument, not a measurement.</p>
+<p><em>Rendered figure deferred to v1.2. The specification above documents the intended content.</em></p>
 <h3>Render-priority notes</h3>
 <p>For "publication-grade" feel, the highest-leverage figures are 1, 2, and 4. For a sponsor / decision-maker pitch deck, Figures 3 and 5 are the most useful (and form the basis of the separately-shipped infographic data package, <code>RIMT-infographic-data.md</code>). Figure 6 is the "killer chart" for environmental-stakeholder audiences.</p>
 

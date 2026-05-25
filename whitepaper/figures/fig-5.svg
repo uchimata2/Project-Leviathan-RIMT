@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 265"
+     style="display:block;max-width:100%;margin:0.5em auto;font-family:'Times New Roman',serif">
+
+  <defs>
+    <marker id="f5rx" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#333"/>
+    </marker>
+    <marker id="f5ux" markerWidth="5" markerHeight="7" refX="2.5" refY="7" orient="auto">
+      <path d="M0,0 L2.5,7 L5,0 Z" fill="#333" transform="rotate(180,2.5,3.5)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="265" fill="white"/>
+
+  <!-- Freshwater shading (σ < 0.1 S/m) -->
+  <rect x="70.0" y="22.0" width="66.2" height="193.0"
+        fill="#fef9e7" fill-opacity="0.75"/>
+
+  <!-- Open-ocean shading (σ > 3.5 S/m) -->
+  <rect x="475.9" y="22.0" width="34.1" height="193.0"
+        fill="#d6eaf8" fill-opacity="0.55"/>
+
+  <!-- Horizontal grid lines (20 / 40 / 60 / 80 %) -->
+  <line x1="70.0" y1="60.6" x2="510.0" y2="60.6" stroke="#ebebeb" stroke-width="1"/>
+  <line x1="70.0" y1="99.2" x2="510.0" y2="99.2" stroke="#ebebeb" stroke-width="1"/>
+  <line x1="70.0" y1="137.8" x2="510.0" y2="137.8" stroke="#ebebeb" stroke-width="1"/>
+  <line x1="70.0" y1="176.4" x2="510.0" y2="176.4" stroke="#ebebeb" stroke-width="1"/>
+
+  <!-- Vertical grid lines at σ ticks -->
+  <line x1="136.2"  y1="22.0" x2="136.2"  y2="215.0" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="202.5"  y1="22.0" x2="202.5"  y2="215.0" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="290.0"  y1="22.0" x2="290.0"  y2="215.0" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="356.2"  y1="22.0" x2="356.2"  y2="215.0" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="422.5"  y1="22.0" x2="422.5"  y2="215.0" stroke="#f0f0f0" stroke-width="1"/>
+
+  <!-- η = 83 % dashed reference line -->
+  <line x1="70.0" y1="54.8" x2="510.0" y2="54.8"
+        stroke="#ccc" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="513.0" y="58.3" font-size="9" fill="#aaa">83%</text>
+
+  <!-- Axes -->
+  <line x1="70.0" y1="215.0" x2="515.0" y2="215.0"
+        stroke="#333" stroke-width="1.5" marker-end="url(#f5rx)"/>
+  <line x1="70.0" y1="215.0" x2="70.0" y2="17.0"
+        stroke="#333" stroke-width="1.5" marker-end="url(#f5ux)"/>
+
+  <!-- η curve -->
+  <polyline points="70.0,204.7 81.3,203.5 92.6,202.1 103.8,200.6 115.1,199.0 126.4,197.2 137.7,195.2 149.0,193.0 160.3,190.6 171.5,188.0 182.8,185.1 194.1,182.0 205.4,178.7 216.7,175.1 227.9,171.2 239.2,167.1 250.5,162.8 261.8,158.2 273.1,153.4 284.4,148.4 295.6,143.2 306.9,137.9 318.2,132.5 329.5,126.9 340.8,121.4 352.1,115.8 363.3,110.2 374.6,104.7 385.9,99.4 397.2,94.1 408.5,89.1 419.7,84.2 431.0,79.5 442.3,75.1 453.6,70.9 464.9,67.0 476.2,63.3 487.4,59.9 498.7,56.7 510.0,53.8"
+            fill="none" stroke="#2471a3" stroke-width="2.5" stroke-linejoin="round"/>
+
+  <!-- Design-point circle (σ = 4.8 S/m, η ≈ 83 %) -->
+  <circle cx="506.1" cy="54.8" r="4" fill="#e74c3c" stroke="white" stroke-width="1.2"/>
+
+  <!-- Y-axis tick marks and labels -->
+  <line x1="70.0" y1="60.6" x2="64.0" y2="60.6" stroke="#555" stroke-width="1"/>
+  <line x1="70.0" y1="99.2" x2="64.0" y2="99.2" stroke="#555" stroke-width="1"/>
+  <line x1="70.0" y1="137.8" x2="64.0" y2="137.8" stroke="#555" stroke-width="1"/>
+  <line x1="70.0" y1="176.4" x2="64.0" y2="176.4" stroke="#555" stroke-width="1"/>
+  <text x="62.0" y="64.1" text-anchor="end" font-size="10" fill="#555">80</text>
+  <text x="62.0" y="102.7" text-anchor="end" font-size="10" fill="#555">60</text>
+  <text x="62.0" y="141.3" text-anchor="end" font-size="10" fill="#555">40</text>
+  <text x="62.0" y="179.9" text-anchor="end" font-size="10" fill="#555">20</text>
+  <text x="62.0" y="25.5"     text-anchor="end" font-size="10" fill="#555">100</text>
+
+  <!-- Y-axis label -->
+  <text x="46" y="17" text-anchor="end" font-size="12" fill="#333" font-style="italic">&#x3b7; [%]</text>
+
+  <!-- X-axis tick marks and labels -->
+  <line x1="70.0" y1="215.0" x2="70.0" y2="221.0" stroke="#555" stroke-width="1"/>
+  <line x1="136.2"  y1="215.0" x2="136.2"  y2="221.0" stroke="#555" stroke-width="1"/>
+  <line x1="202.5"  y1="215.0" x2="202.5"  y2="221.0" stroke="#555" stroke-width="1"/>
+  <line x1="290.0"  y1="215.0" x2="290.0"  y2="221.0" stroke="#555" stroke-width="1"/>
+  <line x1="356.2"  y1="215.0" x2="356.2"  y2="221.0" stroke="#555" stroke-width="1"/>
+  <line x1="422.5"  y1="215.0" x2="422.5"  y2="221.0" stroke="#555" stroke-width="1"/>
+  <line x1="510.0"  y1="215.0" x2="510.0"  y2="221.0" stroke="#555" stroke-width="1"/>
+  <text x="70.0" y="232.0" text-anchor="middle" font-size="9.5" fill="#555">0.05</text>
+  <text x="136.2"  y="232.0" text-anchor="middle" font-size="9.5" fill="#555">0.1</text>
+  <text x="202.5"  y="232.0" text-anchor="middle" font-size="9.5" fill="#555">0.2</text>
+  <text x="290.0"  y="232.0" text-anchor="middle" font-size="9.5" fill="#555">0.5</text>
+  <text x="356.2"  y="232.0" text-anchor="middle" font-size="9.5" fill="#555">1</text>
+  <text x="422.5"  y="232.0" text-anchor="middle" font-size="9.5" fill="#555">2</text>
+  <text x="510.0"  y="232.0" text-anchor="middle" font-size="9.5" fill="#555">5</text>
+
+  <!-- X-axis label -->
+  <text x="290.0" y="248.0" text-anchor="middle" font-size="11" fill="#333"><tspan font-style="italic">&#x3c3;</tspan><tspan font-size="8" dy="2">sw</tspan><tspan dy="-2"> [S m&#x207b;&#xb9;] (log scale)</tspan></text>
+
+  <!-- Region labels -->
+  <text x="103.1" y="36" text-anchor="middle" font-size="9" fill="#9a7d0a">freshwater</text>
+  <text x="493.0" y="36" text-anchor="middle" font-size="9" fill="#1a5276">ocean</text>
+
+  <!-- Design-point annotation -->
+  <text x="499.1" y="46.8" text-anchor="end" font-size="9" fill="#c0392b">&#x3c3; = 4.8&#xa0;S/m</text>
+</svg>

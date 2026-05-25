@@ -2,8 +2,8 @@
 
 **Technical Disclosure & Whitepaper**<br>
 **Author:** Gábor Szabó<br>
-**Date:** 2026-05-24<br>
-**Version:** 1.0.2<br>
+**Date:** 2026-05-25<br>
+**Version:** 1.1<br>
 **License:** CC BY-SA 4.0 International<br>
 **DOI:** [10.5281/zenodo.20361267](https://doi.org/10.5281/zenodo.20361267) (concept, always-latest)
 
@@ -11,7 +11,7 @@
 
 ## Abstract
 
-Modern marine propulsion remains dependent on mechanical screw propellers, a paradigm constrained by cavitation, turbulent vortex shedding, and fundamental momentum-theorem efficiency limits. This paper proposes and analyses Resonant Ionic Momentum Transfer (RIMT), a solid-state propulsion mechanism that converts the entire wetted hull surface of a vessel into a distributed electrokinetic engine. RIMT applies a MHz-frequency asymmetric traveling-wave potential via a sub-surface interdigitated electrode lattice, manipulating the Electrical Double Layer (EDL) of seawater to generate directed ionic flow through electro-osmotic coupling. Operation in the Faradaic-suppression band (2–5 MHz, where the per-half-cycle Faradaic charge falls below the water-splitting threshold) prevents electrolytic degradation, enabling efficient momentum injection without chemical loss. A modular 30 cm × 30 cm Active Tile architecture, driven by GaN wide-bandgap power electronics, provides fault tolerance, scalability, and adaptive frequency control. First-order computational models validate the mechanism: the Péclet number at the hull–fluid interface is $Pe \approx 65$, confirming that electric-field-driven ion transport dominates Brownian diffusion by nearly two orders of magnitude. Efficiency analysis under the proposed §3.3 asymmetric sawtooth waveform shows that an un-tuned configuration (1 µm Al$_2$O$_3$ dielectric, 200 V fixed drive) is dominated by ohmic heating in the seawater between electrodes (driven by the AC displacement current that charges the dielectric capacitor) and achieves only $\eta \approx 3\%$, demonstrating that adaptive voltage control is essential. An optimised design (500 nm Ta$_2$O$_5$ ALD dielectric, analytically tuned 5.3 V drive) reaches $\eta \approx 83\%$ (first-order upper bound; experimental validation pending), exceeding the practical efficiency ceiling of mechanical propulsion (~70–72%) by approximately ten percentage points. The author publishes this architecture as a prior-art disclosure under CC BY-SA 4.0, establishing open prior art and inviting experimental validation by the global research community.
+Modern marine propulsion remains dependent on mechanical screw propellers, a paradigm constrained by cavitation, turbulent vortex shedding, and fundamental momentum-theorem efficiency limits. This paper proposes and analyses Resonant Ionic Momentum Transfer (RIMT), a solid-state propulsion mechanism that converts the entire wetted hull surface of a vessel into a distributed electrokinetic engine. RIMT applies a MHz-frequency asymmetric traveling-wave potential via a sub-surface interdigitated electrode lattice, manipulating the Electrical Double Layer (EDL) of seawater to generate directed ionic flow through electro-osmotic coupling. Operation in the Faradaic-suppression band (2–5 MHz, where the per-half-cycle Faradaic charge falls below the water-splitting threshold) prevents electrolytic degradation, enabling efficient momentum injection without chemical loss. A modular 30 cm × 30 cm Active Tile architecture, driven by GaN wide-bandgap power electronics, provides fault tolerance, scalability, and adaptive frequency control. First-order computational models validate the mechanism: the Péclet number at the hull–fluid interface is $Pe \approx 65$, confirming that electric-field-driven ion transport dominates Brownian diffusion by nearly two orders of magnitude. Efficiency analysis under the proposed §3.3 asymmetric sawtooth waveform shows that an un-tuned configuration (1 µm Al$_2$O$_3$ dielectric, 200 V fixed drive) is dominated by ohmic heating in the seawater between electrodes (driven by the AC displacement current that charges the dielectric capacitor) and achieves only $\eta \approx 3\%$, demonstrating that adaptive voltage control is essential. An optimised design (500 nm Ta$_2$O$_5$ ALD dielectric, analytically tuned 5.3 V drive) reaches $\eta \approx 83\%$ (tile-boundary efficiency — electrical input to tile against useful thrust, DC bus and GaN PEM losses not included; first-order upper bound at the assumed coupling factor $\alpha = 0.005$; see §4.4.1 sensitivity table for the full range $\alpha \in 0.001$–$0.05$ where $\eta$ varies from 52 % to 96 %; full battery-to-thrust chain $\approx 80\%$; experimental validation pending), exceeding the practical efficiency ceiling of mechanical propulsion (~70–72%) by approximately ten percentage points. A multi-parameter sensitivity analysis (§4.4.2) confirms that carrier frequency dominates among the environmental and operational axes — efficiency spans 94 % to 46 % as $f_c$ increases from 1 to 5 MHz due to the quadratic scaling of ohmic heating with frequency — while wave–fluid slip and seawater conductivity have comparatively modest influence within the normal operating envelope. The author publishes this architecture as a prior-art disclosure under CC BY-SA 4.0, establishing open prior art and inviting experimental validation by the global research community.
 
 **Keywords:** electro-osmosis, Electrical Double Layer, traveling-wave potential, marine propulsion, solid-state propulsion, GaN power electronics, seawater electrokinetics, ionic momentum transfer, boundary layer control, Faradaic suppression
 
@@ -33,6 +33,8 @@ Resonant Ionic Momentum Transfer bypasses the limitations of both mechanical and
 
 The principal obstacle to electro-osmotic propulsion at MHz frequencies has historically been electrolysis: conventional DC or low-frequency AC fields split water into hydrogen and oxygen at the electrode surface, wasting energy and degrading hardware. RIMT resolves this in two reinforcing ways. First, the intact Ta$_2$O$_5$ dielectric coating (§3.2) is a Faradaic blocker: in normal operation no electrode metal contacts the electrolyte, so the interfacial current is dominantly capacitive (displacement) rather than Faradaic at all frequencies. Second, AC operation at the carrier frequency $f_c$ symmetrically charges and discharges the EDL within each cycle, so that on a per-cycle basis no DC current can drive water-splitting redox reactions to completion. The two mechanisms together motivate the engineered carrier window of $f_c \approx 2$–5 MHz: the lower bound is set well above any plausible electrode-discharge or pinhole-leakage timescale (giving substantial Faradaic-current headroom in the sense formalised in [8, ch. 6] and [9, ch. 9]), and the upper bound is set by dielectric-loss heating in the Ta$_2$O$_5$ film (§3.3). The 2 MHz figure is therefore a design margin rather than a sharp Faradaic-onset frequency. The system thus remains essentially non-Faradaic while still coupling electrostatic force to ionic momentum capacitively.
 
+To quantify this margin, consider the series-capacitor voltage divider formed by the 500 nm Ta$_2$O$_5$ dielectric ($C_\mathrm{diel} = \varepsilon_0 \varepsilon_r^\mathrm{coat}/d \approx 0.354\ \mathrm{mF\,m^{-2}}$, using $\varepsilon_r = 20$ at the conservative end of the 20–25 specification range) and the EDL ($C_\mathrm{dl} = \varepsilon_0 \varepsilon_r^\mathrm{water}/\kappa^{-1} \approx 1{,}820\ \mathrm{mF\,m^{-2}}$). Since $C_\mathrm{dl} \gg C_\mathrm{diel}$, the coupling fraction is $C_\mathrm{diel}/(C_\mathrm{diel}+C_\mathrm{dl}) \approx 1.95 \times 10^{-4}$, and the transient potential at the EDL under normal operation is $V_\mathrm{dl} = V \times C_\mathrm{diel}/(C_\mathrm{diel}+C_\mathrm{dl})$. At the Model 3 drive of $V = 5.31\ \mathrm{V}$ (§4.4), this gives $V_\mathrm{dl} \approx 1.0\ \mathrm{mV}$ — approximately $1{,}200\times$ below the 1.23 V thermodynamic water-splitting threshold; at the unoptimised Model 2 baseline of 200 V, $V_\mathrm{dl} \approx 39\ \mathrm{mV}$ ($32\times$ margin). The peak surface charge density on the dielectric is $\sigma_\mathrm{diel} = C_\mathrm{diel}\,V \approx 1.88\ \mathrm{mC\,m^{-2}}$ (Model 3), giving a sawtooth-weighted displacement current density $j_\mathrm{rms} = K\,\sigma_\mathrm{diel}\,f_c \approx 9{,}400\ \mathrm{A\,m^{-2}}$ and a per-half-cycle charge budget of $q = j_\mathrm{rms} \times (T/2) \approx 2.35\ \mathrm{mC\,m^{-2}}$; this charge is entirely capacitive and none of it crosses the electrolysis threshold. Where the ALD dielectric is locally absent (pinhole defects), this voltage shielding is lost and Faradaic margin collapses at that site.
+
 ---
 
 ## 2. Related Work
@@ -49,7 +51,88 @@ RIMT is novel in the following specific respects: it is the first proposed syste
 
 ### 3.1 Electrode Geometry: The Interdigitated Lattice
 
-Thrust generation in RIMT depends on the interaction between the traveling-wave electric field and the mobile ion sheath within the EDL. To maximise the field gradient at the hull–water interface while maintaining structural robustness, the electrode layer employs an interdigitated electrode (IDE) geometry. The three geometric parameters used throughout this paper are: the electrode finger width $w = 10$ µm; the inter-electrode gap $g = 5$ µm (the seawater-conduction length across which the tangential field falls between adjacent fingers); and the full spatial wavelength of the alternating-polarity pattern $\lambda = 2(w + g) = 30$ µm (the distance over which the traveling wave imprints one complete potential cycle). $g$ is the relevant length scale for ohmic loss between electrodes and for the §4.2 Péclet calculation; $\lambda$ sets the wave propagation kinematics in §3.3. Electrode material is gold or platinum-plated copper, selected for high electrical conductivity ($\sigma_\mathrm{Au} = 4.1 \times 10^7$ S/m), adhesion to the underlying substrate, and compatibility with the ALD process window for the overlying dielectric (electrodes are buried beneath the dielectric in normal operation; see §3.2 — direct seawater corrosion resistance is therefore not the primary requirement). The electrode fingers are patterned in a herringbone or chevron configuration rather than simple parallel lines; this directs the lateral thrust component and prevents the accumulation of static concentration boundary layers that would otherwise reduce EDL-coupling efficiency over prolonged operation.
+Thrust generation in RIMT depends on the interaction between the traveling-wave electric field and the mobile ion sheath within the EDL. To maximise the field gradient at the hull–water interface while maintaining structural robustness, the electrode layer employs an interdigitated electrode (IDE) geometry. The three geometric parameters used throughout this paper are: the electrode finger width $w = 10$ µm; the inter-electrode gap $g = 5$ µm (the seawater-conduction length across which the tangential field falls between adjacent fingers); and the full spatial wavelength of the alternating-polarity pattern $\lambda = 2(w + g) = 30$ µm (the distance over which the traveling wave imprints one complete potential cycle). $g$ is the relevant length scale for ohmic loss between electrodes and for the §4.2 Péclet calculation; $\lambda$ sets the wave propagation kinematics in §3.3. Electrode material is gold or platinum-plated copper, selected for high electrical conductivity ($\sigma_\mathrm{Au} = 4.1 \times 10^7$ S/m), adhesion to the underlying substrate, and compatibility with the ALD process window for the overlying dielectric (electrodes are buried beneath the dielectric in normal operation; see §3.2 — direct seawater corrosion resistance is therefore not the primary requirement). The electrode fingers are patterned in a herringbone or chevron configuration rather than simple parallel lines; this directs the lateral thrust component and prevents the accumulation of static concentration boundary layers that would otherwise reduce EDL-coupling efficiency over prolonged operation. Figure 1 shows a schematic cross-section of the IDE layer stack with all four geometric parameters labelled.
+
+<!-- FIGURE_1_START -->
+<figure style="margin:1.2em 0;text-align:center">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 290"
+     style="display:block;max-width:100%;margin:0.5em auto;font-family:'Times New Roman',serif">
+  <defs>
+    <marker id="f1r" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#333"/>
+    </marker>
+    <marker id="f1l" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+      <path d="M7,0 L0,2.5 L7,5 Z" fill="#333"/>
+    </marker>
+  </defs>
+
+  <!-- background -->
+  <rect width="540" height="290" fill="white"/>
+
+  <!-- Seawater + EDL -->
+  <rect x="15" y="14" width="460" height="96" fill="#d6eaf8" stroke="#5dade2" stroke-width="1"/>
+  <text x="245" y="50" text-anchor="middle" font-size="13" fill="#1a5276">Seawater + Electrical Double Layer (EDL)</text>
+  <line x1="50" y1="80" x2="300" y2="80" stroke="#c0392b" stroke-width="2" marker-end="url(#f1r)"/>
+  <text x="175" y="74" text-anchor="middle" font-size="11" fill="#c0392b">travelling wave</text>
+
+  <!-- Dielectric (Ta2O5) -->
+  <rect x="15" y="110" width="460" height="20" fill="#a9cce3" stroke="#2e86c1" stroke-width="1"/>
+  <text x="245" y="124" text-anchor="middle" font-size="11" fill="#1b4f72">Ta&#x2082;O&#x2085; dielectric &#xb7; ALD &#xb7; 500 nm</text>
+
+  <!-- IDE electrode fingers: schematic w=90 px, g=46 px -->
+  <!-- finger 1 phase + -->
+  <rect x="15"  y="130" width="90" height="42" fill="#f9e547" stroke="#9a7d0a" stroke-width="1.5"/>
+  <text x="60"  y="158" text-anchor="middle" font-size="18" fill="#922b21">+</text>
+  <!-- finger 2 phase - -->
+  <rect x="151" y="130" width="90" height="42" fill="#f9e547" stroke="#9a7d0a" stroke-width="1.5"/>
+  <text x="196" y="158" text-anchor="middle" font-size="18" fill="#1a5276">&#x2212;</text>
+  <!-- finger 3 phase + -->
+  <rect x="287" y="130" width="90" height="42" fill="#f9e547" stroke="#9a7d0a" stroke-width="1.5"/>
+  <text x="332" y="158" text-anchor="middle" font-size="18" fill="#922b21">+</text>
+  <!-- finger 4 phase - (partial) -->
+  <rect x="423" y="130" width="52" height="42" fill="#f9e547" stroke="#9a7d0a" stroke-width="1.5"/>
+  <text x="449" y="158" text-anchor="middle" font-size="18" fill="#1a5276">&#x2212;</text>
+
+  <!-- Hull substrate -->
+  <rect x="15" y="172" width="460" height="76" fill="#b0bec5" stroke="#78909c" stroke-width="1.5"/>
+  <text x="245" y="216" text-anchor="middle" font-size="13" font-weight="bold" fill="#263238">Hull substrate</text>
+
+  <!-- Dimension: w (finger 1 width 90 px) -->
+  <line x1="15" y1="125" x2="105" y2="125" stroke="#333" stroke-width="1"
+        marker-start="url(#f1l)" marker-end="url(#f1r)"/>
+  <text x="60" y="119" text-anchor="middle" font-size="12" font-style="italic">w</text>
+
+  <!-- Dimension: g (gap 46 px) -->
+  <line x1="105" y1="125" x2="151" y2="125" stroke="#333" stroke-width="1"
+        marker-start="url(#f1l)" marker-end="url(#f1r)"/>
+  <text x="128" y="119" text-anchor="middle" font-size="12" font-style="italic">g</text>
+
+  <!-- Dimension: lambda = 2(w+g), from finger1 left to finger3 left (272 px) -->
+  <line x1="15" y1="258" x2="287" y2="258" stroke="#333" stroke-width="1"
+        marker-start="url(#f1l)" marker-end="url(#f1r)"/>
+  <line x1="15"  y1="253" x2="15"  y2="263" stroke="#333" stroke-width="1"/>
+  <line x1="287" y1="253" x2="287" y2="263" stroke="#333" stroke-width="1"/>
+  <text x="151" y="275" text-anchor="middle" font-size="12" font-style="italic">
+    &#x3bb; = 2(w + g)
+  </text>
+
+  <!-- Dimension: d (dielectric thickness), right-side leader -->
+  <line x1="485" y1="110" x2="485" y2="130" stroke="#333" stroke-width="1"
+        marker-start="url(#f1l)" marker-end="url(#f1r)"/>
+  <text x="491" y="123" font-size="12" font-style="italic" fill="#1b4f72">d</text>
+
+  <!-- Parameter value box (right margin) -->
+  <text x="498" y="137" font-size="11" fill="#444">w = 10 &#xb5;m</text>
+  <text x="498" y="151" font-size="11" fill="#444">g = 5 &#xb5;m</text>
+  <text x="498" y="165" font-size="11" fill="#444">d = 500 nm</text>
+  <text x="498" y="179" font-size="11" fill="#444">&#x3bb; = 30 &#xb5;m</text>
+
+  <!-- Not-to-scale note -->
+  <text x="15" y="284" font-size="10" fill="#888" font-style="italic">Schematic cross-section &#x2014; not to scale.</text>
+</svg>
+<figcaption style="font-size:10pt;color:#444;margin-top:4pt;text-align:left"><strong>Figure 1.</strong> Schematic cross-section of the IDE layer stack (not to scale). Electrode finger width <em>w</em> = 10 &mu;m; inter-electrode gap <em>g</em> = 5 &mu;m; spatial wavelength &lambda; = 2(<em>w</em>&nbsp;+&nbsp;<em>g</em>) = 30 &mu;m; Ta&#x2082;O&#x2085; dielectric thickness <em>d</em> = 500 nm (ALD). Alternating +/&minus; polarity on adjacent fingers produces the lateral potential gradient; the traveling wave (red arrow) advances in the direction of net ion transport.</figcaption>
+</figure>
+<!-- FIGURE_1_END -->
 
 ### 3.2 The Dielectric Barrier
 
@@ -63,7 +146,105 @@ The waveform generation logic synthesises an asymmetric sawtooth carrier signal 
 
 $$v_w = f_c \cdot \lambda$$
 
-With $f_c = 2$ MHz and $\lambda = 30$ µm, $v_w = 60$ m/s (≈ 117 knots), which substantially exceeds any achievable vessel speed. The wave therefore continuously outruns the ship at all operating conditions, maintaining unidirectional ion ratcheting without requiring frequency adjustment. Thrust magnitude is controlled by adjusting drive voltage and pulse duty cycle; thrust direction is reversed by inverting the electrode phase sequence. The central propulsion management system adjusts drive amplitude in proportion to the demanded thrust and compensates for tile faults and salinity variation in real time.
+With $f_c = 2$ MHz and $\lambda = 30$ µm, $v_w = 60$ m/s (≈ 117 knots), which substantially exceeds any achievable vessel speed. The wave therefore continuously outruns the ship at all operating conditions, maintaining unidirectional ion ratcheting without requiring frequency adjustment. Thrust magnitude is controlled by adjusting drive voltage and pulse duty cycle; thrust direction is reversed by inverting the electrode phase sequence. The central propulsion management system adjusts drive amplitude in proportion to the demanded thrust and compensates for tile faults and salinity variation in real time. Figure 2 illustrates the asymmetric sawtooth at $f_c = 2$ MHz, showing the fast-rise "grab" phase ($t_r = 100$ ns) and slow-fall "release" phase ($t_f = 400$ ns) that create the net unidirectional momentum bias.
+
+<!-- FIGURE_2_START -->
+<figure style="margin:1.2em 0;text-align:center">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 260"
+     style="display:block;max-width:100%;margin:0.5em auto;font-family:'Times New Roman',serif">
+  <defs>
+    <marker id="f2r" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#333"/>
+    </marker>
+    <marker id="f2l" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+      <path d="M7,0 L0,2.5 L7,5 Z" fill="#333"/>
+    </marker>
+    <marker id="f2rc" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#922b21"/>
+    </marker>
+    <marker id="f2lc" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+      <path d="M7,0 L0,2.5 L7,5 Z" fill="#922b21"/>
+    </marker>
+    <marker id="f2rb" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#1a5276"/>
+    </marker>
+    <marker id="f2lb" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+      <path d="M7,0 L0,2.5 L7,5 Z" fill="#1a5276"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="260" fill="white"/>
+
+  <!-- Axes -->
+  <line x1="65" y1="185" x2="520" y2="185" stroke="#333" stroke-width="1.5" marker-end="url(#f2r)"/>
+  <line x1="70" y1="190" x2="70" y2="22"  stroke="#333" stroke-width="1.5" marker-end="url(#f2r)"/>
+
+  <!-- Axis labels -->
+  <text x="527" y="189" font-size="13" fill="#333" font-style="italic">t</text>
+  <text x="44"  y="35"  font-size="13" fill="#333" font-style="italic">V</text>
+  <text x="70"  y="200" text-anchor="middle" font-size="10" fill="#555">0</text>
+
+  <!-- V_drive dashed reference line -->
+  <line x1="62" y1="35" x2="516" y2="35" stroke="#ccc" stroke-width="1" stroke-dasharray="5,4"/>
+  <text x="57" y="38" text-anchor="end" font-size="11" font-style="italic" fill="#1a5276">V</text>
+
+  <!-- Light grid lines at 100, 200, ..., 900 ns -->
+  <!-- x = 70 + ns*0.44  -->
+  <line x1="114" y1="30" x2="114" y2="185" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="158" y1="30" x2="158" y2="185" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="202" y1="30" x2="202" y2="185" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="246" y1="30" x2="246" y2="185" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="290" y1="30" x2="290" y2="185" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="334" y1="30" x2="334" y2="185" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="378" y1="30" x2="378" y2="185" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="422" y1="30" x2="422" y2="185" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="466" y1="30" x2="466" y2="185" stroke="#f0f0f0" stroke-width="1"/>
+
+  <!-- Shaded grab/release regions (cycle 1 only for clarity) -->
+  <polygon points="70,185 114,35 114,185"  fill="#fadbd8" fill-opacity="0.6"/>
+  <polygon points="114,35 290,185 114,185" fill="#d6eaf8" fill-opacity="0.4"/>
+
+  <!-- Waveform (2 full cycles) -->
+  <!-- vertices: (70,185) (114,35) (290,185) (334,35) (510,185) -->
+  <polyline points="70,185 114,35 290,185 334,35 510,185"
+            fill="none" stroke="#2471a3" stroke-width="2.5" stroke-linejoin="miter"/>
+
+  <!-- "grab" / "release" region labels -->
+  <text x="92"  y="125" text-anchor="middle" font-size="11" fill="#922b21" font-style="italic">grab</text>
+  <text x="202" y="125" text-anchor="middle" font-size="11" fill="#1a5276" font-style="italic">release</text>
+
+  <!-- === Dimension annotations (cycle 1) === -->
+
+  <!-- t_r: x=70..114 at y=207 -->
+  <line x1="70" y1="207" x2="114" y2="207" stroke="#922b21" stroke-width="1"
+        marker-start="url(#f2lc)" marker-end="url(#f2rc)"/>
+  <text x="92" y="222" text-anchor="middle" font-size="12" fill="#922b21">
+    <tspan font-style="italic">t</tspan><tspan baseline-shift="sub" font-size="9">r</tspan><tspan> = 100 ns</tspan>
+  </text>
+
+  <!-- t_f: x=114..290 at y=207 -->
+  <line x1="114" y1="207" x2="290" y2="207" stroke="#1a5276" stroke-width="1"
+        marker-start="url(#f2lb)" marker-end="url(#f2rb)"/>
+  <text x="202" y="222" text-anchor="middle" font-size="12" fill="#1a5276">
+    <tspan font-style="italic">t</tspan><tspan baseline-shift="sub" font-size="9">f</tspan><tspan> = 400 ns</tspan>
+  </text>
+
+  <!-- T: x=70..290 at y=234 -->
+  <line x1="70"  y1="234" x2="290" y2="234" stroke="#555" stroke-width="1"
+        marker-start="url(#f2l)" marker-end="url(#f2r)"/>
+  <line x1="70"  y1="229" x2="70"  y2="239" stroke="#555" stroke-width="1"/>
+  <line x1="290" y1="229" x2="290" y2="239" stroke="#555" stroke-width="1"/>
+  <text x="180" y="250" text-anchor="middle" font-size="12" fill="#555">
+    <tspan font-style="italic">T</tspan><tspan> = 500 ns  (</tspan><tspan font-style="italic">f</tspan><tspan baseline-shift="sub" font-size="9">c</tspan><tspan> = 2 MHz)</tspan>
+  </text>
+
+  <!-- x-axis labels -->
+  <text x="290" y="199" text-anchor="middle" font-size="10" fill="#777">500 ns</text>
+  <text x="510" y="199" text-anchor="middle" font-size="10" fill="#777">1000 ns</text>
+</svg>
+<figcaption style="font-size:10pt;color:#444;margin-top:4pt;text-align:left"><strong>Figure 2.</strong> Asymmetric sawtooth carrier waveform at <em>f</em><sub>c</sub> = 2 MHz (<em>T</em> = 500 ns). Fast-rise &ldquo;grab&rdquo; phase <em>t</em><sub>r</sub> = 100 ns (shaded red, 20% of period); slow-fall &ldquo;release&rdquo; phase <em>t</em><sub>f</sub> = 400 ns (shaded blue, 80% of period). The 1&thinsp;:&thinsp;4 rise&thinsp;:&thinsp;fall ratio creates the net unidirectional momentum bias. Two complete cycles shown.</figcaption>
+</figure>
+<!-- FIGURE_2_END -->
 
 ### 3.4 Active Tile Architecture
 
@@ -84,21 +265,21 @@ The table below consolidates all design and operating parameters used in §4 for
 | $\varepsilon_r^\mathrm{coat}$ | Ta$_2$O$_5$ relative permittivity | 20–25 | §3.2 |
 | $\varepsilon_r^\mathrm{water}$ | Seawater relative permittivity | 80 | §4.1 |
 | $\mu$ | Seawater dynamic viscosity (35 PSU, 20 °C) | $1.08 \times 10^{-3}$ Pa·s | §4.1 |
-| $\sigma_\mathrm{sw}$ | Seawater conductivity | ≈ 5 S/m | §5.2 |
+| $\sigma_\mathrm{sw}$ | Seawater conductivity | ≈ 5 S/m | §5.2, §4.4.2 |
 | $D$ | NaCl mutual diffusivity (25 °C) | $1.61 \times 10^{-9}$ m²/s | §4.2 |
 | $\zeta$ | Zeta potential (Ta$_2$O$_5$/seawater) | $-30$ mV | §4.1 |
 | $\kappa^{-1}$ | Debye screening length (0.6 M NaCl, 20 °C) | 0.39 nm | §1.3 |
-| $f_c$ | Carrier frequency | 2 MHz (window 2–5 MHz) | §3.3 |
+| $f_c$ | Carrier frequency | 2 MHz (window 2–5 MHz) | §3.3, §4.4.2 |
 | $T$ | Period | 500 ns | §3.3 |
 | $t_r : t_f$ | Sawtooth rise:fall ratio | 100 ns : 400 ns (1 : 4) | §3.3 |
 | $K$ | Sawtooth RMS form factor $\sqrt{1/r + 1/(1-r)}$ | 2.5 | §4.3 |
 | $v_w$ | Wave propagation speed $f_c\lambda$ | 60 m/s | §3.3 |
 | $V$ | Drive voltage (Model 3, tuned) | 5.3 V | §4.4 |
 | $V$ | Drive voltage (Model 2, fixed) | 200 V | §4.4 |
-| $\alpha$ | EDL coupling factor (Model 3 / Model 2) | 0.005 / 0.01 | §4.1 |
-| $v_\mathrm{slip}$ | Wave–fluid velocity slip (Model 3 / Model 2) | 0.2 / 1.0 m/s | §4.3 |
+| $\alpha$ | EDL coupling factor (Model 3 / Model 2) — *phenomenological, not derived; measured-experimentally parameter, see §4.1 and the §4.4.1 sensitivity table* | 0.005 / 0.01 | §4.1, §4.4.1 |
+| $v_\mathrm{slip}$ | Wave–fluid velocity slip (Model 3 / Model 2) | 0.2 / 1.0 m/s | §4.3, §4.4.2 |
 | Pe | Péclet number at boundary | ≈ 65 | §4.2 |
-| $\eta$ | First-order efficiency (Model 3 / Model 2) | 83 % / 3 % | §4.4 |
+| $\eta$ | First-order efficiency (Model 3 / Model 2) — tile-boundary definition (§4.3) | 83 % / 3 % | §4.4 |
 
 *Reference-temperature note.* All thermo-transport parameters in this table are evaluated at 20 °C (293 K) — the sim default — except the NaCl mutual diffusivity $D$, which is quoted at the conventional literature reference temperature of 25 °C. The temperature dependence of $D$ over 20–25 °C is approximately +9 % (1.48 → 1.61 × 10$^{-9}$ m²/s); choosing the higher-temperature value is the more conservative (Pe-reducing) choice for the §4.2 Péclet calculation. A uniform 20 °C parameter set would raise Pe from ≈ 65 to ≈ 71 without changing any other conclusion in this paper.
 
@@ -120,7 +301,7 @@ $$v_{eo}^{\mathrm{peak}} = \frac{(8.854\times 10^{-12})(80)(0.030)(1.06\times 10
 
 The time-averaged $v_{eo}$ is approximately half this peak (sawtooth duty), giving an effective ionic drift of $\sim 10$ mm/s at the slip plane. This is small in absolute terms but is the velocity of the *ion sheath only*; the wave-train above moves at $v_w = 60$ m/s and the ion sheath is continually re-acquired as each wave passes. Thrust per unit area is built up by the time-averaged momentum injected per cycle, not by $v_{eo}$ directly.
 
-The fraction of the drive voltage that appears tangentially in the diffuse layer (rather than dropped capacitively across the dielectric) is captured by the dimensionless coupling parameter $\alpha$ used in the §4.3 model. To first order $\alpha \approx C_{\mathrm{dl}}/(C_{\mathrm{dl}} + C_{\mathrm{diel}})$, where $C_{\mathrm{dl}} = \varepsilon_0\varepsilon_r/\kappa^{-1}$ is the diffuse-layer capacitance and $C_{\mathrm{diel}} = \varepsilon_0\varepsilon_{r,\mathrm{coat}}/d$ is the dielectric capacitance per unit area. For the Ta$_2$O$_5$ 500 nm design this evaluates to $\alpha \approx 0.005$; for 1 µm Al$_2$O$_3$, $\alpha \approx 0.01$. These values dominate the achievable thrust density and are an explicit sensitivity parameter in the companion simulation.
+The fraction of the drive voltage that appears tangentially in the diffuse layer (rather than dropped capacitively across the dielectric, lost to steric crowding in the dense Stern layer, or absorbed by interfacial non-idealities outside the linearised EDL picture) is captured by the dimensionless coupling parameter $\alpha$ used in the §4.3 model. **In this disclosure $\alpha$ is treated as a phenomenological coupling-efficiency parameter that must be characterised experimentally; it is not derived from a closed-form expression.** A naive two-capacitor series divider — the diffuse-layer capacitance $C_{\mathrm{dl}} = \varepsilon_0\varepsilon_r/\kappa^{-1}$ in series with the dielectric capacitance $C_{\mathrm{diel}} = \varepsilon_0\varepsilon_{r,\mathrm{coat}}/d$ per unit area — would predict $V_{\mathrm{dl}}/V_{\mathrm{total}} = C_{\mathrm{diel}}/(C_{\mathrm{dl}}+C_{\mathrm{diel}}) \approx 2\times 10^{-4}$ for the Ta$_2$O$_5$ 500 nm stack; this estimate, however, neglects the lateral (along-surface) field component that actually drives electro-osmotic transport, the steric saturation of the Stern layer at the drive voltages of interest [6], and the non-linear induced-charge response of the dielectric overcoat [5], all of which act to *increase* the effective coupling above the linear-divider lower bound. Empirical TWEO-thrust measurements on dielectric-coated microelectrode arrays in the cited microfluidics literature [1, 3, 4] are consistent with effective values in the range $\alpha \in 0.001$–$0.05$, and the value $\alpha = 0.005$ used as the Model 3 default sits near the geometric mid-point of that range. Because $\alpha$ is the single most leverage-bearing parameter in the efficiency budget, its assumed value is *not* a load-bearing claim of this disclosure; §4.4 reports efficiency as an explicit function of $\alpha$ over the literature range and identifies experimental measurement of $\alpha$ for the proposed Ta$_2$O$_5$ stack as a Phase-1 prototype deliverable (§6). The companion simulation exposes $\alpha$ as a top-level input on both Models 2 and 3.
 
 ### 4.2 Péclet Number Validation
 
@@ -140,15 +321,251 @@ Propulsive efficiency was calculated using a suite of three first-order analytic
 
 $$\eta = \frac{F_{thrust} \cdot v_{ship}}{P_{input}}$$
 
-where $F_{thrust}$ is the net hull-surface thrust force, $v_{ship}$ is vessel velocity, and $P_{input}$ is total electrical input power including all losses. The full model and validation test suite (45 unit tests, all passing) are available in the companion repository at `simulations/rimt_simulation.py`.
+where $F_{thrust}$ is the net hull-surface thrust force, $v_{ship}$ is vessel velocity, and $P_{input}$ is total electrical input power into the tile (losses inside the tile — ohmic heating and viscous dissipation — are included; upstream DC bus and GaN PEM losses are not; see §4.4 for the full-chain treatment). The full model and validation test suite (52 unit tests, all passing) are available in the companion repository at `simulations/rimt_simulation.py`.
 
 ### 4.4 Efficiency Results
 
 Two reference design points were evaluated against a representative scenario (10 m boat, 30 m² wetted hull, 10 m/s at 1 500 N total thrust). The scenario is illustrative — a slim semi-displacement hull operating well below planing; thrust-density requirements for planing-mode 10 m hulls at 20 knots would be 2–5× higher and would shift the operating point on both Models 2 and 3 accordingly. The un-tuned baseline configuration (Model 2) uses a 1 µm aluminium oxide (Al$_2$O$_3$) dielectric at a fixed drive voltage of 200 V with a 1.0 m/s wave–fluid velocity slip — representative of a first-generation tile manufactured with conventional plasma-enhanced chemical vapour deposition (PECVD), standard electrode surface finish, a 10 µm inter-electrode gap (the looser pitch typical of standard PCB lithography, contrasted with the 5 µm Model 3 design value), and no adaptive drive control. At the §3.3 carrier frequency of 2 MHz this configuration achieves only $\eta \approx 3\%$. The dominant loss is AC ohmic heating in the seawater between electrodes (driven by the displacement current that charges the dielectric capacitor each half-cycle): the surface charge density at 200 V on a 1 µm Al$_2$O$_3$ stack is high, and the §3.3 sawtooth drives an RMS current density of $j_{\mathrm{rms}} \approx 9 \times 10^4$ A m$^{-2}$ at 2 MHz for the Model 2 baseline, falling to $j_{\mathrm{rms}} \approx 9 \times 10^3$ A m$^{-2}$ at the Model 3 tuned drive (where the ≈ 38× lower drive voltage suppresses the displacement current proportionally). This baseline therefore does not demonstrate viability of RIMT; it demonstrates that *fixed high-voltage drive on a thick low-k dielectric is unworkable* and that adaptive voltage control matched to the demanded thrust is essential.
 
-The optimised configuration (Model 3) employs the 500 nm Ta$_2$O$_5$ ALD dielectric with analytical solution of the thrust equation for the minimum drive voltage. For the design thrust density of 50 N m$^{-2}$, the solved drive voltage is $V \approx 5.3$ V, achievable with a synchronised traveling wave producing a residual $v_{\mathrm{slip}} \approx 0.2$ m/s at the EDL. This configuration achieves $\eta \approx 83\%$ — an upper bound under the first-order model assumptions, but well above the practical efficiency ceiling of mechanical propulsors (~70–72%). The improvement over the baseline comes from three reinforcing effects: (i) the higher-k thinner dielectric stores more capacitance per unit voltage, reducing the drive amplitude needed for the same surface charge; (ii) the analytically-tuned drive voltage is approximately 38× lower than the un-tuned baseline, reducing the $V^2$-scaled displacement current by roughly three orders of magnitude; and (iii) the 2× tighter electrode pitch shortens the ohmic conduction path between electrodes. Propellers and waterjets incur irreducible losses through vortex wake formation, cavitation at high shaft speeds, and mechanical drivetrain friction; hull-surface electro-osmosis avoids all three by distributing momentum transfer across the entire wetted area at sub-cavitation velocities with no moving parts. The 83 % figure remains a first-order upper bound: experimental validation is required to characterise the reduction due to non-ideal EDL behaviour, surface roughness, organic fouling, turbulent boundary layer disruption, and the steric flow-reversal regime identified in §2.
+The optimised configuration (Model 3) employs the 500 nm Ta$_2$O$_5$ ALD dielectric with analytical solution of the thrust equation for the minimum drive voltage. For the design thrust density of 50 N m$^{-2}$, the solved drive voltage is $V \approx 5.3$ V, achievable with a synchronised traveling wave producing a residual $v_{\mathrm{slip}} \approx 0.2$ m/s at the EDL. This configuration achieves $\eta \approx 83\%$ — a tile-boundary upper bound (§4.3 definition: electrical power into the tile against useful thrust; DC bus and GaN PEM losses not included) under the first-order model assumptions, but well above the practical efficiency ceiling of mechanical propulsors (~70–72%). The full battery-to-thrust chain is approximately $0.99 \times 0.97 \times 0.83 \approx 80\%$, still comfortably above the propeller practical ceiling. The improvement over the baseline comes from three reinforcing effects: (i) the higher-k thinner dielectric stores more capacitance per unit voltage, reducing the drive amplitude needed for the same surface charge; (ii) the analytically-tuned drive voltage is approximately 38× lower than the un-tuned baseline, reducing the $V^2$-scaled displacement current by roughly three orders of magnitude; and (iii) the 2× tighter electrode pitch shortens the ohmic conduction path between electrodes. Propellers and waterjets incur irreducible losses through vortex wake formation, cavitation at high shaft speeds, and mechanical drivetrain friction; hull-surface electro-osmosis avoids all three by distributing momentum transfer across the entire wetted area at sub-cavitation velocities with no moving parts. The 83 % figure remains a first-order upper bound: experimental validation is required to characterise the reduction due to non-ideal EDL behaviour, surface roughness, organic fouling, turbulent boundary layer disruption, and the steric flow-reversal regime identified in §2.
 
-The efficiency narrative is therefore as follows: a naive baseline with fixed high drive voltage is dominated by ohmic loss and is non-viable ($\eta \approx 3\%$); adaptive voltage matching combined with an ALD-grade high-k dielectric reaches $\eta \approx 83\%$ in first-order modelling, comfortably above the practical ceiling of mechanical propulsion. Realised efficiency in hardware is expected to be lower than the modelled upper bound but is the critical experimental quantity that this disclosure invites the community to measure.
+The efficiency narrative is therefore as follows: a naive baseline with fixed high drive voltage is dominated by ohmic loss and is non-viable ($\eta \approx 3\%$); adaptive voltage matching combined with an ALD-grade high-k dielectric reaches $\eta \approx 83\%$ in first-order modelling at the assumed coupling factor $\alpha = 0.005$, comfortably above the practical ceiling of mechanical propulsion. Realised efficiency in hardware is expected to be lower than the modelled upper bound but is the critical experimental quantity that this disclosure invites the community to measure.
+
+#### 4.4.1 Sensitivity of η to the coupling factor α
+
+Because the Model 3 drive voltage is solved analytically as $V \propto \alpha^{-1/2}$ for a fixed thrust-density target, the displacement-current ohmic loss scales as $V^2 \propto \alpha^{-1}$ and the efficiency $\eta$ is strongly $\alpha$-dependent. The table below reports $\eta$, the solved $V_{\mathrm{drive}}$, and the ohmic loss density at fixed thrust density (50 N m$^{-2}$) across the literature-plausible range of $\alpha$ (§4.1). All other Model 3 inputs are held at their §3.5 defaults; values reproduce the output of `_audit_math_check2.py` for the same $\alpha$ grid.
+
+| $\alpha$ | $V_{\mathrm{drive}}$ [V] | $\eta$ | Ohmic loss [W m$^{-2}$] | Interpretation |
+|---|---|---|---|---|
+| 0.0002 | 26.9 | 17 % | 2 365 | Linear two-cap series-divider lower bound (§4.1); operating point is dominated by ohmic loss; non-viable as a propulsion design but useful as a *floor* against which experiment must demonstrate improvement. |
+| 0.001 | 11.9 | 52 % | 461 | Conservative empirical estimate at the low end of the cited TWEO literature [1, 3, 4]; still beats Model 2 baseline by ~17×, but falls below the propeller practical ceiling. |
+| **0.005** | **5.31** | **83 %** | **92** | **Model 3 reference point used throughout this disclosure.** Geometric mid-point of the literature-plausible band. |
+| 0.01 | 3.76 | 90 % | 46 | High-end empirical estimate consistent with the best-reported TWEO devices in dielectric-coated microelectrode arrays. |
+| 0.05 | 1.68 | 96 % | 9 | Upper-bound consistency check — confirms that the model degenerates gracefully toward the loss-free thermodynamic limit at high coupling, with the residual losses dominated by the v$_{\mathrm{slip}}$ viscous term rather than the ohmic term. |
+
+The takeaway is twofold. First, the headline $\eta \approx 83\%$ is *not* robust against an order-of-magnitude downward revision in $\alpha$: an experimentally measured $\alpha \lesssim 10^{-3}$ on the proposed Ta$_2$O$_5$ stack would invalidate the propeller-ceiling-beating claim of this disclosure and would push the design toward higher carrier frequencies or thinner dielectrics to recover the operating point. Second, the model is gracefully degrading rather than singular — even at the pessimistic $\alpha = 10^{-3}$ point the modelled efficiency exceeds the un-tuned Model 2 baseline by a factor of $\sim 17$, demonstrating that the *adaptive-voltage* design principle of Model 3 contributes most of the efficiency gain independent of the precise $\alpha$ value. Measuring $\alpha$ on a bench-scale ionic plate (§6, prototype deliverable (a)) is therefore the highest-value first experiment. Figure 3 compares the energy conversion chains for conventional diesel-mechanical propulsion and for the RIMT design, illustrating the efficiency gap between the two architectures.
+
+<!-- FIGURE_3_START -->
+<figure style="margin:1.2em 0;text-align:center">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 310"
+     style="display:block;max-width:100%;margin:0.5em auto;font-family:'Times New Roman',serif">
+  <defs>
+    <marker id="f3d" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="310" fill="white"/>
+
+  <!-- Divider -->
+  <line x1="318" y1="8" x2="318" y2="295" stroke="#ddd" stroke-width="1"/>
+
+  <!-- Column headers -->
+  <text x="157" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#111">Conventional propulsion</text>
+  <text x="476" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#111">RIMT (modelled)</text>
+
+  <!-- ========== Conventional chain (left column, x origin = 15) ========== -->
+
+  <!-- Stage 1: 100%, w=230 -->
+  <rect x="15" y="28" width="230" height="34" fill="#27ae60" stroke="#1e8449" stroke-width="1"/>
+  <text x="130" y="50" text-anchor="middle" font-size="12" fill="white" font-weight="bold">Fuel chemical energy &#x2013; 100%</text>
+
+  <!-- Loss label + arrow -->
+  <text x="250" y="68" font-size="11" fill="#c0392b">&#x2212;50 % combustion</text>
+  <line x1="127" y1="62" x2="127" y2="72" stroke="#555" stroke-width="1.5" marker-end="url(#f3d)"/>
+
+  <!-- Stage 2: 50%, w=115 -->
+  <rect x="15" y="74" width="115" height="34" fill="#f39c12" stroke="#d68910" stroke-width="1"/>
+  <text x="72" y="96" text-anchor="middle" font-size="12" fill="white" font-weight="bold">50%</text>
+
+  <!-- Loss label + arrow -->
+  <text x="134" y="113" font-size="11" fill="#c0392b">&#x2212;2.5 % shaft</text>
+  <line x1="72" y1="108" x2="72" y2="118" stroke="#555" stroke-width="1.5" marker-end="url(#f3d)"/>
+
+  <!-- Stage 3: 47.5%, w=109 -->
+  <rect x="15" y="120" width="109" height="34" fill="#e67e22" stroke="#d35400" stroke-width="1"/>
+  <text x="69" y="142" text-anchor="middle" font-size="12" fill="white" font-weight="bold">47.5%</text>
+
+  <!-- Loss label + arrow -->
+  <text x="128" y="159" font-size="11" fill="#c0392b">&#x2212;14 % propeller</text>
+  <line x1="69" y1="154" x2="69" y2="164" stroke="#555" stroke-width="1.5" marker-end="url(#f3d)"/>
+
+  <!-- Stage 4: 33%, w=76 -->
+  <rect x="15" y="166" width="76" height="34" fill="#e74c3c" stroke="#cb4335" stroke-width="1"/>
+  <text x="53" y="188" text-anchor="middle" font-size="12" fill="white" font-weight="bold">&#x2248;33%</text>
+  <text x="96" y="188" font-size="11" fill="#555">useful thrust</text>
+
+  <!-- ========== RIMT chain (right column, x origin = 330) ========== -->
+
+  <!-- Stage 1: 100%, w=230 -->
+  <rect x="330" y="28" width="230" height="34" fill="#2980b9" stroke="#1f618d" stroke-width="1"/>
+  <text x="445" y="50" text-anchor="middle" font-size="12" fill="white" font-weight="bold">Battery electric &#x2013; 100%</text>
+
+  <!-- Loss label + arrow -->
+  <text x="563" y="68" font-size="11" fill="#1a5276">&#x2212;1 % DC bus</text>
+  <line x1="445" y1="62" x2="445" y2="72" stroke="#555" stroke-width="1.5" marker-end="url(#f3d)"/>
+
+  <!-- Stage 2: 99%, w=228 -->
+  <rect x="330" y="74" width="228" height="34" fill="#2471a3" stroke="#1f618d" stroke-width="1"/>
+  <text x="444" y="96" text-anchor="middle" font-size="12" fill="white" font-weight="bold">99%</text>
+
+  <!-- Loss label + arrow -->
+  <text x="561" y="113" font-size="11" fill="#1a5276">&#x2212;3 % GaN PEM</text>
+  <line x1="444" y1="108" x2="444" y2="118" stroke="#555" stroke-width="1.5" marker-end="url(#f3d)"/>
+
+  <!-- Stage 3: 96%, w=221 -->
+  <rect x="330" y="120" width="221" height="34" fill="#1a6ea0" stroke="#154360" stroke-width="1"/>
+  <text x="440" y="142" text-anchor="middle" font-size="12" fill="white" font-weight="bold">96%</text>
+
+  <!-- Loss label + arrow -->
+  <text x="554" y="159" font-size="11" fill="#1a5276">&#x2212;16 % tile losses</text>
+  <line x1="440" y1="154" x2="440" y2="164" stroke="#555" stroke-width="1.5" marker-end="url(#f3d)"/>
+
+  <!-- Stage 4: 80% full chain (tile eta = 83%); w=184 -->
+  <rect x="330" y="166" width="184" height="34" fill="#27ae60" stroke="#1e8449" stroke-width="1"/>
+  <text x="422" y="188" text-anchor="middle" font-size="12" fill="white" font-weight="bold">&#x2248;80%</text>
+  <text x="518" y="188" font-size="11" fill="#555">useful thrust&#x2020;</text>
+
+  <!-- Comparison dashed link -->
+  <line x1="91" y1="194" x2="330" y2="194" stroke="#bbb" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="319" y="218" text-anchor="end" font-size="11" fill="#555" font-style="italic">83% vs 33%</text>
+
+  <!-- Stage labels (right of conventional, left of RIMT) -->
+  <text x="155" y="42"  font-size="10" fill="#888">fuel input</text>
+  <text x="155" y="88"  font-size="10" fill="#888">after combustion</text>
+  <text x="155" y="134" font-size="10" fill="#888">after shaft</text>
+  <text x="155" y="180" font-size="10" fill="#888">propeller thrust</text>
+
+  <!-- Footnote + source note -->
+  <text x="320" y="243" text-anchor="middle" font-size="10" fill="#888" font-style="italic">&#x2020; Full chain = 0.99 &#xd7; 0.97 &#xd7; tile &#x3b7; (83 %) &#x2248; 80 %. WP &#xa7;4.4 headline 83 % is tile-boundary (&#xa7;4.3 definition).</text>
+  <text x="320" y="257" text-anchor="middle" font-size="10" fill="#888" font-style="italic">Conventional: Comparison doc &#xa7;1&#x2013;2. RIMT: WP &#xa7;4.4 (Model 3, &#x3b1; = 0.005). Numbers rounded.</text>
+</svg>
+<figcaption style="font-size:10pt;color:#444;margin-top:4pt;text-align:left"><strong>Figure 3.</strong> Energy conversion chain: conventional diesel-mechanical propulsion (left) vs. RIMT battery-electric propulsion (right). Bar width is proportional to the cumulative retained fraction of the input energy. Conventional: fuel chemical energy &rarr; combustion (&times;50%) &rarr; transmission + shaft (&times;95%) &rarr; propeller open-water (&times;70%) &rarr; &approx;33% useful thrust. RIMT: battery electric &rarr; DC bus (&times;99%) &rarr; GaN PEM (&times;97%) &rarr; tile EDL (tile-boundary &eta; = 83%, WP &sect;4.4) &rarr; &approx;80% full-chain useful thrust (0.99&times;0.97&times;0.83). The WP &sect;4.4 headline &eta;&nbsp;&asymp;&nbsp;83% is the tile-boundary efficiency (electrical input to tile &rarr; useful thrust; DC bus and GaN PEM losses not included &mdash; see WP &sect;4.3 for boundary definition). Numbers rounded.</figcaption>
+</figure>
+<!-- FIGURE_3_END -->
+
+#### 4.4.2 Sensitivity to wave–fluid slip, seawater conductivity, and carrier frequency
+
+The α-sensitivity in §4.4.1 is the dominant parametric uncertainty because α is currently unmeasured. Three additional parameters that are either environmentally variable (σ) or operationally constrained (v_slip, f_c) also influence η, and their sensitivities are tabulated here. All three sweeps hold the remaining inputs at Model 3 §3.5 defaults: α = 0.005, v_slip = 0.2 m/s, σ_sw = 4.8 S/m, f_c = 2 MHz. Values reproduce the output of `sensitivity_sweep()` in `simulations/rimt_simulation.py`.
+
+**Wave–fluid slip velocity.** The viscous loss term is $P_{\mathrm{visc}} = (F/A)_{\mathrm{req}} \cdot v_{\mathrm{slip}}$; it scales linearly with slip, while the ohmic term is slip-independent. Because viscous loss is only 10 W m$^{-2}$ at the reference point (versus 92 W m$^{-2}$ ohmic), the slip sensitivity is comparatively mild: a 5× increase from the design point to 1.0 m/s costs ≈ 5 percentage points.
+
+| $v_{\mathrm{slip}}$ [m s$^{-1}$] | $V_{\mathrm{drive}}$ [V] | $\eta$ | Ohmic loss [W m$^{-2}$] | Viscous loss [W m$^{-2}$] |
+|---|---|---|---|---|
+| 0.1 | 5.31 | 84 % | 92 | 5 |
+| **0.2** | **5.31** | **83 %** | **92** | **10** |
+| 0.5 | 5.31 | 81 % | 92 | 25 |
+| 1.0 | 5.31 | 78 % | 92 | 50 |
+
+**Seawater conductivity.** Ohmic loss is $P_{\mathrm{ohm}} \propto \sigma_{\mathrm{sw}}^{-1}$ (the bulk seawater between electrodes carries the displacement current; higher conductivity reduces resistive heating). The sensitivity is strong in the brackish regime: dropping to σ = 0.5 S/m (tropical river estuary) cuts η from 83 % to 36 %, making low-salinity operation impractical without frequency reduction. At open-ocean salinity the sensitivity is mild: the default model uses σ = 4.8 S/m (§3.5 `SIGMA_SEAWATER`), which gives η = 83 %; the table row at σ = 5 S/m gives η = 84 %, confirming robust operation across typical ocean salinity variation (§5.2).
+
+| $\sigma_{\mathrm{sw}}$ [S m$^{-1}$] | $V_{\mathrm{drive}}$ [V] | $\eta$ | Ohmic loss [W m$^{-2}$] | Context |
+|---|---|---|---|---|
+| 0.5 | 5.31 | 36 % | 887 | Brackish / estuarine — impractical without f_c reduction |
+| 1.0 | 5.31 | 52 % | 444 | Low-salinity coastal zone |
+| **5.0** | **5.31** | **84 %** | **89** | **Open ocean (reference ≈ §3.5 default; see §5.2)** |
+
+**Carrier frequency.** This is the most impactful of the three axes. Ohmic heating from the displacement current scales as $P_{\mathrm{ohm}} \propto f_c^2$ (§4.3): doubling f_c quadruples ohmic loss. The Faradaic-safe operating window (2–5 MHz, §3.3) therefore defines a meaningful efficiency constraint — operating at the upper end of the window (5 MHz) cuts efficiency from 83 % to 46 %. The choice of f_c = 2 MHz as the §3.3 reference point is thus a deliberate balance between Faradaic suppression and ohmic efficiency. Figure 4 plots η continuously across the 0.5–8 MHz range for the §3.5 default parameters; the 2–5 MHz window is shaded.
+
+| $f_c$ [MHz] | $V_{\mathrm{drive}}$ [V] | $\eta$ | Ohmic loss [W m$^{-2}$] | Note |
+|---|---|---|---|---|
+| 1 | 5.31 | 94 % | 23 | Below window — Faradaic charge-reversal risk (§3.3) |
+| **2** | **5.31** | **83 %** | **92** | **§3.3 reference point; Faradaic margin maintained** |
+| 5 | 5.31 | 46 % | 578 | Upper end of window — ohmic loss 6× higher than at 2 MHz |
+
+<!-- FIGURE_4_START -->
+<figure style="margin:1.2em 0;text-align:center">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 265"
+     style="display:block;max-width:100%;margin:0.5em auto;font-family:'Times New Roman',serif">
+
+  <defs>
+    <marker id="f4rx" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#333"/>
+    </marker>
+    <marker id="f4ux" markerWidth="5" markerHeight="7" refX="2.5" refY="7" orient="auto">
+      <path d="M0,0 L2.5,7 L5,0 Z" fill="#333" transform="rotate(180,2.5,3.5)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="265" fill="white"/>
+
+  <!-- Faradaic-safe window shading (2-5 MHz) -->
+  <rect x="176" y="22" width="167" height="193" fill="#d6eaf8" fill-opacity="0.45"/>
+
+  <!-- Horizontal grid lines -->
+  <line x1="65" y1="176" x2="510" y2="176" stroke="#ebebeb" stroke-width="1"/>
+  <line x1="65" y1="138" x2="510" y2="138" stroke="#ebebeb" stroke-width="1"/>
+  <line x1="65" y1="99"  x2="510" y2="99"  stroke="#ddd" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="65" y1="61"  x2="510" y2="61"  stroke="#ddd" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="65" y1="22"  x2="510" y2="22"  stroke="#ebebeb" stroke-width="1"/>
+
+  <!-- Vertical grid lines -->
+  <line x1="121" y1="22" x2="121" y2="215" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="176" y1="22" x2="176" y2="215" stroke="#aac9e8" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <line x1="232" y1="22" x2="232" y2="215" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="288" y1="22" x2="288" y2="215" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="343" y1="22" x2="343" y2="215" stroke="#aac9e8" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <line x1="399" y1="22" x2="399" y2="215" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="454" y1="22" x2="454" y2="215" stroke="#f0f0f0" stroke-width="1"/>
+
+  <!-- Axes -->
+  <line x1="65" y1="215" x2="512" y2="215" stroke="#333" stroke-width="1.5" marker-end="url(#f4rx)"/>
+  <line x1="65" y1="215" x2="65"  y2="17"  stroke="#333" stroke-width="1.5" marker-end="url(#f4ux)"/>
+
+  <!-- Y-axis tick marks and labels -->
+  <line x1="65" y1="176" x2="59" y2="176" stroke="#555" stroke-width="1"/>
+  <line x1="65" y1="138" x2="59" y2="138" stroke="#555" stroke-width="1"/>
+  <line x1="65" y1="99"  x2="59" y2="99"  stroke="#555" stroke-width="1"/>
+  <line x1="65" y1="61"  x2="59" y2="61"  stroke="#555" stroke-width="1"/>
+  <line x1="65" y1="22"  x2="59" y2="22"  stroke="#555" stroke-width="1"/>
+  <text x="56" y="179" text-anchor="end" font-size="10" fill="#555">20</text>
+  <text x="56" y="141" text-anchor="end" font-size="10" fill="#555">40</text>
+  <text x="56" y="102" text-anchor="end" font-size="10" fill="#555">60</text>
+  <text x="56" y="64"  text-anchor="end" font-size="10" fill="#555">80</text>
+  <text x="56" y="25"  text-anchor="end" font-size="10" fill="#555">100</text>
+
+  <!-- X-axis tick marks and labels -->
+  <line x1="121" y1="215" x2="121" y2="221" stroke="#555" stroke-width="1"/>
+  <line x1="176" y1="215" x2="176" y2="221" stroke="#555" stroke-width="1"/>
+  <line x1="232" y1="215" x2="232" y2="221" stroke="#555" stroke-width="1"/>
+  <line x1="288" y1="215" x2="288" y2="221" stroke="#555" stroke-width="1"/>
+  <line x1="343" y1="215" x2="343" y2="221" stroke="#555" stroke-width="1"/>
+  <line x1="399" y1="215" x2="399" y2="221" stroke="#555" stroke-width="1"/>
+  <line x1="454" y1="215" x2="454" y2="221" stroke="#555" stroke-width="1"/>
+  <text x="65"  y="230" text-anchor="middle" font-size="10" fill="#777">0</text>
+  <text x="121" y="230" text-anchor="middle" font-size="10" fill="#555">1</text>
+  <text x="176" y="230" text-anchor="middle" font-size="10" fill="#555">2</text>
+  <text x="232" y="230" text-anchor="middle" font-size="10" fill="#555">3</text>
+  <text x="288" y="230" text-anchor="middle" font-size="10" fill="#555">4</text>
+  <text x="343" y="230" text-anchor="middle" font-size="10" fill="#555">5</text>
+  <text x="399" y="230" text-anchor="middle" font-size="10" fill="#555">6</text>
+  <text x="454" y="230" text-anchor="middle" font-size="10" fill="#555">7</text>
+
+  <!-- Axis labels -->
+  <text x="287" y="250" text-anchor="middle" font-size="12" fill="#333">
+    <tspan font-style="italic">f</tspan><tspan baseline-shift="sub" font-size="9">c</tspan><tspan> [MHz]</tspan>
+  </text>
+  <text transform="translate(18,118) rotate(-90)" text-anchor="middle" font-size="12" fill="#333" font-style="italic">&#x3b7; [%]</text>
+
+  <!-- Window label -->
+  <text x="259" y="38" text-anchor="middle" font-size="9" fill="#1a5276">Faradaic-safe window</text>
+  <text x="259" y="49" text-anchor="middle" font-size="9" fill="#1a5276">(2&#x2013;5 MHz, &#xa7;3.3)</text>
+
+  <!-- Efficiency curve -->
+  <polyline points="93,28 121,34 148,43 176,55 204,68 232,81 260,93 288,105 315,116 343,126 399,143 454,156 510,166"
+            fill="none" stroke="#2471a3" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+
+  <!-- Reference point (2 MHz, 83%) -->
+  <circle cx="176" cy="55" r="5" fill="#c0392b" stroke="white" stroke-width="1.5"/>
+
+  <!-- Reference annotation -->
+  <line x1="181" y1="50" x2="205" y2="36" stroke="#c0392b" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="207" y="34" font-size="10" fill="#c0392b" font-style="italic">&#x3b7; = 83 %,  f<tspan baseline-shift="sub" font-size="8">c</tspan><tspan> = 2 MHz</tspan></text>
+
+</svg>
+<figcaption style="font-size:10pt;color:#444;margin-top:4pt;text-align:left"><strong>Figure 4.</strong> Modelled propulsive efficiency &#x3b7; vs. carrier frequency <em>f</em><sub>c</sub> (Model 3, Ta<sub>2</sub>O<sub>5</sub> 500 nm, &#x3b1;&nbsp;=&nbsp;0.005, <em>v</em><sub>slip</sub>&nbsp;=&nbsp;0.2&nbsp;m/s, &#x3c3;<sub>sw</sub>&nbsp;=&nbsp;4.8&nbsp;S/m; other parameters at §3.5 defaults). The shaded band marks the Faradaic-safe operating window (2&ndash;5&nbsp;MHz, §3.3). Efficiency falls steeply above 2&nbsp;MHz because ohmic heating scales as <em>f</em><sub>c</sub><sup>2</sup>; the reference design point at 2&nbsp;MHz (&#x3b7;&nbsp;=&nbsp;83&nbsp;%) balances Faradaic suppression against ohmic efficiency. Values computed by <code>sensitivity_sweep()</code> in <code>simulations/rimt_simulation.py</code>.</figcaption>
+</figure>
+<!-- FIGURE_4_END -->
 
 ### 4.5 Wave-vs-Fluid Frame Momentum Transfer
 
@@ -174,19 +591,142 @@ Note that an intact 500 nm Ta$_2$O$_5$ dielectric blocks Faradaic current at all
 
 RIMT performance depends on the ion concentration and conductivity of the surrounding water, both of which vary significantly between open ocean ($\sigma \approx 5$ S/m), coastal estuaries ($\sigma \approx 0.5$–2 S/m), and freshwater river channels ($\sigma < 0.1$ S/m). As ion concentration decreases, the Debye length increases ($\kappa^{-1} \propto c^{-1/2}$, where $c$ is the ionic concentration; this maps to $\sigma^{-1/2}$ only when ion mobilities are constant), the EDL becomes more diffuse, and electro-osmotic coupling efficiency decreases. The PEM mitigates this through continuous real-time impedance sensing: as the vessel transits from high to low salinity, the controller increases peak drive voltage and adjusts pulse width to maintain constant momentum transfer for the available charge carrier density. Vessels designed exclusively for freshwater operation can specify a thinner dielectric (e.g., 100 nm HfO$_2$) to increase baseline capacitance and partially compensate for reduced ion concentration.
 
+Figure 5 plots η continuously across σ ∈ [0.05, 5] S m⁻¹ (freshwater to open ocean), showing that ohmic loss ($P_\mathrm{ohm} \propto \sigma_\mathrm{sw}^{-1}$) causes efficiency to fall steeply below σ ≈ 1 S m⁻¹; at open-ocean salinity the design operates near the efficiency plateau. The thinner HfO$_2$ dielectric option raises EDL surface charge density and reduces the minimum required $V_\mathrm{drive}$, partially compensating the $\sigma^{-1}$ penalty, but does not flatten the underlying ohmic dependence.
+
+<!-- FIGURE_5_START -->
+<figure style="margin:1.2em 0;text-align:center">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 265"
+     style="display:block;max-width:100%;margin:0.5em auto;font-family:'Times New Roman',serif">
+
+  <defs>
+    <marker id="f5rx" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#333"/>
+    </marker>
+    <marker id="f5ux" markerWidth="5" markerHeight="7" refX="2.5" refY="7" orient="auto">
+      <path d="M0,0 L2.5,7 L5,0 Z" fill="#333" transform="rotate(180,2.5,3.5)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="265" fill="white"/>
+
+  <!-- Freshwater shading (σ < 0.1 S/m) -->
+  <rect x="70.0" y="22.0" width="66.2" height="193.0"
+        fill="#fef9e7" fill-opacity="0.75"/>
+
+  <!-- Open-ocean shading (σ > 3.5 S/m) -->
+  <rect x="475.9" y="22.0" width="34.1" height="193.0"
+        fill="#d6eaf8" fill-opacity="0.55"/>
+
+  <!-- Horizontal grid lines (20 / 40 / 60 / 80 %) -->
+  <line x1="70.0" y1="60.6" x2="510.0" y2="60.6" stroke="#ebebeb" stroke-width="1"/>
+  <line x1="70.0" y1="99.2" x2="510.0" y2="99.2" stroke="#ebebeb" stroke-width="1"/>
+  <line x1="70.0" y1="137.8" x2="510.0" y2="137.8" stroke="#ebebeb" stroke-width="1"/>
+  <line x1="70.0" y1="176.4" x2="510.0" y2="176.4" stroke="#ebebeb" stroke-width="1"/>
+
+  <!-- Vertical grid lines at σ ticks -->
+  <line x1="136.2"  y1="22.0" x2="136.2"  y2="215.0" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="202.5"  y1="22.0" x2="202.5"  y2="215.0" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="290.0"  y1="22.0" x2="290.0"  y2="215.0" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="356.2"  y1="22.0" x2="356.2"  y2="215.0" stroke="#f0f0f0" stroke-width="1"/>
+  <line x1="422.5"  y1="22.0" x2="422.5"  y2="215.0" stroke="#f0f0f0" stroke-width="1"/>
+
+  <!-- η = 83 % dashed reference line -->
+  <line x1="70.0" y1="54.8" x2="510.0" y2="54.8"
+        stroke="#ccc" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="513.0" y="58.3" font-size="9" fill="#aaa">83%</text>
+
+  <!-- Axes -->
+  <line x1="70.0" y1="215.0" x2="515.0" y2="215.0"
+        stroke="#333" stroke-width="1.5" marker-end="url(#f5rx)"/>
+  <line x1="70.0" y1="215.0" x2="70.0" y2="17.0"
+        stroke="#333" stroke-width="1.5" marker-end="url(#f5ux)"/>
+
+  <!-- η curve -->
+  <polyline points="70.0,204.7 81.3,203.5 92.6,202.1 103.8,200.6 115.1,199.0 126.4,197.2 137.7,195.2 149.0,193.0 160.3,190.6 171.5,188.0 182.8,185.1 194.1,182.0 205.4,178.7 216.7,175.1 227.9,171.2 239.2,167.1 250.5,162.8 261.8,158.2 273.1,153.4 284.4,148.4 295.6,143.2 306.9,137.9 318.2,132.5 329.5,126.9 340.8,121.4 352.1,115.8 363.3,110.2 374.6,104.7 385.9,99.4 397.2,94.1 408.5,89.1 419.7,84.2 431.0,79.5 442.3,75.1 453.6,70.9 464.9,67.0 476.2,63.3 487.4,59.9 498.7,56.7 510.0,53.8"
+            fill="none" stroke="#2471a3" stroke-width="2.5" stroke-linejoin="round"/>
+
+  <!-- Design-point circle (σ = 4.8 S/m, η ≈ 83 %) -->
+  <circle cx="506.1" cy="54.8" r="4" fill="#e74c3c" stroke="white" stroke-width="1.2"/>
+
+  <!-- Y-axis tick marks and labels -->
+  <line x1="70.0" y1="60.6" x2="64.0" y2="60.6" stroke="#555" stroke-width="1"/>
+  <line x1="70.0" y1="99.2" x2="64.0" y2="99.2" stroke="#555" stroke-width="1"/>
+  <line x1="70.0" y1="137.8" x2="64.0" y2="137.8" stroke="#555" stroke-width="1"/>
+  <line x1="70.0" y1="176.4" x2="64.0" y2="176.4" stroke="#555" stroke-width="1"/>
+  <text x="62.0" y="64.1" text-anchor="end" font-size="10" fill="#555">80</text>
+  <text x="62.0" y="102.7" text-anchor="end" font-size="10" fill="#555">60</text>
+  <text x="62.0" y="141.3" text-anchor="end" font-size="10" fill="#555">40</text>
+  <text x="62.0" y="179.9" text-anchor="end" font-size="10" fill="#555">20</text>
+  <text x="62.0" y="25.5"     text-anchor="end" font-size="10" fill="#555">100</text>
+
+  <!-- Y-axis label -->
+  <text x="46" y="17" text-anchor="end" font-size="12" fill="#333" font-style="italic">&#x3b7; [%]</text>
+
+  <!-- X-axis tick marks and labels -->
+  <line x1="70.0" y1="215.0" x2="70.0" y2="221.0" stroke="#555" stroke-width="1"/>
+  <line x1="136.2"  y1="215.0" x2="136.2"  y2="221.0" stroke="#555" stroke-width="1"/>
+  <line x1="202.5"  y1="215.0" x2="202.5"  y2="221.0" stroke="#555" stroke-width="1"/>
+  <line x1="290.0"  y1="215.0" x2="290.0"  y2="221.0" stroke="#555" stroke-width="1"/>
+  <line x1="356.2"  y1="215.0" x2="356.2"  y2="221.0" stroke="#555" stroke-width="1"/>
+  <line x1="422.5"  y1="215.0" x2="422.5"  y2="221.0" stroke="#555" stroke-width="1"/>
+  <line x1="510.0"  y1="215.0" x2="510.0"  y2="221.0" stroke="#555" stroke-width="1"/>
+  <text x="70.0" y="232.0" text-anchor="middle" font-size="9.5" fill="#555">0.05</text>
+  <text x="136.2"  y="232.0" text-anchor="middle" font-size="9.5" fill="#555">0.1</text>
+  <text x="202.5"  y="232.0" text-anchor="middle" font-size="9.5" fill="#555">0.2</text>
+  <text x="290.0"  y="232.0" text-anchor="middle" font-size="9.5" fill="#555">0.5</text>
+  <text x="356.2"  y="232.0" text-anchor="middle" font-size="9.5" fill="#555">1</text>
+  <text x="422.5"  y="232.0" text-anchor="middle" font-size="9.5" fill="#555">2</text>
+  <text x="510.0"  y="232.0" text-anchor="middle" font-size="9.5" fill="#555">5</text>
+
+  <!-- X-axis label -->
+  <text x="290.0" y="248.0" text-anchor="middle" font-size="11" fill="#333"><tspan font-style="italic">&#x3c3;</tspan><tspan font-size="8" dy="2">sw</tspan><tspan dy="-2"> [S m&#x207b;&#xb9;] (log scale)</tspan></text>
+
+  <!-- Region labels -->
+  <text x="103.1" y="36" text-anchor="middle" font-size="9" fill="#9a7d0a">freshwater</text>
+  <text x="493.0" y="36" text-anchor="middle" font-size="9" fill="#1a5276">ocean</text>
+
+  <!-- Design-point annotation -->
+  <text x="499.1" y="46.8" text-anchor="end" font-size="9" fill="#c0392b">&#x3c3; = 4.8&#xa0;S/m</text>
+</svg>
+<figcaption style="font-size:10pt;color:#444;margin-top:4pt;text-align:left"><strong>Figure 5.</strong> Modelled conversion efficiency &eta; (Model 3, &alpha; = 0.005, <em>f</em><sub>c</sub> = 2&thinsp;MHz, <em>v</em><sub>slip</sub> = 0.2&thinsp;m&thinsp;s<sup>&minus;1</sup>) vs. seawater conductivity &sigma;<sub>sw</sub>, spanning freshwater to open ocean (&sigma;&thinsp;&isin;&thinsp;[0.05,&thinsp;5]&thinsp;S&thinsp;m<sup>&minus;1</sup>). Ohmic heating (&prop;&thinsp;&sigma;<sup>&minus;1</sup>) dominates the power budget at low conductivity; efficiency falls from 84&thinsp;% at open-ocean salinity (&sigma;&thinsp;&asymp;&thinsp;5&thinsp;S&thinsp;m<sup>&minus;1</sup>, right shading) to &asymp;5&thinsp;% in freshwater (&sigma;&thinsp;=&thinsp;0.05&thinsp;S&thinsp;m<sup>&minus;1</sup>, left shading). A thinner dielectric (e.g., 100&thinsp;nm HfO<sub>2</sub>, &sect;5.2) raises EDL surface charge density and reduces the minimum <em>V</em><sub>drive</sub>, partially compensating but not eliminating the &sigma;<sup>&minus;1</sup> ohmic penalty. Red dot: &sect;3.5 design point (&sigma; = 4.8&thinsp;S&thinsp;m<sup>&minus;1</sup>).</figcaption>
+</figure>
+<!-- FIGURE_5_END -->
+
 ### 5.3 Physical Damage and Fault Isolation
 
 The 500 nm dielectric layer is the most mechanically vulnerable element of the SSIH. Breaching of this layer by abrasion, impact debris, or penetrating marine growth creates a low-impedance path from the driven electrode directly to seawater, producing a tile-level short circuit. The per-tile GaN controller detects the resulting current spike and permanently de-energises the tile within a few microseconds (consistent with the desaturation-protect propagation delay of representative isolated GaN drivers — see §3.4) — isolating the fault before thermal damage can propagate to adjacent tiles or the DC bus. The vessel's central propulsion management system registers the fault, recalculates thrust distribution across remaining healthy tiles, and increases drive parameters proportionally to maintain target vessel speed. Physical repair requires replacement of the affected tile module — a procedure achievable without drydocking for accessible hull areas.
+
+### 5.4 Radio-Frequency Compatibility
+
+RIMT drives the wetted hull surface at carrier frequencies spanning 2–5 MHz. The electromagnetic skin depth in seawater ($\sigma \approx 5$ S/m, $\mu_r \approx 1$) is:
+
+$$\delta = \sqrt{\frac{2}{\mu_0 \sigma \omega}}$$
+
+where $\omega = 2\pi f_c$. At the nominal 2 MHz operating point this evaluates to $\delta \approx 15.9$ cm; the values across the carrier band and its immediate vicinity are:
+
+| $f_c$ (MHz) | $\delta$ (cm) |
+|---|---|
+| 1 | 22.5 |
+| 2 | 15.9 |
+| 3 | 13.0 |
+| 5 | 10.1 |
+| 10 | 7.1 |
+
+*EM skin depth in seawater ($\sigma = 5$ S/m) at RIMT carrier-band frequencies. Field amplitude attenuates by $e^{-1}$ over distance $\delta$.*
+
+The 500 nm Ta$_2$O$_5$ dielectric constrains electrode fields to be tangential to the hull surface; the hull tiles are not configured as radiating antenna elements. Combined with the rapid attenuation of EM energy within 10–22 cm of the hull depending on $f_c$, far-field radiated power at inter-vessel distances is expected to be low. Quantitative EMI envelope measurements at hull scale have not been performed and are an identified open question (§6).
+
+The binding RF-compatibility constraint for a ship-board RIMT installation is not external radiation but coupling to the vessel's own shipboard MF/HF radio equipment. The RIMT nominal lower-band edge at 2 MHz lies immediately below the GMDSS Digital Selective Calling (DSC) MF distress frequency at 2.187 5 MHz; the RIMT upper band (4–5 MHz) coincides with the international maritime mobile HF allocation. Uncontrolled in-hull conducted or near-field coupling from the SSIH power bus or tile interconnects to shipboard antenna feed cables could corrupt MF DSC distress watch-keeping — a safety-of-life concern under SOLAS Chapter IV. Three mitigation paths are available, individually or in combination: (a) shielding and Faraday-cage segregation of SSIH wiring from antenna feed runs, consistent with IEC 60945 marine EMC practice; (b) masthead or stern-rail antenna placement to maximise physical separation from the hull tile surface; (c) carrier-frequency selection at or above 6 MHz to move the RIMT carrier above the 4–5 MHz maritime mobile allocation, at the cost of reduced efficiency — $\eta \approx 46\%$ at 5 MHz per §4.4.2 Figure 4 versus $\eta \approx 83\%$ at 2 MHz. The optimal frequency-versus-compatibility trade-off and the in-hull coupling attenuation required for GMDSS-compliant operation are experimental open questions (§6).
 
 ---
 
 ## 6. Limitations and Future Work
 
-This disclosure is text-and-equation only: explanatory figures (hull-stack-up cross-section, IDE traveling-wave schematic, Active Tile system diagram) are deliberately omitted from version 1.0 and are reserved for a follow-up revision. The §3.5 parameter summary table is intended to compensate for the absence of figures at the level needed for reviewers to reconstruct the geometry.
+This version includes five explanatory figures: Figure 1 (IDE layer-stack cross-section, §3.1), Figure 2 (asymmetric sawtooth waveform, §3.3), Figure 3 (energy conversion chain comparison, §4.4), Figure 4 (η-vs-f_c sensitivity, §4.4.2), and Figure 5 (η-vs-σ conductivity sensitivity, §5.2). Additional schematic figures — including a full hull-stack-up cross-section and an Active Tile system diagram — are deferred to a follow-up revision. The §3.5 parameter summary table remains as a consolidated numerical reference for reviewers.
 
 The analysis presented in this disclosure is theoretical and computational; no laboratory prototype of the RIMT/SSIH system has been constructed or tested as of the date of publication. The efficiency values of 3% (un-tuned baseline) and 83% (optimised) are derived from first-order analytical models assuming an ideal planar EDL, Newtonian fluid behaviour within the boundary layer, spatially uniform electrode performance, and the absence of organic fouling, dissolved gases, or turbulent disruption of the ion sheath. Real-world performance will deviate from these values, and experimental characterisation is essential before any vessel-scale application can be rigorously evaluated.
 
-Several specific open questions require empirical resolution. First, the precise usable frequency window must be determined experimentally: the steric flow reversal identified by Olesen et al. (2010) sets an upper frequency bound [6] that depends on electrolyte concentration and electrode geometry in ways not fully captured by linearised EDL theory, and the optimal sawtooth asymmetry must be validated against this constraint. Second, the bio-fouling suppression claim — specifically the protein-adhesion disruption mechanism at MHz frequencies — requires controlled in vitro and in situ validation. Third, the thrust efficiency of the proposed interdigitated electrode geometry at 30 µm pitch has not been measured; scaling from microfluidic TWEO results to hull-scale arrays may introduce edge effects and parasitic capacitances not present in idealised geometries. Fourth, the long-term durability of a 500 nm ALD Ta$_2$O$_5$ dielectric under continuous electrochemical cycling, thermal cycling, and physical stress in a marine environment is unknown.
+Several specific open questions require empirical resolution. First, the precise usable frequency window must be determined experimentally: the steric flow reversal identified by Olesen et al. (2010) sets an upper frequency bound [6] that depends on electrolyte concentration and electrode geometry in ways not fully captured by linearised EDL theory, and the optimal sawtooth asymmetry must be validated against this constraint. Second, the bio-fouling suppression claim — specifically the protein-adhesion disruption mechanism at MHz frequencies — requires controlled in vitro and in situ validation. Third, the thrust efficiency of the proposed interdigitated electrode geometry at 30 µm pitch has not been measured; scaling from microfluidic TWEO results to hull-scale arrays may introduce edge effects and parasitic capacitances not present in idealised geometries. Fourth, the long-term durability of a 500 nm ALD Ta$_2$O$_5$ dielectric under continuous electrochemical cycling, thermal cycling, and physical stress in a marine environment is unknown. Fifth, the measured EMI envelope at hull scale and the in-hull radio coupling attenuation required for GMDSS-compliant operation have not been characterised; this encompasses both the radiated far-field envelope and the conducted/near-field coupling from SSIH wiring to shipboard MF/HF antenna feeds (§5.4). Anticipated objections spanning these and related topics — including the α derivation, energy-chain scope, planing-speed applicability, freshwater performance, dielectric MTBF, EMI compliance, ice abrasion, and ballast water interaction — are addressed in Appendix C.
 
 Future work proposed by the author includes: (a) construction of a bench-scale ionic plate test cell (10 cm × 10 cm interdigitated gold electrode array on PCB substrate in a controlled saltwater tank, driven by a GaN evaluation board, with thrust measured by a torsion balance — the required sensitivity is approximately 0.5 N for the design thrust density of 50 N m$^{-2}$ on a 0.01 m$^2$ test plate, well within the resolution of commercially available laboratory torsion balances of ±10 mN class) to validate the first-order model and characterise the steric reversal frequency — a simpler dielectric such as Parylene-C or a high-quality ceramic dip-coat is sufficient for this bench-scale validation and substantially reduces prototype cost relative to full ALD processing; (b) a detailed component-level cost model for a production 20 m vessel SSIH installation; (c) development and simulation of salinity-adaptive control algorithms for estuarine and freshwater transit; (d) experimental characterisation of the hypothesised AC-EF bio-fouling suppression effect under marine flow conditions; (e) experimental quantification of any skin-friction drag reduction co-benefit (§1.3) under hull-scale flow; and (f) an environmental impact assessment of the MHz-range electromagnetic fields on representative marine organisms at realistic hull-surface flux densities, evaluated against the ICNIRP 1998 general-public reference levels for the 100 kHz–10 MHz band (E-field limit 87 V/m) and the analogous IEEE C95.1 occupational exposure standard.
 
@@ -198,7 +738,7 @@ A note on manufacturing economics is warranted here. The two primary cost driver
 
 The Solid-State Ionic Hull (SSIH) driven by Resonant Ionic Momentum Transfer represents a conceptually distinct departure from all prior marine propulsion paradigms. Rather than generating thrust by displacing water at a mechanical point source, RIMT manipulates the pre-existing Electrical Double Layer of seawater across the entire hull surface via GaN-driven traveling-wave electrostatics, generating net directional thrust and — if the hypothesised skin-friction drag attenuation (§1.3, §6) is realised in hardware — simultaneously reducing the dominant resistance component of the hull. The physics underlying this mechanism — electro-osmotic coupling, Debye layer theory, and traveling-wave electrophoresis — are well-established at microscale; RIMT proposes their first application at macroscopic hull scale, enabled by the commercial maturity of GaN wide-bandgap power electronics and high-k ALD dielectric deposition.
 
-First-order computational modelling confirms thermodynamic viability of the optimised design: an un-tuned baseline with fixed high drive voltage is dominated by AC ohmic loss in the seawater between electrodes and is non-viable ($\eta \approx 3\%$). An ALD-optimised design with analytically tuned drive voltage reaches $\eta \approx 83\%$ (first-order upper bound; experimental validation pending), exceeding the practical efficiency ceiling of mechanical propulsion (~70–72% [10]) by approximately ten percentage points. This improvement is achieved by distributing momentum transfer across the entire wetted hull surface at sub-cavitation velocities with no moving parts. The modular Active Tile architecture ensures fault tolerance, platform independence, and field-serviceable maintainability. As a practical operational consequence of eliminating external rotating machinery, SSIH vessels have no minimum propulsion draft, no propeller-strike risk in shallow water, and no acoustic signature from mechanical drivetrain components. The open publication of this architecture under CC BY-SA 4.0 establishes prior art, prevents proprietary patent capture of this design space, and invites the global research and engineering community to build on, validate, and extend this work freely.
+First-order computational modelling confirms thermodynamic viability of the optimised design: an un-tuned baseline with fixed high drive voltage is dominated by AC ohmic loss in the seawater between electrodes and is non-viable ($\eta \approx 3\%$). An ALD-optimised design with analytically tuned drive voltage reaches $\eta \approx 83\%$ (tile-boundary efficiency; first-order upper bound at the assumed phenomenological coupling factor $\alpha = 0.005$; the §4.4.1 sensitivity table reports $\eta$ across the full literature-plausible range $\alpha \in 0.001$–$0.05$; full battery-to-thrust chain $\approx 80\%$; experimental validation pending), exceeding the practical efficiency ceiling of mechanical propulsion (~70–72% [10]) by approximately ten percentage points. The §4.4.2 multi-parameter sensitivity analysis further shows that carrier frequency is the dominant operational sensitivity axis — efficiency spans 94 % at 1 MHz to 46 % at 5 MHz due to the $f_c^2$ scaling of ohmic heating — while wave–fluid slip and seawater conductivity have comparatively modest influence at the §3.5 optimised design point. This improvement is achieved by distributing momentum transfer across the entire wetted hull surface at sub-cavitation velocities with no moving parts. The modular Active Tile architecture ensures fault tolerance, platform independence, and field-serviceable maintainability. As a practical operational consequence of eliminating external rotating machinery, SSIH vessels have no minimum propulsion draft, no propeller-strike risk in shallow water, and no acoustic signature from mechanical drivetrain components. The open publication of this architecture under CC BY-SA 4.0 establishes prior art, prevents proprietary patent capture of this design space, and invites the global research and engineering community to build on, validate, and extend this work freely.
 
 ---
 
@@ -212,7 +752,7 @@ The author declares no competing financial interests.
 
 ## Data Availability Statement
 
-All simulation source code, unit tests, the Markdown source of this paper, the companion side-by-side comparison document, and the interactive infographic data package are openly available at https://github.com/uchimata2/Project-Leviathan-RIMT (concept DOI [10.5281/zenodo.20361267](https://doi.org/10.5281/zenodo.20361267); always-latest version). The companion simulation `simulations/rimt_simulation.py` implements the three first-order models described in §4 and is the authoritative source for all efficiency figures quoted in this paper. The accompanying test suite `simulations/test_rimt_simulation.py` (45 unit tests, all passing) acts as a machine-checked specification of the numerical results.
+All simulation source code, unit tests, the Markdown source of this paper, the companion side-by-side comparison document, and the interactive infographic data package are openly available at https://github.com/uchimata2/Project-Leviathan-RIMT (concept DOI [10.5281/zenodo.20361267](https://doi.org/10.5281/zenodo.20361267); always-latest version). The companion simulation `simulations/rimt_simulation.py` implements the three first-order models described in §4 and is the authoritative source for all efficiency figures quoted in this paper. The accompanying test suite `simulations/test_rimt_simulation.py` (52 unit tests, all passing) acts as a machine-checked specification of the numerical results.
 
 ## Dual-Use Considerations
 
@@ -260,6 +800,60 @@ Please cite this work using the concept DOI (always resolves to the latest versi
 10. Carlton, J. S. (2018). *Marine Propellers and Propulsion* (4th ed.). Butterworth-Heinemann. — Chapter 6 (propeller theories), Chapter 12 (resistance and propulsion), Chapter 14 (efficiency limits).
 
 11. GaN Systems (2018). *GS66508T 650 V Enhancement Mode GaN Transistor* — datasheet, Rev. 180422, https://gansystems.com.
+
+---
+
+## Appendix C — Anticipated Objections
+
+*The following Q&A addresses objections commonly raised against first-disclosure electrokinetic propulsion claims. Each response cites the section of this paper where the point is analysed in greater depth.*
+
+**C.1 The coupling factor α is assumed, not derived. Why should the efficiency figures be trusted?**
+
+*The 83 % efficiency figure rests on an assumed coupling parameter α = 0.005 with no first-principles derivation, making the result circular.*
+
+The paper acknowledges this explicitly (§4.1): α is treated as a phenomenological coupling-efficiency parameter that cannot be derived from the linearised EDL framework used here. A two-capacitor series-divider gives a lower bound of ~2 × 10⁻⁴; empirical TWEO-thrust data in the microfluidics literature [1, 3, 4] are consistent with effective values in the range α ∈ 0.001–0.05, and α = 0.005 sits near the geometric midpoint of that range. Rather than treating α as a load-bearing claim, §4.4.1 reports η explicitly as a function of α across the full literature range (η spans 52 % to 96 %); the companion simulation exposes α as a top-level input. Experimental determination of α for the proposed Ta$_2$O$_5$/seawater interface is the primary Phase-1 prototype deliverable (§6).
+
+**C.2 The 83 % efficiency figure omits upstream losses. The real system efficiency must be substantially lower.**
+
+*Quoting tile-boundary efficiency without including DC bus and power-electronics losses gives a misleading headline figure.*
+
+§4.3 defines the efficiency boundary explicitly: electrical power delivered to the tile input terminals against useful mechanical thrust. The DC bus and GaN PEM losses are excluded from this figure by construction, but are not ignored: §4.4 states the full battery-to-thrust chain as 0.99 × 0.97 × 0.83 ≈ 80 %, and Figure 3 (energy conversion chain comparison, §4.4) illustrates each stage. Both the 83 % tile-boundary and the 80 % full-chain figures are labelled with their respective boundaries in every location where they appear in this document.
+
+**C.3 The analysis uses a displacement hull at 10 m/s. Does RIMT scale to planing speeds?**
+
+*The efficiency scenario is a semi-displacement hull well below planing. Planing vessels require far higher thrust densities — does the result hold?*
+
+§4.4 notes that a planing-mode 10 m hull at 20 knots requires a 2–5× higher thrust density, shifting the operating point on both Models 2 and 3. In the tuned Model 3, the drive voltage V is solved analytically for the demanded thrust density; at 2–5× higher demand, V increases by $\sqrt{2}$–$\sqrt{5}$ (approximately 1.4–2.2×), and the $V^2$-scaled ohmic loss increases proportionally, reducing η. Efficiency at planing-speed thrust densities has not been computed; this is an identified gap in the current analysis (§6) requiring extension of the first-order model to higher thrust-density operating points before planing applicability can be quantitatively assessed.
+
+**C.4 RIMT efficiency collapses in freshwater or brackish estuaries. Is it viable for coastal vessels?**
+
+*Seawater conductivity spans ~5 S/m (open ocean) to < 0.1 S/m (freshwater). The efficiency appears to fall to near zero at low salinity.*
+
+§5.2 and Figure 5 address this quantitatively: ohmic heating scales as $P_\mathrm{ohm} \propto \sigma_\mathrm{sw}^{-1}$, so efficiency falls steeply below σ ≈ 1 S m⁻¹. At open-ocean salinity the design operates near its efficiency plateau (η ≈ 83 %); in pure freshwater (σ = 0.05 S m⁻¹) η falls to approximately 5 %. For vessels operating primarily in estuarine or freshwater environments, §5.2 proposes a thinner-dielectric variant (100 nm HfO$_2$) that increases baseline capacitance and reduces the minimum $V_\mathrm{drive}$, partially compensating the $\sigma^{-1}$ penalty. Development and simulation of salinity-adaptive control algorithms for estuarine and freshwater transit is included in the §6 future-work programme.
+
+**C.5 A 500 nm dielectric film will degrade rapidly in service. What is the expected operational lifetime?**
+
+*ALD Ta$_2$O$_5$ at 500 nm is extremely thin; electrochemical cycling, thermal cycling, and ocean turbulence will degrade or breach it rapidly.*
+
+At the Model 3 drive of $V \approx 5.31$ V across 500 nm, the mean field is ~10.6 MV m⁻¹ — well below the bulk Ta$_2$O$_5$ intrinsic breakdown field (~200–400 MV m⁻¹ in the ALD literature), providing a large intrinsic safety margin against voltage-driven dielectric failure. The principal reliability risk is not intrinsic breakdown but pinhole defects from ALD process non-uniformity and propagating mechanical damage from abrasion or impact; §5.3 describes the per-tile GaN fault-detection mechanism that de-energises any affected tile within microseconds of a short-circuit event, preventing thermal damage from propagating. Long-term MTBF under continuous marine cycling is an identified open question (§6, fourth specific open question) and is the primary motivation for the bench-scale test-cell programme proposed in §6.
+
+**C.6 Operating at 2 MHz adjacent to the GMDSS DSC distress frequency is a safety-of-life concern. How does RIMT comply with maritime radio regulations?**
+
+*The RIMT nominal lower-band edge at 2 MHz lies immediately below the 2.187 5 MHz GMDSS MF distress frequency. Any harmonic or broadband emission could corrupt safety watch-keeping.*
+
+§5.4 presents the RF-compatibility analysis in full. The 500 nm Ta$_2$O$_5$ dielectric constrains electrode fields to be tangential to the hull surface; tiles are not configured as radiating antenna elements, and the seawater skin depth (~15.9 cm at 2 MHz) attenuates far-field emissions rapidly with distance from the hull. The binding constraint is in-hull conducted coupling to shipboard antenna cables, not far-field radiation. Three mitigation paths are identified in §5.4: (a) Faraday-cage segregation of SSIH wiring from antenna feed runs per IEC 60945; (b) masthead or stern-rail antenna placement to maximise physical separation from the tile surface; and (c) carrier shift above 6 MHz, at the cost of reduced efficiency. The in-hull coupling attenuation required for full GMDSS compliance is an experimental open question (§6, fifth specific open question).
+
+**C.7 Ice abrasion in high-latitude operations would rapidly ablate the dielectric. Is RIMT viable for Arctic or sub-Arctic vessels?**
+
+*Even minor frazil ice or sea-ice contact abrasion would strip the 500 nm dielectric, progressively rendering the hull propulsion system non-functional.*
+
+§5.3 identifies the dielectric as the most mechanically vulnerable element and describes how per-tile fault isolation responds to point-failure events. Ice abrasion, however, presents a systematic (area-wide) threat that tile-level fault isolation cannot address: sustained ice contact at hull scale would progressively deactivate large tile arrays. The baseline SSIH design is therefore not suitable for ice-class vessels without additional protective overcoatings or sacrificial ablation layers atop the dielectric — a design option not specified in the current disclosure. Mid-latitude and tropical open-ocean vessels, which represent the primary near-term application space, are not affected by this constraint; Arctic and sub-Arctic deployment is deferred to follow-on design work addressing protective-layer compatibility with the EDL coupling mechanism.
+
+**C.8 How does RIMT interact with the ship's ballast water system, and could it affect IMO ballast water compliance?**
+
+*Ballast water exchange near SSIH-equipped hull sections could disrupt the EDL, introduce organisms into the tile gap, or interfere with tile electronics.*
+
+The SSIH tile array is installed on the external (wetted) hull surface; ballast water is carried in internal tanks isolated from the tile dielectric in normal operation. During overboard ballast exchange, the local turbulence near hull intake ports could briefly disrupt the EDL at adjacent tiles — a transient that the Propulsion Energy Module (PEM) controller compensates by adjusting local tile drive parameters (§3.4). The more significant interaction runs in the opposite direction: the hypothesised MHz-range bio-fouling suppression mechanism (§5.1) may reduce biotic transport on the external hull surface, potentially complementing — rather than conflicting with — IMO Ballast Water Management Convention (2004/2017) compliance programmes. This secondary benefit has not been characterised quantitatively and is noted here for completeness.
 
 ---
 

@@ -109,6 +109,14 @@ class PerformanceResult:
     efficiency        : float  # η = P_useful / P_total  [0–1]
 
 
+@dataclass
+class SensitivityPoint:
+    """Single point in a parameter sensitivity sweep (WP §4.4.2)."""
+    param_name  : str    # axis identifier: "alpha", "v_slip", "sigma", "f_c"
+    param_value : float  # value of the swept parameter (SI units)
+    result      : PerformanceResult
+
+
 # ---------------------------------------------------------------------------
 # Model 1 — Debye Layer Fundamentals
 # ---------------------------------------------------------------------------
@@ -201,7 +209,7 @@ def parametric_performance(
     drive_freq_Hz      : float = 2.0e6,    # §3.3 carrier
     slip_velocity_m_s  : float = 1.0,      # poorly synchronised wave (5× higher slip than Model 3)
     electrode_gap_m    : float = 10.0e-6,  # 2× looser pitch than Model 3 (longer ohmic conduction path)
-    coupling_alpha     : float = 0.01,     # C_dl / (C_dl + C_diel) — see WP §4.1 derivation
+    coupling_alpha     : float = 0.01,     # phenomenological EDL coupling factor — see WP §4.1; must be measured experimentally
     sigma_seawater     : float = SIGMA_SEAWATER,  # override for freshwater / brackish testing
 ) -> PerformanceResult:
     """
@@ -229,10 +237,13 @@ def parametric_performance(
     electrode_gap_m     : Inter-electrode gap g [m] (seawater-conduction length
                           between adjacent fingers — WP §3.1 / §4.2).
                           Default 10 µm.
-    coupling_alpha      : Fraction of coating field penetrating the Debye layer.
-                          Default 0.01 — derived from the capacitive voltage
-                          division between the dielectric (C_diel) and the EDL
-                          (C_dl) in series: α ≈ C_dl / (C_dl + C_diel).
+    coupling_alpha      : Phenomenological coupling sensitivity parameter — the
+                          fraction of the drive voltage that produces useful
+                          tangential field at the EDL slip plane. Default 0.01.
+                          Treated as a *measured* quantity, not a derived one;
+                          see WP §4.1 for the framing and §4.4.1 for the η-vs-α
+                          sensitivity table over the literature-plausible range
+                          α ∈ [0.001, 0.05].
     sigma_seawater      : Bulk seawater conductivity [S m⁻¹]. Default SIGMA_SEAWATER
                           (≈ 4.8 S/m at 35 PSU, 20 °C). Override for brackish
                           (~0.5–2 S/m) or freshwater (<0.1 S/m) studies (WP §5.2).
@@ -333,7 +344,7 @@ def tuned_performance(
     drive_freq_Hz            : float = 2.0e6,    # §3.3 carrier
     slip_velocity_m_s        : float = 0.2,      # synchronised wave — small residual slip
     electrode_gap_m          : float = 5.0e-6,   # 2× tighter pitch than Model 2 (shorter ohmic path)
-    coupling_alpha           : float = 0.005,    # C_dl / (C_dl + C_diel) — see WP §4.1; smaller than Model 2 because thinner / higher-k dielectric stores more of V on its own capacitance
+    coupling_alpha           : float = 0.005,    # phenomenological EDL coupling factor — see WP §4.1; must be measured experimentally. Default 0.005 sits near the geometric mid-point of the literature-plausible TWEO range α ∈ [0.001, 0.05]; see WP §4.4.1 for the η-vs-α sensitivity table.
     sigma_seawater           : float = SIGMA_SEAWATER,  # override for freshwater / brackish testing
 ) -> PerformanceResult:
     """
@@ -356,11 +367,14 @@ def tuned_performance(
     slip_velocity_m_s      : Absolute wave–fluid velocity slip [m s⁻¹].
                              Default 0.2 m/s — synchronised wave, small residual.
     electrode_gap_m        : Inter-electrode gap g [m].  Default 5 µm.
-    coupling_alpha         : Debye-screening penetration factor.  Default 0.005
-                             (capacitive division between thin Ta₂O₅ and the
-                             diffuse EDL — smaller than alumina case because
-                             the thinner / higher-k dielectric stores more of
-                             the applied voltage on its own capacitance).
+    coupling_alpha         : Phenomenological coupling sensitivity parameter —
+                             the fraction of the drive voltage that produces
+                             useful tangential field at the EDL slip plane.
+                             Default 0.005 — geometric mid-point of the
+                             literature-plausible TWEO range α ∈ [0.001, 0.05].
+                             Treated as a *measured* quantity, not a derived
+                             one; see WP §4.1 for the framing and §4.4.1 for
+                             the η-vs-α sensitivity table.
     sigma_seawater         : Bulk seawater conductivity [S m⁻¹]. Default
                              SIGMA_SEAWATER (≈ 4.8 S/m at 35 PSU, 20 °C).
                              Override for brackish (~0.5–2 S/m) or freshwater
@@ -426,8 +440,84 @@ def tuned_performance(
 
 
 # ---------------------------------------------------------------------------
+# Sensitivity sweep — WP §4.4.2
+# ---------------------------------------------------------------------------
+
+def sensitivity_sweep(
+    vessel_speed_m_s    : float = 10.0,
+    thrust_density_N_m2 : float = 50.0,
+) -> dict[str, list[SensitivityPoint]]:
+    """
+    Sweep η across four parameter axes of the Model 3 tuned design.
+
+    Each axis varies one parameter while holding the remaining three at their
+    §3.5 default values (α = 0.005, v_slip = 0.2 m/s, σ = 4.8 S/m,
+    f_c = 2 MHz).  Results correspond to the §4.4.2 sensitivity tables in the
+    whitepaper.
+
+    Parameters
+    ----------
+    vessel_speed_m_s    : Target vessel speed [m s⁻¹].  Default 10 m/s.
+    thrust_density_N_m2 : Required thrust per unit area [N m⁻²].  Default 50.
+
+    Returns
+    -------
+    dict with four keys, each mapping to a list of SensitivityPoint:
+        "alpha"  — α ∈ {0.001, 0.005, 0.02}
+        "v_slip" — v_slip ∈ {0.1, 0.2, 0.5, 1.0} m/s
+        "sigma"  — σ_seawater ∈ {0.5, 1.0, 5.0} S/m
+        "f_c"    — f_c ∈ {1, 2, 5} MHz
+    """
+    hull_area = 1.0   # per-unit-area normalisation; hull_area cancels in η
+
+    def _pt(name: str, val: float, **kw) -> SensitivityPoint:
+        r = tuned_performance(
+            vessel_speed_m_s    = vessel_speed_m_s,
+            hull_area_m2        = hull_area,
+            thrust_density_N_m2 = thrust_density_N_m2,
+            **kw,
+        )
+        return SensitivityPoint(param_name=name, param_value=val, result=r)
+
+    alpha_axis  = [_pt("alpha",  a, coupling_alpha=a)
+                   for a in (0.001, 0.005, 0.02)]
+    v_slip_axis = [_pt("v_slip", v, slip_velocity_m_s=v)
+                   for v in (0.1, 0.2, 0.5, 1.0)]
+    sigma_axis  = [_pt("sigma",  s, sigma_seawater=s)
+                   for s in (0.5, 1.0, 5.0)]
+    fc_axis     = [_pt("f_c",    f, drive_freq_Hz=f)
+                   for f in (1.0e6, 2.0e6, 5.0e6)]
+
+    return {
+        "alpha" : alpha_axis,
+        "v_slip": v_slip_axis,
+        "sigma" : sigma_axis,
+        "f_c"   : fc_axis,
+    }
+
+
+# ---------------------------------------------------------------------------
 # Formatted output helpers
 # ---------------------------------------------------------------------------
+
+def _print_sensitivity(sweep: dict[str, list[SensitivityPoint]]) -> None:
+    axes_meta = [
+        ("alpha",  "alpha",  ""),
+        ("v_slip", "v_slip", " m/s"),
+        ("sigma",  "sigma",  " S/m"),
+        ("f_c",    "f_c",    " Hz"),
+    ]
+    for key, _label, unit in axes_meta:
+        pts = sweep[key]
+        print(f"  {'Parameter':<12}  {'Value':<12}  {'eta':>6}  {'V_drive':>8}")
+        print(f"  {'-'*12}  {'-'*12}  {'-'*6}  {'-'*8}")
+        for pt in pts:
+            val_str = f"{pt.param_value:.4g}{unit}"
+            print(f"  {key:<12}  {val_str:<12}  "
+                  f"{pt.result.efficiency*100:>5.1f}%  "
+                  f"{pt.result.drive_voltage_V:>7.2f}V")
+        print()
+
 
 def _print_section(title: str) -> None:
     width = 62
@@ -512,6 +602,12 @@ def main() -> None:
     delta = (r3.efficiency - r2.efficiency) * 100
     print(f"  Δη = {delta:+.1f} percentage points")
     print()
+
+    # --- Sensitivity sweep (WP §4.4.2) ---
+    _print_section("Sensitivity Sweep — §4.4.2 (one axis varied, others at §3.5 defaults)")
+    sweep = sensitivity_sweep(vessel_speed_m_s=VESSEL_SPEED,
+                              thrust_density_N_m2=THRUST_PER_M2)
+    _print_sensitivity(sweep)
 
 
 if __name__ == "__main__":
